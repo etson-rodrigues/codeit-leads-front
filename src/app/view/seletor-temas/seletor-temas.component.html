@@ -1,0 +1,24 @@
+<div class="container-selecionar-tema">
+  <form [formGroup]="themeForm" class="h-100 container">
+    <mat-form-field>
+      <mat-label>Nome da empresa</mat-label>
+      <input matInput formControlName="name" placeholder="Digite o nome da empresa para gerar o tema">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Selecione um tema</mat-label>
+      <mat-select matInput formControlName="themes">
+        <mat-option *ngFor="let theme of themes" [value]="theme.codigo">
+          {{theme.corpName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="container-buttons">
+      <button mat-raised-button color="primary" class="btn-primary" (click)="insert($event)">Cadastrar/Alterar
+      </button>
+
+      <button mat-raised-button color="accent" class="btn-secundary" (click)="limparFiltros($event)">Limpar Filtro</button>
+    </div>
+  </form>
+</div>
