@@ -138,4 +138,29 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 
 .codeit-theme {
   @include angular-material-theme($app-theme);
+
+  // componente message-tracker
+  .message-error {
+    color: mat-color($app-accent, A700);
+
+    .error {
+      .container-item {
+        .button-close {
+          color: mat-color($app-accent, A700);
+        }
+      }
+
+      .border-error {
+        .progress-error {
+          background-color: mat-color($app-warn);
+        }
+      }
+    }
+  }
+
+  // Reset MatSnackBar
+  .reset-snackbar {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
 }

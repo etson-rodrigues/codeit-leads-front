@@ -1,0 +1,18 @@
+<div id="message-error" class="message-error" [hidden]="error">
+  <div *ngFor="let error of error!.errors['ValidationsErrors']; let i = index" [attr.data-index]="i"
+    [id]="defineIdError(i)" class="error">
+    <div class="container-item">
+      <button mat-icon-button color="warn" data-dismiss="alert" aria-label="close" (click)="deleteError(error)">
+        <mat-icon fontSet="fas" fontIcon="fa-exclamation-circle" class="button-icon"></mat-icon>
+      </button>
+      <span>{{ error }}</span>
+      <button mat-icon-button color="accent" data-dismiss="alert" aria-label="close" (click)="deleteError(error)"
+        class="button-close">
+        <mat-icon fontSet="fas" fontIcon="fa-times" class="button-icon"></mat-icon>
+      </button>
+    </div>
+    <div id="border-error" class="border-error">
+      <div id="progress-error" class="progress-error"></div>
+    </div>
+  </div>
+</div>

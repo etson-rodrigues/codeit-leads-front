@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
 
 @Component({
   selector: 'app-home',
@@ -7,8 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _messageTrackerService: MessageTrackerService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 }
