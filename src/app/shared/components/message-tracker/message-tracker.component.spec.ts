@@ -15,7 +15,6 @@ describe('MessageTrackerComponent', () => {
       declarations: [MessageTrackerComponent],
       imports: [MatSnackBarModule,],
       providers: [
-        { provide: MatSnackBarRef, useValue: {} },
         { provide: MAT_SNACK_BAR_DATA, useValue: { error: mockError, progress: 'asc' } },
         { provide: MatSnackBarRef, useValue: { dismiss: () => { } } }
       ],

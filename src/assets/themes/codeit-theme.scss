@@ -144,6 +144,8 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
     color: mat-color($app-accent, A700);
 
     .error {
+      background-color: mat-color($app-accent, 50);
+
       .container-item {
         .button-close {
           color: mat-color($app-accent, A700);
@@ -158,7 +160,7 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
     }
   }
 
-  // Reset MatSnackBar
+  // reset MatSnackBar
   .reset-snackbar {
     background: transparent !important;
     box-shadow: none !important;
