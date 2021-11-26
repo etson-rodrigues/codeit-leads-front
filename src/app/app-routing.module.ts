@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+export const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
-    path: 'home',
+    path: 'login',
     loadChildren: () =>
-      import('./view/home/home.module').then(m => m.HomeModule),
+      import('./view/login/login.module').then(m => m.LoginModule),
+  },
+  {
+    path: 'consulta-processos',
+    loadChildren: () => import('./view/consulta-processos/consulta-processos.module').then(m => m.ConsultaProcessosModule)
   },
   {
     path: 'seletor-temas',

@@ -8,12 +8,12 @@ import { CURRENCY_MASK_CONFIG } from 'ngx-currency';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { customCurrencyMaskConfig } from './core/config/currency-mask';
 import { SpinnerModule } from './core/components/spinner/spinner.module';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MessageTrackerModule } from './shared/components/message-tracker/message-tracker.module';
 
 const maskConfig: Partial<IConfig> = {

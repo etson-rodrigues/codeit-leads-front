@@ -165,4 +165,34 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
     background: transparent !important;
     box-shadow: none !important;
   }
+
+  // ícones dentro de inputs
+  .mat-form-field {
+    .mat-icon {
+      color: mat-color($app-accent, A400);
+    }
+  }
+
+  // tela login
+  .container-login {
+    background: url(../images/codeit/codeit-bg.jpg) no-repeat center center fixed;
+    background-size: cover;
+    .container-mensagem {
+      color: mat-color($app-accent, 50);
+    }
+
+    .container-form {
+      background-color: mat-color($app-accent, 50);
+      .formLogin {
+        button {
+          color: mat-color($app-accent, 50);
+          background-color: mat-color($app-accent, 800);
+
+          &:disabled {
+            background-color: mat-color($app-accent, 300);
+          }
+        }
+      }
+    }
+  }
 }
