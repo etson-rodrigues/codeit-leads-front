@@ -32,7 +32,7 @@ describe('AutenticacaoService', () => {
     service.login(mockUserLogin).subscribe(response => {
       expect(response.body!.data.email).withContext('Email deve ser o mesmo do request').toBe(mockLoginResponse.data.email);
       expect(response.body!.data.accessToken).withContext('Deve retornar um token').toBeTruthy();
-      expect(['Administrador', 'Operador']).withContext('Tipo de acesso deve ser Administrador ou Operador').toContain(response.body!.data.accessType);
+      expect(['Administrador', 'Operador']).withContext('Tipo de acesso deve ser Administrador ou Operador').toContain(response.body!.data.profile.type);
       expect(response.status).withContext('Status deve ser 201').toBe(201);
     });
 
@@ -64,5 +64,19 @@ describe('AutenticacaoService', () => {
     expect(req.request.method).withContext('Método da requisição deve ser POST').toEqual('POST');
 
     req.error(errorEvent, { status, statusText });
+  });
+
+  it('[CIT-5682] deve definir variável de dados do usuário após login', () => {
+    expect(service['_loginInfo']).withContext('Variável _loginInfo deve inicializar indefinida').toBeUndefined();
+    service.setLoginInfo(mockLoginResponse);
+    expect(service['_loginInfo']).withContext('Variável _loginInfo deve ser preenchida após chamar a função setLoginInfo').toBe(mockLoginResponse.data);
+  });
+
+  it('[CIT-5682] deve retornar dados do usuário logado', () => {
+    expect(service['_loginInfo']).withContext('Variável _loginInfo deve inicializar indefinida').toBeUndefined();
+    service.setLoginInfo(mockLoginResponse);
+    expect(service['_loginInfo']).withContext('Variável _loginInfo deve ser preenchida após chamar a função setLoginInfo').toBe(mockLoginResponse.data);
+
+    expect(service.getLoginInfo()).withContext('Deve retornar dados do usuário logado').toBeDefined();
   });
 });

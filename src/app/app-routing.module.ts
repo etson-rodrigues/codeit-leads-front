@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/auth/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -10,7 +11,13 @@ export const routes: Routes = [
   },
   {
     path: 'consulta-processos',
-    loadChildren: () => import('./view/consulta-processos/consulta-processos.module').then(m => m.ConsultaProcessosModule)
+    loadChildren: () => import('./view/consulta-processos/consulta-processos.module').then(m => m.ConsultaProcessosModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'cadastro-usuario',
+    loadChildren: () => import('./view/cadastro-usuario/cadastro-usuario.module').then(m => m.CadastroUsuarioModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'seletor-temas',

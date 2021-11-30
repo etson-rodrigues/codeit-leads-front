@@ -19,7 +19,7 @@ describe('LoginComponent', () => {
   let messageTrackerService: any;
 
   beforeEach(waitForAsync(() => {
-    const autenticacaoServiceSpy = jasmine.createSpyObj('AutenticacaoService', ['login']);
+    const autenticacaoServiceSpy = jasmine.createSpyObj('AutenticacaoService', ['login', 'setLoginInfo']);
     const messageTrackerServiceSpy = jasmine.createSpyObj('MessageTrackerService', ['subscribeError']);
 
     TestBed.configureTestingModule({

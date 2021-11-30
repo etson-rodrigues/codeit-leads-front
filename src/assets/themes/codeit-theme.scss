@@ -85,6 +85,7 @@ $app-primary-color: (
   // Close
   700: #043957,
   // Very close
+  750: #0076a6,
   800: #1565c0,
   // Very very Close
   900: #0d47a1,
@@ -192,6 +193,58 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
             background-color: mat-color($app-accent, 300);
           }
         }
+      }
+    }
+  }
+
+  // header
+  .container-header {
+    .mat-toolbar {
+      background-color: mat-color($app-primary, 750);
+      color: mat-color($app-accent, 50);
+      button {
+        background-color: mat-color($app-primary, 750);
+        color: mat-color($app-accent, 50);
+        &:hover {
+          color: mat-color($app-primary, 0.8);
+        }
+      }
+      .container-menu-logo {
+        #logo {
+          background-image: url(../images/codeit/codeit-logo.png);
+          min-width: 180px;
+          min-height: 55px;
+          background-size: cover;
+          background-repeat: none;
+        }
+      }
+    }
+  }
+
+  // footer
+  .container-footer {
+    background-color: mat-color($app-primary, 750);
+    .mensagem {
+      color: mat-color($app-accent, 50);
+    }
+  }
+
+  // sidenav
+  .container-sidenav {
+    background-color: mat-color($app-primary, 750);
+    color: mat-color($app-accent, 50);
+
+    .closeSidenavButton {
+      background-color: mat-color($app-primary, 750);
+      color: mat-color($app-accent, 50);
+      &:hover {
+        color: mat-color($app-primary, 0.8);
+      }
+    }
+
+    .mat-nav-list {
+      .mat-list-item {
+        color: mat-color($app-accent, 50);
       }
     }
   }

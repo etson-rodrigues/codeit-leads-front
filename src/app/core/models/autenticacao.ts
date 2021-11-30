@@ -1,9 +1,12 @@
 import { AbstractResponse } from "./comum/abstract-response";
 
-interface Autenticacao {
+export interface Autenticacao {
   email: string;
   accessToken: string;
-  accessType: string;
+  profile: {
+    type: string,
+    access: string[]
+  }
 }
 
 export interface LoginResponse extends AbstractResponse<Autenticacao>{}

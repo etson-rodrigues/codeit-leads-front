@@ -1,0 +1,13 @@
+<section class="container-sidenav" *ngIf="accessData">
+  <button class="closeSidenavButton" (click)="toggleSidenav()">
+    <i class="fas fa-times icon-md-24" aria-hidden="true"></i>
+  </button>
+  <div class="user-info">
+    <h2>{{accessData.email}}</h2>
+    <p>{{accessData.profile.type}}</p>
+  </div>
+
+  <mat-nav-list>
+    <a mat-list-item (click)="toggleSidenav()" *ngFor="let access of accessData.profile.access" routerLink="/{{access}}">{{access}}</a>
+  </mat-nav-list>
+</section>

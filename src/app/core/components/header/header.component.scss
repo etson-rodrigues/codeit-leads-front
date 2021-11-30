@@ -1,0 +1,17 @@
+.container-header {
+  .mat-toolbar {
+    height: 5rem;
+    padding: 0 5rem;
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      border: none;
+    }
+
+    .container-menu-logo {
+      display: flex;
+      gap: 2rem;
+    }
+  }
+}

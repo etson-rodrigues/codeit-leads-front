@@ -1,29 +1,29 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-import { ConsultaProcessosComponent } from './consulta-processos.component';
+import { CadastroUsuarioComponent } from './cadastro-usuario.component';
 
-describe('ConsultaProcessosComponent', () => {
-  let component: ConsultaProcessosComponent;
-  let fixture: ComponentFixture<ConsultaProcessosComponent>;
+describe('CadastroUsuarioComponent', () => {
+  let component: CadastroUsuarioComponent;
+  let fixture: ComponentFixture<CadastroUsuarioComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
-        ConsultaProcessosComponent
+        CadastroUsuarioComponent
       ],
       imports: [],
       providers: [],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(ConsultaProcessosComponent);
+        fixture = TestBed.createComponent(CadastroUsuarioComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
       });
   }));
 
-  it('[CIT-5680] deve criar', () => {
+  it('[CIT-5682] deve criar', () => {
     expect(component).toBeTruthy();
   });
 });
