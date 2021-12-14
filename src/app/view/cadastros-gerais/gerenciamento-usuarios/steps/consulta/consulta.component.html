@@ -1,0 +1,68 @@
+<div class="container-consulta">
+  <form class="container-form" [formGroup]="formConsulta">
+    <mat-form-field>
+      <mat-label>E-mail do usuário</mat-label>
+      <input matInput formControlName="email" placeholder="seuemail@email.com" />
+    </mat-form-field>
+
+    <div class="container-button">
+      <button class="search" mat-raised-button (click)="search()">Pesquisar</button>
+
+      <button class="cleanFilter" mat-raised-button (click)="cleanFilter()">Limpar Filtro</button>
+    </div>
+
+
+  </form>
+
+  <div class="next-step">
+    <button mat-button (click)="handleNextStep()">
+      <span>Cadastrar Novo Usuário</span>
+      <i class="fas fa-user-plus" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <div *ngIf="searchResult != null && searchResult.length == 0">
+    <p>Nenhum Usuário Encontrado</p>
+  </div>
+
+  <div [hidden]="!(searchResult && searchResult.length > 0)">
+
+    <table mat-table [dataSource]="searchResult" class="result-table mat-elevation-z8">
+
+      <ng-container matColumnDef="codigo">
+        <th mat-header-cell *matHeaderCellDef scope="col"> Código </th>
+        <td mat-cell *matCellDef="let element"> {{element.codigo}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef scope="col"> E-mail </th>
+        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="editar">
+        <th mat-header-cell *matHeaderCellDef scope="col"> Editar </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="edit(element)" #tooltip="matTooltip" matTooltip="Editar" class="icon-button">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="excluir">
+        <th mat-header-cell *matHeaderCellDef scope="col"> Excluir</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-stroked-button (click)="delete(element)" #tooltip="matTooltip" matTooltip="Excluir"
+            class="icon-button">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+
+
+</div>

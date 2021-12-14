@@ -15,8 +15,8 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'cadastro-usuario',
-    loadChildren: () => import('./view/cadastro-usuario/cadastro-usuario.module').then(m => m.CadastroUsuarioModule),
+    path: 'cadastros-gerais/usuarios',
+    loadChildren: () => import('./view/cadastros-gerais/gerenciamento-usuarios/gerenciamento-usuarios.module').then(m => m.GerenciamentoUsuariosModule),
     canActivate: [AuthGuard]
   },
   {

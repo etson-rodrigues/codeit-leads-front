@@ -1,23 +1,23 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-import { CadastroUsuarioComponent } from './cadastro-usuario.component';
+import { GerenciamentoUsuariosComponent } from './gerenciamento-usuarios.component';
 
-describe('CadastroUsuarioComponent', () => {
-  let component: CadastroUsuarioComponent;
-  let fixture: ComponentFixture<CadastroUsuarioComponent>;
+describe('GerenciamentoUsuariosComponent', () => {
+  let component: GerenciamentoUsuariosComponent;
+  let fixture: ComponentFixture<GerenciamentoUsuariosComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
-        CadastroUsuarioComponent
+        GerenciamentoUsuariosComponent
       ],
       imports: [],
       providers: [],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(CadastroUsuarioComponent);
+        fixture = TestBed.createComponent(GerenciamentoUsuariosComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
       });

@@ -1,0 +1,33 @@
+.container-consulta {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 1rem auto;
+
+  .container-form {
+    display: flex;
+    flex-direction: column;
+
+    .container-button {
+      display: flex;
+      gap: 2rem;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  .next-step{
+    display: flex;
+    justify-content: end;
+
+    span {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .result-table {
+    width: 100%;
+  }
+}

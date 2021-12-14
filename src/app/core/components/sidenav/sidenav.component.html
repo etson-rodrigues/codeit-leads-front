@@ -8,6 +8,10 @@
   </div>
 
   <mat-nav-list>
-    <a mat-list-item (click)="toggleSidenav()" *ngFor="let access of accessData.profile.access" routerLink="/{{access}}">{{access}}</a>
+    <a mat-list-item [matMenuTriggerFor]="menu" *ngIf="profileAccess()">Cadastros Gerais</a>
+    <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
+      <a mat-menu-item (click)="toggleSidenav()" routerLink="/cadastros-gerais/usuarios">Usuários</a>
+    </mat-menu>
+    <a mat-list-item (click)="toggleSidenav()" routerLink="/consulta-processos">Consulta de Processos</a>
   </mat-nav-list>
 </section>

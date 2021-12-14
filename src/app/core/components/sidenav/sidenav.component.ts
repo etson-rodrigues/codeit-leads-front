@@ -22,4 +22,8 @@ export class SidenavComponent implements OnInit {
   toggleSidenav() {
     this.openMenu.emit();
   }
+
+  profileAccess() {
+    return this.accessData.profile.type == 'Administrador';
+  }
 }

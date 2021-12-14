@@ -11,9 +11,5 @@ export function validationInput(formGroup: FormGroup, formControlName: string): 
 
   if (errors?.devemSerSenhasIguais) return 'A senha deve ser a mesma.';
 
-  if (errors?.errorMaioridade) return 'Menores de 18 não podem se cadastrar.';
-
   if (errors?.errorEmail) return 'O campo e-mail está inválido.';
-
-  if (errors?.errorCurrency) return 'Deve ser informada uma renda mensal válida, maior que 0 (zero).';
 }

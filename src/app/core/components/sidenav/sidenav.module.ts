@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { SidenavComponent } from './sidenav.component';
 
@@ -12,7 +13,8 @@ import { SidenavComponent } from './sidenav.component';
   imports: [
     CommonModule,
     RouterModule,
-    MatListModule
+    MatListModule,
+    MatMenuModule
   ]
 })
 export class SidenavModule { }

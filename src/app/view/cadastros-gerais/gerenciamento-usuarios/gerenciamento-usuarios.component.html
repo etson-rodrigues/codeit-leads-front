@@ -1,0 +1,32 @@
+<div class="gerenciamento-usuarios-title">
+  <button mat-button routerLink="/consulta-processos">
+    <i class="fas fa-chevron-left icon-md-24" aria-hidden="true"></i>
+  </button>
+  <h1>Gerenciamento de Usuários</h1>
+</div>
+<div class="container-gerenciamento-usuarios mat-elevation-z24">
+  <mat-stepper [orientation]="(stepperOrientation | async)!" linear #stepper>
+
+    <mat-step label="Consulta">
+      <app-consulta #consulta (nextStep)="setNextStep()"></app-consulta>
+    </mat-step>
+
+    <mat-step [stepControl]="cadastro.formCadastro" label="Cadastro">
+      <app-cadastro #cadastro (isRegistered)="getIsRegistered($event)" (previousStep)="setPreviousStep()">
+      </app-cadastro>
+    </mat-step>
+
+    <mat-step label="Resumo">
+      <app-resumo #resumo (isFinished)="getIsFinished($event)"></app-resumo>
+    </mat-step>
+
+    <ng-template matStepperIcon="edit">
+      <mat-icon>done</mat-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="number">
+      <mat-icon>more_horiz</mat-icon>
+    </ng-template>
+
+  </mat-stepper>
+</div>

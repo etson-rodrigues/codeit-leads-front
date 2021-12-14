@@ -1,0 +1,15 @@
+.container-form-cadastro {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  margin: 1rem auto;
+
+  .container-button {
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      margin: 0 0.5rem;
+    }
+  }
+}

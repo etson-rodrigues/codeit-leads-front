@@ -1,0 +1,36 @@
+.container-resumo {
+  width: 50%;
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+
+  .message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .user-data {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+
+    span {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  .new-search {
+    span {
+      margin-right: 0.5rem;
+    }
+  }
+}
