@@ -8,10 +8,13 @@
   </div>
 
   <mat-nav-list>
-    <a mat-list-item [matMenuTriggerFor]="menu" *ngIf="profileAccess()">Cadastros Gerais</a>
-    <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
+    <a mat-list-item [matMenuTriggerFor]="cadastro" *ngIf="profileAccess()">Cadastros Gerais</a>
+    <mat-menu #cadastro="matMenu" yPosition="below" xPosition="before">
       <a mat-menu-item (click)="toggleSidenav()" routerLink="/cadastros-gerais/usuarios">Usuários</a>
     </mat-menu>
-    <a mat-list-item (click)="toggleSidenav()" routerLink="/consulta-processos">Consulta de Processos</a>
+    <a mat-list-item [matMenuTriggerFor]="processosjudiciais" *ngIf="profileAccess()">Processos Judiciais</a>
+    <mat-menu #processosjudiciais="matMenu" yPosition="below" xPosition="before">
+      <a mat-menu-item (click)="toggleSidenav()" routerLink="/processos-judiciais/consulta-geral">Consulta Geral</a>
+    </mat-menu>
   </mat-nav-list>
 </section>

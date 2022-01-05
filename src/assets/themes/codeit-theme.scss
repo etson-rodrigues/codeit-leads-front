@@ -268,7 +268,7 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
   }
 
   // consulta - gerenciamento usuarios
-  .container-consulta {
+  .container-consulta-usuario {
     .container-form {
       .container-button {
         .search {
@@ -292,6 +292,29 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
     }
     .new-search {
       color: mat-color($app-accent, 800);
+    }
+  }
+
+  // consulta de processos
+  .container-consulta-processos {
+    background-color: mat-color($app-accent, 50);
+    .container-consulta {
+      .form {
+        .container-button {
+          .search {
+            color: mat-color($app-accent, 50);
+            background-color: mat-color($app-accent, 800);
+          }
+          .cleanFilter {
+            background-color: mat-color($app-accent, 300);
+          }
+        }
+      }
+      .result-table {
+        .mat-header-cell {
+          color: mat-color($app-accent, 800);
+        }
+      }
     }
   }
 }

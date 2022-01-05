@@ -10,8 +10,8 @@ export const routes: Routes = [
       import('./view/login/login.module').then(m => m.LoginModule),
   },
   {
-    path: 'consulta-processos',
-    loadChildren: () => import('./view/consulta-processos/consulta-processos.module').then(m => m.ConsultaProcessosModule),
+    path: 'processos-judiciais/consulta-geral',
+    loadChildren: () => import('./view/processos-judiciais/consulta-geral/consulta-processos.module').then(m => m.ConsultaProcessosModule),
     canActivate: [AuthGuard]
   },
   {

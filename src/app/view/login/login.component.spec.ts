@@ -8,7 +8,7 @@ import { routes } from 'src/app/app-routing.module';
 import { mockLoginResponse } from 'src/app/core/mocks/data/autenticacao-mock';
 import { AutenticacaoService } from 'src/app/core/services/autenticacao/autenticacao.service';
 import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
-import { ConsultaProcessosModule } from '../consulta-processos/consulta-processos.module';
+import { ConsultaProcessosModule } from '../processos-judiciais/consulta-geral/consulta-processos.module';
 import { LoginComponent } from './login.component';
 import { LoginModule } from './login.module';
 

@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
           this._messageTrackerService.subscribeError(error.error);
         },
         complete: () => {
-          this._router.navigate(['consulta-processos']);
+          this._router.navigate(['processos-judiciais/consulta-geral']);
         },
       });
   }
