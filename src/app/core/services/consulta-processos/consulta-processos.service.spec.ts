@@ -37,7 +37,7 @@ describe('ConsultaProcessosService', () => {
     req.flush(mockConsultaProcessosResponse);
   });
 
-  it('[CIT-5736] deve retornar retornar erro caso consulta dos processos falhar', () => {
+  it('[CIT-5736] deve retornar erro caso consulta dos processos falhar', () => {
     const razaoSocial = 'teste';
     const pageNumber = 1;
     const pageSize = 3;

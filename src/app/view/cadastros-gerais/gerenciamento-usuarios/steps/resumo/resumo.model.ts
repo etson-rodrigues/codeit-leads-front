@@ -3,4 +3,5 @@ export interface CadastroUsuarioResumo {
   perfil: {
     descricao: string
   }
+  status: string
 }

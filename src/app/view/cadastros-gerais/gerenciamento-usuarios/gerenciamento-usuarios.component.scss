@@ -1,3 +1,5 @@
+@import "../../../../assets/variaveis.scss";
+
 .gerenciamento-usuarios-title {
   height: 3rem;
   display: flex;
@@ -14,5 +16,17 @@
 
   ::ng-deep .mat-step-header {
     pointer-events: none;
+  }
+}
+
+@media screen and (max-width: $desktop-medium) {
+  .container-gerenciamento-usuarios {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: $desktop-base) {
+  .container-gerenciamento-usuarios {
+    width: 95%;
   }
 }

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
-import { CadastroUsuarioResponse } from 'src/app/core/models/cadastro-usuario';
 import { ResumoService } from 'src/app/core/services/resumo/resumo.service';
 import { CadastroUsuarioResumo } from './resumo.model';
 
@@ -11,13 +10,15 @@ import { CadastroUsuarioResumo } from './resumo.model';
   styleUrls: ['./resumo.component.scss']
 })
 export class ResumoComponent implements OnInit {
-
   userData: CadastroUsuarioResumo = {
     email: '',
     perfil: {
       descricao: ''
-    }
+    },
+    status: ''
   };
+
+  isEdited: boolean = false;
 
   @Output() isFinished: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -25,14 +26,18 @@ export class ResumoComponent implements OnInit {
 
   ngOnInit(): void {
     this._resumoService.getValues.subscribe(data => {
-      Object.entries(data).map(() => {
+      Object.entries(data).forEach(() => {
         return this.userData = {
-          email: data.data.email,
+          email: data.email,
           perfil: {
-            descricao: data.data.perfil.descricao
-          }
+            descricao: data.perfil.descricao
+          },
+          status: data.ativo ? 'Ativo' : 'Inativo'
         }
       })
+    });
+    this._resumoService.getIsEditing.subscribe(data => {
+      return this.isEdited = data;
     })
   }
 

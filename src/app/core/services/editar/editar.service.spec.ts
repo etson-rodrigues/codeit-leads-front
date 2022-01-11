@@ -1,22 +1,22 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ResumoService } from './resumo.service';
+import { EditarService } from './editar.service';
 
-describe('ResumoService', () => {
-  let service: ResumoService;
+describe('EditarService', () => {
+  let service: EditarService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ResumoService);
+    service = TestBed.inject(EditarService);
   });
 
-  it('[CIT-5693] deve ser criado', () => {
+  it('[CIT-5694] deve ser criado', () => {
     expect(service).toBeTruthy();
   });
 
-  it('[CIT-5693] deve chamar getValues quando for chamado a função setValues', () => {
+  it('[CIT-5694] deve chamar getValues quando for chamado a função setValues', () => {
     spyOn(service.getValues, 'emit');
-    service.setValues({}, false);
+    service.setValues(true);
     expect(service.getValues.emit).withContext('Deve chamar função getValues.emit uma vez').toHaveBeenCalledTimes(1);
   });
 });

@@ -11,7 +11,7 @@ import { MessageTrackerService } from 'src/app/core/services/message-tracker/mes
 import { validationInput } from 'src/app/core/validators/error-input';
 import { formatarData } from 'src/app/shared/utils/formatarData';
 import { ConsultaProcessosView } from './consulta-processos.model';
-import { CadastroUsuarioResponseData } from 'src/app/core/models/consulta-processos';
+import { ConsultaProcessosResponseData } from 'src/app/core/models/consulta-processos';
 import { Uf } from 'src/app/shared/enums/uf.enum';
 
 @Component({
@@ -55,7 +55,7 @@ export class ConsultaProcessosComponent implements OnInit {
         .subscribe(
           {
             next: (response) => {
-              this.searchResult = (response.data.map((item: CadastroUsuarioResponseData) => {
+              this.searchResult = (response.data.map((item: ConsultaProcessosResponseData) => {
                 return {
                   nup: item.numeroUnicoProtocolo,
                   uf: Uf[Number(item.uf.codigo)],
@@ -89,7 +89,7 @@ export class ConsultaProcessosComponent implements OnInit {
       .subscribe(
         {
           next: (response) => {
-            this.searchResult = (response.data.map((item: CadastroUsuarioResponseData) => {
+            this.searchResult = (response.data.map((item: ConsultaProcessosResponseData) => {
               return {
                 nup: item.numeroUnicoProtocolo,
                 uf: item.uf.descricao,

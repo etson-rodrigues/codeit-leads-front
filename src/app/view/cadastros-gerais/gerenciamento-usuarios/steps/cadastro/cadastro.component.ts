@@ -14,6 +14,7 @@ import { validationInput } from 'src/app/core/validators/error-input';
 import { inputFocus } from 'src/app/shared/utils/inputFocus';
 import { CadastroUsuarioRequest } from './cadastro.model';
 import { ResumoService } from 'src/app/core/services/resumo/resumo.service';
+import { EditarService } from 'src/app/core/services/editar/editar.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -23,26 +24,30 @@ import { ResumoService } from 'src/app/core/services/resumo/resumo.service';
 export class CadastroComponent implements OnInit {
   formCadastro!: FormGroup;
   perfis: Perfil[] = [];
+  userID: number = 0;
+  hidePassword: boolean = true;
+  hideConfirmPassword: boolean = true;
+  listRef: any[] = [];
 
   @ViewChild('formDirective') formDirective!: NgForm;
-
   @ViewChild('emailRef') emailRef!: ElementRef;
   @ViewChild('senhaRef') senhaRef!: ElementRef;
   @ViewChild('confirmarSenhaRef') confirmarSenhaRef!: ElementRef;
   @ViewChild('perfilRef') perfilRef!: MatSelect;
-  listRef: any[] = [];
 
   @Output() isRegistered: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() isEditing: boolean = false;
 
   constructor(
     private _formBuilder: FormBuilder,
     private _cadastroUsuariosService: CadastroUsuariosService,
     private _perfisService: PerfisService,
+    private _resumoService: ResumoService,
+    private _editarService: EditarService,
     private _spinner: NgxSpinnerService,
     private _changeDetector: ChangeDetectorRef,
-    private _messageTrackerService: MessageTrackerService,
-    private _resumoService: ResumoService
+    private _messageTrackerService: MessageTrackerService
   ) {
     this.formCadastro = this._formBuilder.group({
       email: ['', [Validators.required, emailValidator, Validators.maxLength(50)]],
@@ -55,13 +60,21 @@ export class CadastroComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.populatePerfilSelect();
+    this.fillPerfilSelect();
+    this.fillFormEditing();
   }
 
-  hidePassword: boolean = true;
-  hideConfirmPassword: boolean = true;
+  fillFormEditing() {
+    this._editarService.getValues.subscribe(data => {
+      Object.entries(data).forEach(() => {
+        this.userID = data.id;
+        this.formCadastro.controls.email.patchValue(data.email);
+        this.formCadastro.controls.perfil.patchValue(data.perfil.codigo);
+      });
+    });
+  }
 
-  populatePerfilSelect() {
+  fillPerfilSelect() {
     this._perfisService
       .getPerfis()
       .subscribe(
@@ -82,19 +95,20 @@ export class CadastroComponent implements OnInit {
         email: this.formCadastro.controls.email.value,
         senha: this.formCadastro.controls.confirmarSenha.value,
         perfil: {
-          codigo: this.formCadastro.controls.perfil.value.codigo
+          codigo: this.formCadastro.controls.perfil.value
         }
       };
 
       this._spinner.show();
       this._cadastroUsuariosService
-        .save(data)
+        .save(data, this.isEditing, this.userID)
         .pipe(finalize(() => this._spinner.hide()))
         .subscribe(
           {
             next: (response) => {
               this.isRegistered.emit(true);
-              this._resumoService.setValues(response.body!)
+              this.userID = 0;
+              this._resumoService.setValues(response, this.isEditing);
             },
             error: (error) => {
               this._messageTrackerService.subscribeError(error.error);

@@ -173,6 +173,27 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
     }
   }
 
+  // dialog
+  .container-dialog {
+    .mat-dialog-title {
+      color: mat-color($app-accent, 800);
+    }
+
+    .mat-dialog-content {
+    }
+
+    .mat-dialog-actions {
+      .cancel {
+        background-color: mat-color($app-accent, 300);
+      }
+      .confirm {
+        color: mat-color($app-accent, 50);
+        background-color: mat-color($app-accent, 800);
+      }
+    }
+  }
+
+
   // tela login
   .container-login {
     background: url(../images/codeit/codeit-bg.jpg) no-repeat center center fixed;
@@ -282,6 +303,15 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
     }
     .next-step {
       color: mat-color($app-accent, 800);
+    }
+    .result-table {
+      .mat-header-cell {
+        color: mat-color($app-accent, 800);
+      }
+      .mat-column-editar,
+      .mat-column-desativar {
+        color: mat-color($app-accent, 800);
+      }
     }
   }
 

@@ -8,8 +8,13 @@
     display: flex;
     justify-content: space-between;
 
-    span {
-      margin: 0 0.5rem;
+    button {
+      .mat-icon {
+        vertical-align: baseline;
+      }
+      span {
+        margin: 0 0.5rem;
+      }
     }
   }
 }

@@ -18,16 +18,44 @@
     }
   }
 
-  .next-step{
+  .next-step {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 
-    span {
-      margin-right: 0.5rem;
+    button {
+      .mat-icon {
+        vertical-align: baseline;
+      }
+
+      span {
+        margin-right: 0.5rem;
+      }
     }
   }
 
   .result-table {
     width: 100%;
+
+    .mat-header-cell {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .mat-column-email {
+      width: 40%;
+    }
+
+    .mat-column-perfil {
+      width: 30%;
+    }
+
+    .mat-column-ativo {
+      width: 16%;
+    }
+
+    .mat-column-editar,
+    .mat-column-desativar {
+      width: 7%;
+    }
   }
 }

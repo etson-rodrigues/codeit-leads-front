@@ -1,4 +1,4 @@
-export interface CadastroUsuarioResponseData {
+export interface ConsultaProcessosResponseData {
   numeroUnicoProtocolo: string,
   uf: {
     codigo: string,
@@ -24,5 +24,5 @@ export interface ConsultaProcessosResponse {
   totalRecords: number,
   nextPage: string | null,
   previousPage: string | null,
-  data: CadastroUsuarioResponseData[]
+  data: ConsultaProcessosResponseData[]
 }

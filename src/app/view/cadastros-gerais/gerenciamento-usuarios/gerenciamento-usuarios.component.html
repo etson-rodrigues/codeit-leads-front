@@ -5,14 +5,16 @@
   <h1>Gerenciamento de Usuários</h1>
 </div>
 <div class="container-gerenciamento-usuarios mat-elevation-z24">
-  <mat-stepper [orientation]="(stepperOrientation | async)!" linear #stepper>
+  <mat-stepper [orientation]="(stepperOrientation | async)!" #stepper>
 
     <mat-step label="Consulta">
-      <app-consulta #consulta (nextStep)="setNextStep()"></app-consulta>
+      <app-consulta #consulta (nextStep)="setNextStep()" (isEditing)="setIsEditing($event)"
+        (isUpdatedStatus)="getIsUpdatedStatus($event)"></app-consulta>
     </mat-step>
 
     <mat-step [stepControl]="cadastro.formCadastro" label="Cadastro">
-      <app-cadastro #cadastro (isRegistered)="getIsRegistered($event)" (previousStep)="setPreviousStep()">
+      <app-cadastro #cadastro (isRegistered)="getIsRegistered($event)" (previousStep)="setPreviousStep()"
+        [isEditing]="isEditing">
       </app-cadastro>
     </mat-step>
 

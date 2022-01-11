@@ -11,11 +11,12 @@ import { CadastroComponent } from './steps/cadastro/cadastro.component';
   styleUrls: ['./gerenciamento-usuarios.component.scss']
 })
 export class GerenciamentoUsuariosComponent implements OnInit {
+  isEditing: boolean = false;
+  isNewSearch: boolean = false;
+  stepperOrientation!: Observable<StepperOrientation>;
 
   @ViewChild('stepper') private stepper!: MatStepper;
   @ViewChild('cadastro') private cadastro!: CadastroComponent;
-
-  stepperOrientation!: Observable<StepperOrientation>;
 
   constructor(private _breakpointObserver: BreakpointObserver) {
   }
@@ -26,10 +27,6 @@ export class GerenciamentoUsuariosComponent implements OnInit {
       .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
   }
 
-  newSearch(stepper: MatStepper) {
-    stepper.reset();
-  }
-
   getIsRegistered(isRegistered: boolean) {
     if (isRegistered) this.stepper.next();
   }
@@ -38,6 +35,16 @@ export class GerenciamentoUsuariosComponent implements OnInit {
     if (isFinished) {
       this.stepper.reset();
       this.cadastro.resetForm();
+    }
+  }
+
+  setIsEditing(isEditing: boolean) {
+    this.isEditing = isEditing;
+  }
+
+  getIsUpdatedStatus(IsUpdatedStatus: boolean) {
+    if (IsUpdatedStatus) {
+      this.stepper.selectedIndex = 2;
     }
   }
 

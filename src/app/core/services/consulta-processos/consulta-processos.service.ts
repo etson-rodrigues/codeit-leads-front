@@ -8,6 +8,7 @@ import { ConsultaProcessosResponse } from '../../models/consulta-processos';
 })
 export class ConsultaProcessosService {
   private _url: string = 'https://localhost:5001/api/';
+  private _urlMock: string = 'https://619f8da81ac52a0017ba48ed.mockapi.io/api/';
 
   constructor(private _http: HttpClient) { }
 
@@ -17,5 +18,6 @@ export class ConsultaProcessosService {
       .set('pageNumber', pageNumber)
       .set('pageSize', pageSize)
     return this._http.get<ConsultaProcessosResponse>(`${this._url}processos-judiciais`, { params });
+    //return this._http.get<ConsultaProcessosResponse>(`${this._urlMock}processos`);
   }
 }

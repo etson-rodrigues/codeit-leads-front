@@ -1,7 +1,9 @@
-<form class="container-form-cadastro" [formGroup]="formCadastro" (submit)="register()" (keydown.enter)="false" #formDirective="ngForm">
+<form class="container-form-cadastro" [formGroup]="formCadastro" (submit)="register()" (keydown.enter)="false"
+  #formDirective="ngForm">
   <mat-form-field>
     <mat-label>E-mail</mat-label>
-    <input matInput formControlName="email" placeholder="seuemail@email.com" id="email" (keyup.enter)="changeFocus()" #emailRef required />
+    <input matInput formControlName="email" placeholder="seuemail@email.com" id="email" (keyup.enter)="changeFocus()"
+      #emailRef required [readOnly]="isEditing" />
     <mat-error>{{validationInput('email')}}</mat-error>
   </mat-form-field>
 
@@ -26,7 +28,7 @@
   <mat-form-field>
     <mat-label>Perfil de Acesso</mat-label>
     <mat-select matInput formControlName="perfil" id="perfil" #perfilRef required>
-      <mat-option *ngFor="let perfil of perfis" [value]="perfil" (click)="changeFocus()">
+      <mat-option *ngFor="let perfil of perfis" [value]="perfil.codigo" (click)="changeFocus()">
         {{ perfil.descricao }}
       </mat-option>
     </mat-select>
@@ -34,13 +36,13 @@
   </mat-form-field>
 
   <div class="container-button">
-    <button mat-button type="button" (click)="handlePreviousStep()">
-      <i class="fas fa-chevron-left" aria-hidden="true"></i>
+    <button type="button" mat-button aria-label="Cancelar" (click)="handlePreviousStep()">
+      <mat-icon fontSet="fas" fontIcon="fa-chevron-left"></mat-icon>
       <span>Cancelar</span>
     </button>
-    <button mat-button type="submit">
-      <span>Cadastrar</span>
-      <i class="fas fa-chevron-right" aria-hidden="true"></i>
+    <button type="submit" mat-button aria-label="Cadastrar/Editar">
+      <span>{{isEditing ? 'Editar' : 'Cadastrar'}}</span>
+      <mat-icon fontSet="fas" fontIcon="fa-chevron-right"></mat-icon>
     </button>
   </div>
 </form>

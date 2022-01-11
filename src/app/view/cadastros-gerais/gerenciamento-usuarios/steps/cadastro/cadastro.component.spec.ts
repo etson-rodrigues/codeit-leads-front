@@ -1,6 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
@@ -42,7 +41,7 @@ describe('CadastroComponent', () => {
               return of(mockPerfisListResponse);
             }
           }
-        },
+        }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents()
@@ -142,16 +141,9 @@ describe('CadastroComponent', () => {
     fixture.detectChanges();
     expect(perfilInput!.valid).withContext('Campo perfil deve inicializar inválido').toBeFalsy();
 
-    const debugElement = fixture.debugElement;
-    const matSelect = debugElement.query(By.css('.mat-select-trigger')).nativeElement;
-    matSelect.click();
+    perfilInput!.setValue({ codigo: '001', descricao: 'Administrador' });
     fixture.detectChanges();
-    const matOption = debugElement.query(By.css('.mat-option')).nativeElement;
-    matOption.click();
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(perfilInput!.value.descricao).withContext('Campo perfil deve estar preenchido com Administrador').toBe('Administrador');
-    });
+    expect(perfilInput!.value.descricao).withContext('Campo perfil deve estar preenchido com Administrador').toBe('Administrador');
   });
 
   it('[CIT-5693] deve cadastrar novo usuário', fakeAsync(() => {
@@ -198,4 +190,37 @@ describe('CadastroComponent', () => {
     expect(component['_resumoService'].setValues).withContext('Não deve chamar função de envio dos dados do usuário ao gerar erro ao cadastrar usuário').toHaveBeenCalledTimes(0);
     expect(messageTrackerService.subscribeError).withContext('Deve abrir o messageTracker ao gerar erro ao cadastrar usuário').toHaveBeenCalledTimes(1);
   }));
+
+  it('[CIT-5694] deve preencher os dados do formulário caso for edição de usuário', () => {
+    const data = {
+      id: 1,
+      email: 'teste@email.com',
+      perfil: {
+        codigo: '001',
+        descricao: 'Administrador'
+      }
+    };
+    component['_editarService'].setValues(data);
+    component.fillFormEditing();
+    expect(component.formCadastro.controls.email.value).withContext('Campo e-mail deve ser preenchido').toEqual('teste@email.com');
+    expect(component.formCadastro.controls.perfil.value).withContext('Campo perfil deve ser preenchido').toEqual('001');
+  });
+
+  it('[CIT-5694] deve limpar campos do formulário', () => {
+    const emailInput = component.formCadastro.controls.email;
+    emailInput!.setValue('teste@email.com');
+    fixture.detectChanges();
+    component.resetForm();
+    expect(emailInput!.value).withContext('Campo e-mail deve ser nulo após resetar o formulário').toBeNull();
+  });
+
+  it('[CIT-5694] deve limpar campos do formulário caso usuário cancelar o novo cadastro', () => {
+    spyOn(component.previousStep, 'emit');
+    const emailInput = component.formCadastro.controls.email;
+    emailInput!.setValue('teste@email.com');
+    fixture.detectChanges();
+    component.handlePreviousStep();
+    expect(emailInput!.value).withContext('Campo e-mail deve ser nulo após resetar o formulário').toBeNull();
+    expect(component.previousStep.emit).withContext('Deve emitir evento de previousStep').toHaveBeenCalledTimes(1);
+  });
 });
