@@ -24,6 +24,6 @@ export class SidenavComponent implements OnInit {
   }
 
   profileAccess() {
-    return this.accessData.profile.type == 'Administrador';
+    return this.accessData.perfil.descricao == 'Administrador';
   }
 }

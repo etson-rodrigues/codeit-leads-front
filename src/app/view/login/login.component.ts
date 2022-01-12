@@ -53,9 +53,8 @@ export class LoginComponent implements OnInit {
       }))
       .subscribe({
         next: (response) => {
-          console.log(response);
           this._autenticacaoService.isLoggedIn = true;
-          this._autenticacaoService.setLoginInfo(response.body!);
+          this._autenticacaoService.setLoginInfo(response);
         },
         error: (error) => {
           this._messageTrackerService.subscribeError(error.error);

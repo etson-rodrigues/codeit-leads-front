@@ -4,7 +4,7 @@
   </button>
   <div class="user-info">
     <h2>{{accessData.email}}</h2>
-    <p>{{accessData.profile.type}}</p>
+    <p>{{accessData.perfil.descricao}}</p>
   </div>
 
   <mat-nav-list>
@@ -12,7 +12,7 @@
     <mat-menu #cadastro="matMenu" yPosition="below" xPosition="before">
       <a mat-menu-item (click)="toggleSidenav()" routerLink="/cadastros-gerais/usuarios">Usuários</a>
     </mat-menu>
-    <a mat-list-item [matMenuTriggerFor]="processosjudiciais" *ngIf="profileAccess()">Processos Judiciais</a>
+    <a mat-list-item [matMenuTriggerFor]="processosjudiciais">Processos Judiciais</a>
     <mat-menu #processosjudiciais="matMenu" yPosition="below" xPosition="before">
       <a mat-menu-item (click)="toggleSidenav()" routerLink="/processos-judiciais/consulta-geral">Consulta Geral</a>
     </mat-menu>

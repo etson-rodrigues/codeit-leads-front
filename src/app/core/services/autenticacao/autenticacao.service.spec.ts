@@ -30,10 +30,9 @@ describe('AutenticacaoService', () => {
     const statusText = 'Created';
 
     service.login(mockUserLogin).subscribe(response => {
-      expect(response.body!.data.email).withContext('Email deve ser o mesmo do request').toBe(mockLoginResponse.data.email);
-      expect(response.body!.data.accessToken).withContext('Deve retornar um token').toBeTruthy();
-      expect(['Administrador', 'Operador']).withContext('Tipo de acesso deve ser Administrador ou Operador').toContain(response.body!.data.profile.type);
-      expect(response.status).withContext('Status deve ser 201').toBe(201);
+      expect(response.data.email).withContext('Email deve ser o mesmo do request').toBe(mockLoginResponse.data.email);
+      expect(response.data.accessToken).withContext('Deve retornar um token').toBeTruthy();
+      expect(['Administrador', 'Operador']).withContext('Tipo de acesso deve ser Administrador ou Operador').toContain(response.data.perfil.descricao);
     });
 
     const req = http.expectOne(`${service["_url"]}login`);

@@ -4,5 +4,6 @@ export interface CadastroUsuarioRequest {
   perfil: {
     codigo: string
   },
-  ativo?: boolean
+  ativo: boolean,
+  redefinirSenha: boolean
 }

@@ -1,5 +1,5 @@
 import { CadastroUsuarioRequest } from "src/app/view/cadastros-gerais/gerenciamento-usuarios/steps/cadastro/cadastro.model"
-import { ConsultaUsuarioView } from "src/app/view/cadastros-gerais/gerenciamento-usuarios/steps/consulta/consulta.model"
+import { ConsultaUsuarioView } from "src/app/view/cadastros-gerais/gerenciamento-usuarios/steps/consulta/consulta.model";
 import { AtualizarStatusCadastroUsuario, CadastroUsuarioResponse, ConsultaUsuarioPaginateResponse } from "../../models/gerenciamento-usuarios"
 
 
@@ -8,7 +8,9 @@ export const mockCadastroUsuarioRequest: CadastroUsuarioRequest = {
   senha: "senhateste",
   perfil: {
     codigo: "002"
-  }
+  },
+  ativo: true,
+  redefinirSenha: true
 };
 
 export const mockCadastroUsuarioResponse: CadastroUsuarioResponse = {

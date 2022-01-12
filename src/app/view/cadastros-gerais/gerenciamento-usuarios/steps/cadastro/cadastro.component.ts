@@ -96,7 +96,9 @@ export class CadastroComponent implements OnInit {
         senha: this.formCadastro.controls.confirmarSenha.value,
         perfil: {
           codigo: this.formCadastro.controls.perfil.value
-        }
+        },
+        ativo: true,
+        redefinirSenha: true
       };
 
       this._spinner.show();

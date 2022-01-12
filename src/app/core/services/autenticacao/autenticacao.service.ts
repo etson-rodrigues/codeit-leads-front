@@ -8,7 +8,7 @@ import { Autenticacao, LoginResponse } from '../../models/autenticacao';
   providedIn: 'root'
 })
 export class AutenticacaoService {
-  private _url: string = 'https://619f8da81ac52a0017ba48ed.mockapi.io/api/';
+  private _url: string = 'https://localhost:5001/api/';
   private _loginInfo!: Autenticacao;
   isLoggedIn: boolean = false;
   redirectUrl: string | null = null;
@@ -16,7 +16,7 @@ export class AutenticacaoService {
   constructor(private _http: HttpClient) { }
 
   login(data: LoginRequest) {
-    return this._http.post<LoginResponse>(`${this._url}login`, data, { observe: 'response' });
+    return this._http.post<LoginResponse>(`${this._url}login`, data);
   }
 
   setLoginInfo(response: LoginResponse) {

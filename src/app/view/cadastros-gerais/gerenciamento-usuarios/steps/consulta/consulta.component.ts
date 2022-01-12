@@ -58,7 +58,7 @@ export class ConsultaComponent implements OnInit {
     this.emailInputValue = this.formConsulta.controls.email.value;
     this._spinner.show();
     this._cadastroUsuariosService
-      .get(this.emailInputValue, 1, 2)
+      .get(this.emailInputValue, 1, 10)
       .pipe(finalize(() => this._spinner.hide()))
       .subscribe(
         {
@@ -91,7 +91,7 @@ export class ConsultaComponent implements OnInit {
     const pageNumber = event.pageIndex + 1;
     this._spinner.show();
     this._cadastroUsuariosService
-      .get(this.emailInputValue, pageNumber, 2)
+      .get(this.emailInputValue, pageNumber, 10)
       .pipe(finalize(() => this._spinner.hide()))
       .subscribe(
         {
