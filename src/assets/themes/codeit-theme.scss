@@ -193,7 +193,6 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
     }
   }
 
-
   // tela login
   .container-login {
     background: url(../images/codeit/codeit-bg.jpg) no-repeat center center fixed;
@@ -205,6 +204,9 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
     .container-form {
       background-color: mat-color($app-accent, 50);
       .formLogin {
+        h1 {
+          color: mat-color($app-accent, 800);
+        }
         button {
           color: mat-color($app-accent, 50);
           background-color: mat-color($app-accent, 800);
@@ -216,6 +218,32 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
       }
     }
   }
+
+    // tela login/redefinir senha
+    .container-redefinir-senha {
+      background: url(../images/codeit/codeit-bg.jpg) no-repeat center center fixed;
+      background-size: cover;
+      .container-mensagem {
+        color: mat-color($app-accent, 50);
+      }
+
+      .container-form {
+        background-color: mat-color($app-accent, 50);
+        .form-redefinir-senha {
+          h1 {
+            color: mat-color($app-accent, 800);
+          }
+          button {
+            color: mat-color($app-accent, 50);
+            background-color: mat-color($app-accent, 800);
+
+            &:disabled {
+              background-color: mat-color($app-accent, 300);
+            }
+          }
+        }
+      }
+    }
 
   // header
   .container-header {
@@ -344,6 +372,21 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
         .mat-header-cell {
           color: mat-color($app-accent, 800);
         }
+      }
+    }
+  }
+
+  // redefinir senha
+  .redefinir-senha-title {
+    background-color: mat-color($app-primary, 700);
+    color: mat-color($app-accent, 50);
+  }
+
+  .container-redefinir-senha-usuario {
+    .form-redefinir-senha {
+      button {
+        color: mat-color($app-accent, 50);
+        background-color: mat-color($app-accent, 800);
       }
     }
   }

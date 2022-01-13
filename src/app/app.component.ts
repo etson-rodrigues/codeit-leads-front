@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
   }
 
   handleUserLogin() {
-    if ((this.currentUrl === '/login' || this.currentUrl === '/')) {
+    if ((this.currentUrl === '/login' || this.currentUrl === '/redefinir-senha' || this.currentUrl === '/')) {
       this.isSidenavOpen = false;
       return this.isLoggedIn = false;
     }

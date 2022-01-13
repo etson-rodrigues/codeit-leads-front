@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { AbstractControl, AbstractControlOptions, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { AbstractControlOptions, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs';
 
@@ -15,6 +15,7 @@ import { inputFocus } from 'src/app/shared/utils/inputFocus';
 import { CadastroUsuarioRequest } from './cadastro.model';
 import { ResumoService } from 'src/app/core/services/resumo/resumo.service';
 import { EditarService } from 'src/app/core/services/editar/editar.service';
+import { mustBeTheSame } from 'src/app/core/validators/same-password-validator';
 
 @Component({
   selector: 'app-cadastro',
@@ -55,7 +56,7 @@ export class CadastroComponent implements OnInit {
       confirmarSenha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
       perfil: ['', [Validators.required]]
     }, {
-      validator: this.mustBeTheSame('senha', 'confirmarSenha')
+      validator: mustBeTheSame('senha', 'confirmarSenha')
     } as AbstractControlOptions);
   }
 
@@ -127,23 +128,6 @@ export class CadastroComponent implements OnInit {
 
   resetForm() {
     this.formDirective.resetForm();
-  }
-
-  mustBeTheSame(senha: string, confirmarSenha: string) {
-    return (controls: AbstractControl) => {
-      const controlSenha = controls.get(senha);
-      const controlConfirmarSenha = controls.get(confirmarSenha);
-
-      if (controlConfirmarSenha?.errors && !controlConfirmarSenha.errors.devemSerSenhasIguais) {
-        return;
-      }
-
-      if (controlSenha?.value !== controlConfirmarSenha?.value) {
-        controlConfirmarSenha?.setErrors({ devemSerSenhasIguais: true });
-      } else {
-        controlConfirmarSenha?.setErrors(null);
-      }
-    }
   }
 
   validationInput(formControlName: string): string | undefined {

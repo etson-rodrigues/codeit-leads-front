@@ -42,4 +42,4 @@ export interface AtualizarStatusCadastroUsuario {
   status: boolean
 }
 
-export interface CadastroUsuarioResponse extends AbstractResponse<CadastroUsuario> { }
+export interface CadastroUsuarioResponse extends AbstractResponse<ConsultaUsuarioResponseData> { }

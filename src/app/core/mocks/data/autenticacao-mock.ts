@@ -8,6 +8,7 @@ export const mockUserLogin: LoginRequest = {
 
 export const mockLoginResponse: LoginResponse = {
   data: {
+    id: 1,
     email: "teste@email.com",
     accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQHRlc3RlLmNvbSIsIm5iZiI6MTYzNzg0NDc3NywiZXhwIjoxNjM3ODUxOTc3LCJpYXQiOjE2Mzc4NDQ3Nzd9.GOrx8lhhi8gty2M4N_fShDQc-ZxFtSeONIjaNAHbLQw",
     redefinirSenha: false,

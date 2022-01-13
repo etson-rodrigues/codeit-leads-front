@@ -55,13 +55,13 @@ export class LoginComponent implements OnInit {
         next: (response) => {
           this._autenticacaoService.isLoggedIn = true;
           this._autenticacaoService.setLoginInfo(response);
+          response.data.redefinirSenha
+            ? this._router.navigate(['redefinir-senha'])
+            : this._router.navigate(['processos-judiciais/consulta-geral']);
         },
         error: (error) => {
           this._messageTrackerService.subscribeError(error.error);
-        },
-        complete: () => {
-          this._router.navigate(['processos-judiciais/consulta-geral']);
-        },
+        }
       });
   }
 }

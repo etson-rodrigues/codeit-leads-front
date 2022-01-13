@@ -8,6 +8,7 @@ interface AcaoSeguranca {
   }
 }
 export interface Autenticacao {
+  id: number,
   email: string,
   accessToken: string,
   redefinirSenha: boolean,

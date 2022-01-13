@@ -15,6 +15,7 @@ export const mockCadastroUsuarioRequest: CadastroUsuarioRequest = {
 
 export const mockCadastroUsuarioResponse: CadastroUsuarioResponse = {
   data: {
+    id: 1,
     email: "teste@email.com",
     senha: "AAx32wpLE2gbWcOfJJg9+st4mGWxk08BaeqI4bVukBNf3TemM22ePksVgOmRk3EGuQ==",
     perfil: {

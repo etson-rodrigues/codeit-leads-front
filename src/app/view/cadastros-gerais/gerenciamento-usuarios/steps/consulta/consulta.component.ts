@@ -140,7 +140,8 @@ export class ConsultaComponent implements OnInit {
     const dialogRef = this._dialog.open(DialogComponent, {
       data: {
         titulo: `DESEJA ${data.status ? "REATIVAR" : "DESATIVAR"} O USUÁRIO?`,
-        mensagem: data.email
+        mensagem: data.email,
+        tipo: 'question'
       }
     });
     dialogRef.afterClosed().subscribe((result) => {

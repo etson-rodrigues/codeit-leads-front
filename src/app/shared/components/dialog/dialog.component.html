@@ -2,7 +2,7 @@
   <h1 mat-dialog-title>{{data.titulo}}</h1>
   <div mat-dialog-content>{{data.mensagem}}</div>
   <div mat-dialog-actions>
-    <button class="confirm" mat-button [mat-dialog-close]="true">Confirmar</button>
-    <button class="cancel" mat-button [mat-dialog-close]="false">Cancelar</button>
+    <button class="confirm" mat-button [mat-dialog-close]="true">{{setDialogType() ? 'Confirmar' : 'Continuar'}}</button>
+    <button class="cancel" mat-button [mat-dialog-close]="false" *ngIf="setDialogType()">Cancelar</button>
   </div>
 </div>

@@ -1,0 +1,25 @@
+@import "../../../assets/variaveis.scss";
+
+.redefinir-senha-title {
+  height: 3rem;
+  display: flex;
+  align-items: center;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.container-redefinir-senha-usuario {
+  width: 40%;
+  margin: 2rem auto;
+  padding: 3rem;
+
+  .form-redefinir-senha{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: auto;
+  }
+}
