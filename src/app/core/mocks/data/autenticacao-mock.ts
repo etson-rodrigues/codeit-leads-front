@@ -32,3 +32,10 @@ export const mockLoginResponse: LoginResponse = {
     }
   }
 }
+
+export const mockLoginResponseRedefinirSenha: LoginResponse = {
+  data: {
+  ...mockLoginResponse.data,
+  redefinirSenha: true
+  }
+}

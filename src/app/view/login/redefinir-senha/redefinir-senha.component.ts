@@ -16,6 +16,10 @@ import { inputFocus } from 'src/app/shared/utils/inputFocus';
 import { CadastroUsuarioRequest } from 'src/app/view/cadastros-gerais/gerenciamento-usuarios/steps/cadastro/cadastro.model';
 import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
 import { LoginRequest } from '../login.model';
+import { CookiesService } from 'src/app/core/services/cookies/cookies.service';
+import { ChavesCookies } from 'src/app/core/enums/cookie.enum';
+import { LocalStorageService } from 'src/app/core/services/local-storage/local-storage.service';
+import { ChavesLocalStorage } from 'src/app/core/enums/local-storage.enum';
 
 @Component({
   selector: 'app-redefinir-senha',
@@ -36,15 +40,17 @@ export class RedefinirSenhaComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _cadastroUsuariosService: CadastroUsuariosService,
     private _autenticacaoService: AutenticacaoService,
+    private _cookieService: CookiesService,
+    private _localStorageService: LocalStorageService,
     private _router: Router,
     private _dialog: MatDialog,
-    private _spinner: NgxSpinnerService,
+    private _spinnerService: NgxSpinnerService,
     private _changeDetector: ChangeDetectorRef,
     private _messageTrackerService: MessageTrackerService
   ) { }
 
   ngOnInit(): void {
-    this.loginInfo = this._autenticacaoService.getLoginInfo();
+    this.loginInfo = JSON.parse(this._localStorageService.getItemLocalStorage(ChavesLocalStorage.UserInfo) || '{}');
 
     this.formRedefinirSenha = this._formBuilder.group({
       senha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
@@ -66,10 +72,10 @@ export class RedefinirSenhaComponent implements OnInit {
         redefinirSenha: false
       };
 
-      this._spinner.show();
+      this._spinnerService.show();
       this._cadastroUsuariosService
         .save(data, true, this.loginInfo.id)
-        .pipe(finalize(() => this._spinner.hide()))
+        .pipe(finalize(() => this._spinnerService.hide()))
         .subscribe(
           {
             next: () => {
@@ -83,24 +89,22 @@ export class RedefinirSenhaComponent implements OnInit {
     }
   }
 
-
-
   login() {
     const loginData: LoginRequest = {
       email: this.loginInfo.email,
       senha: this.formRedefinirSenha.controls.confirmarSenha.value
     };
 
-    this._spinner.show();
+    this._spinnerService.show();
     this._autenticacaoService
       .login(loginData)
       .pipe(finalize(() => {
-        this._spinner.hide();
+        this._spinnerService.hide();
       }))
       .subscribe({
         next: (response) => {
-          this._autenticacaoService.isLoggedIn = true;
-          this._autenticacaoService.setLoginInfo(response);
+          this._cookieService.setCookie(ChavesCookies.Token, response.data.accessToken, 240);
+          this._localStorageService.setItemLocalStorage(JSON.stringify(response.data), ChavesLocalStorage.UserInfo);
           this.openDialog();
         },
         error: (error) => {

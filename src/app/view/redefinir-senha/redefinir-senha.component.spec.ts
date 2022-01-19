@@ -21,7 +21,7 @@ describe('RedefinirSenhaComponent', () => {
   let messageTrackerService: any;
 
   beforeEach(waitForAsync(() => {
-    const autenticacaoServiceSpy = jasmine.createSpyObj('AutenticacaoService', ['getLoginInfo']);
+    const autenticacaoServiceSpy = jasmine.createSpyObj('AutenticacaoService', ['']);
     const cadastroUsuariosServiceSpy = jasmine.createSpyObj('CadastroUsuariosService', ['save']);
     const messageTrackerServiceSpy = jasmine.createSpyObj('MessageTrackerService', ['subscribeError']);
 

@@ -35,7 +35,11 @@ export class CookiesService {
 
   deleteCookie(cookieName: string) {
     if (this.getCookie(cookieName)) {
-      document.cookie = cookieName + "=" + "; expires=Thu, 01-Jan-70 00:00:01 GMT";
+      document.cookie = cookieName + "=" + ";path=/;expires=Thu, 01-Jan-70 00:00:01 GMT";
     }
+  }
+
+  hasItemCookie(cookieName: string): boolean {
+    return !!this.getCookie(cookieName);
   }
 }

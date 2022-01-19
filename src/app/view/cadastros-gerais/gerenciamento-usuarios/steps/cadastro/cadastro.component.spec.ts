@@ -223,4 +223,11 @@ describe('CadastroComponent', () => {
     expect(emailInput!.value).withContext('Campo e-mail deve ser nulo após resetar o formulário').toBeNull();
     expect(component.previousStep.emit).withContext('Deve emitir evento de previousStep').toHaveBeenCalledTimes(1);
   });
+
+  it('[CIT-5794] deve chamar função de foco e armazenar refs dos campos dos fomulários nas variáveis', () => {
+    fixture.detectChanges();
+    expect(component.listRef.length).withContext('Variável listRef deve inicializar um array vazio').toEqual(0);
+    component.changeFocus();
+    expect(component.listRef.length).withContext('Variável listRef deve receber um array com 4 refs').toEqual(4);
+  });
 });

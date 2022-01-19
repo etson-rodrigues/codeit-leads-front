@@ -2,13 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { CadastroUsuarioRequest } from 'src/app/view/cadastros-gerais/gerenciamento-usuarios/steps/cadastro/cadastro.model';
+import { environment } from 'src/environments/environment';
 import { AtualizarStatusCadastroUsuario, CadastroUsuarioResponse, ConsultaUsuarioPaginateResponse } from '../../models/gerenciamento-usuarios';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CadastroUsuariosService {
-  private _url: string = 'https://localhost:5001/api/';
+  private _url: string = environment.url;
 
   constructor(private _http: HttpClient) { }
 

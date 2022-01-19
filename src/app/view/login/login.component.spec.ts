@@ -15,11 +15,11 @@ import { LoginModule } from './login.module';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let autenticacaoService: any;
-  let messageTrackerService: any;
+  let autenticacaoService: jasmine.SpyObj<AutenticacaoService>;
+  let messageTrackerService: jasmine.SpyObj<MessageTrackerService>;
 
   beforeEach(waitForAsync(() => {
-    const autenticacaoServiceSpy = jasmine.createSpyObj('AutenticacaoService', ['login', 'setLoginInfo']);
+    const autenticacaoServiceSpy = jasmine.createSpyObj('AutenticacaoService', ['login']);
     const messageTrackerServiceSpy = jasmine.createSpyObj('MessageTrackerService', ['subscribeError']);
 
     TestBed.configureTestingModule({
@@ -40,8 +40,8 @@ describe('LoginComponent', () => {
     }).compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(LoginComponent);
-        autenticacaoService = TestBed.inject(AutenticacaoService);
-        messageTrackerService = TestBed.inject(MessageTrackerService);
+        autenticacaoService = TestBed.inject(AutenticacaoService) as jasmine.SpyObj<AutenticacaoService>;
+        messageTrackerService = TestBed.inject(MessageTrackerService) as jasmine.SpyObj<MessageTrackerService>;
         component = fixture.componentInstance;
         fixture.detectChanges();
       });

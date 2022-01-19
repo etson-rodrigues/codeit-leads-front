@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { mockPerfisListResponse } from '../../mocks/data/perfis-mock';
 
+import { mockPerfisListResponse } from '../../mocks/data/perfis-mock';
 import { PerfisService } from './perfis.service';
 
 describe('PerfisService', () => {

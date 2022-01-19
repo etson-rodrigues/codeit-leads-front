@@ -4,7 +4,11 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs';
 
+import { ChavesCookies } from 'src/app/core/enums/cookie.enum';
+import { ChavesLocalStorage } from 'src/app/core/enums/local-storage.enum';
 import { AutenticacaoService } from 'src/app/core/services/autenticacao/autenticacao.service';
+import { CookiesService } from 'src/app/core/services/cookies/cookies.service';
+import { LocalStorageService } from 'src/app/core/services/local-storage/local-storage.service';
 import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
 import { emailValidator } from 'src/app/core/validators/email-validator';
 import { validationInput } from 'src/app/core/validators/error-input';
@@ -21,8 +25,10 @@ export class LoginComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _autenticacaoService: AutenticacaoService,
+    private _cookieService: CookiesService,
+    private _localStorageService: LocalStorageService,
     private _router: Router,
-    private _spinner: NgxSpinnerService,
+    private _spinnerService: NgxSpinnerService,
     private _messageTrackerService: MessageTrackerService
   ) { }
 
@@ -45,19 +51,20 @@ export class LoginComponent implements OnInit {
       senha: this.formLogin.value['senha']
     }
 
-    this._spinner.show();
+    this._spinnerService.show();
     this._autenticacaoService
       .login(dados)
       .pipe(finalize(() => {
-        this._spinner.hide();
+        this._spinnerService.hide();
       }))
       .subscribe({
         next: (response) => {
-          this._autenticacaoService.isLoggedIn = true;
-          this._autenticacaoService.setLoginInfo(response);
-          response.data.redefinirSenha
-            ? this._router.navigate(['redefinir-senha'])
-            : this._router.navigate(['processos-judiciais/consulta-geral']);
+          this._cookieService.setCookie(ChavesCookies.Token, response.data.accessToken, 240);
+          this._localStorageService.setItemLocalStorage(JSON.stringify(response.data), ChavesLocalStorage.UserInfo);
+          if (response.data.redefinirSenha) {
+            return this._router.navigate(['redefinir-senha']);
+          }
+          this._router.navigate(['processos-judiciais/consulta-geral']);
         },
         error: (error) => {
           this._messageTrackerService.subscribeError(error.error);

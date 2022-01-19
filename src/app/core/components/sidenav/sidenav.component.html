@@ -1,6 +1,6 @@
 <section class="container-sidenav" *ngIf="accessData">
-  <button class="closeSidenavButton" (click)="toggleSidenav()">
-    <i class="fas fa-times icon-md-24" aria-hidden="true"></i>
+  <button mat-icon-button aria-label="Fechar menu" class="closeSidenavButton" (click)="toggleSidenav()">
+    <mat-icon fontSet="fas" fontIcon="fa-times" class="icon-md-24"></mat-icon>
   </button>
   <div class="user-info">
     <h2>{{accessData.email}}</h2>

@@ -2,28 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { LoginRequest } from 'src/app/view/login/login.model';
-import { Autenticacao, LoginResponse } from '../../models/autenticacao';
+import { environment } from 'src/environments/environment';
+import { LoginResponse } from '../../models/autenticacao';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AutenticacaoService {
-  private _url: string = 'https://localhost:5001/api/';
-  private _loginInfo!: Autenticacao;
-  isLoggedIn: boolean = false;
-  redirectUrl: string | null = null;
+  private _url: string = environment.url;
 
   constructor(private _http: HttpClient) { }
 
   login(data: LoginRequest) {
     return this._http.post<LoginResponse>(`${this._url}login`, data);
-  }
-
-  setLoginInfo(response: LoginResponse) {
-    this._loginInfo = response.data;
-  }
-
-  getLoginInfo(){
-    return this._loginInfo;
   }
 }

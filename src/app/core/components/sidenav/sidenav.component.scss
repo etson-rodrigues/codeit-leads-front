@@ -11,6 +11,10 @@
     right: 0;
   }
 
+  .mat-icon-button ::ng-deep .mat-button-focus-overlay {
+    display: none;
+  }
+
   .user-info {
     padding: 3rem 1rem 1rem;
 

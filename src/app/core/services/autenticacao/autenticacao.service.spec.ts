@@ -64,18 +64,4 @@ describe('AutenticacaoService', () => {
 
     req.error(errorEvent, { status, statusText });
   });
-
-  it('[CIT-5682] deve definir variável de dados do usuário após login', () => {
-    expect(service['_loginInfo']).withContext('Variável _loginInfo deve inicializar indefinida').toBeUndefined();
-    service.setLoginInfo(mockLoginResponse);
-    expect(service['_loginInfo']).withContext('Variável _loginInfo deve ser preenchida após chamar a função setLoginInfo').toBe(mockLoginResponse.data);
-  });
-
-  it('[CIT-5682] deve retornar dados do usuário logado', () => {
-    expect(service['_loginInfo']).withContext('Variável _loginInfo deve inicializar indefinida').toBeUndefined();
-    service.setLoginInfo(mockLoginResponse);
-    expect(service['_loginInfo']).withContext('Variável _loginInfo deve ser preenchida após chamar a função setLoginInfo').toBe(mockLoginResponse.data);
-
-    expect(service.getLoginInfo()).withContext('Deve retornar dados do usuário logado').toBeDefined();
-  });
 });

@@ -16,12 +16,12 @@ import { RedefinirSenhaModule } from './redefinir-senha.module';
 describe('RedefinirSenhaComponent', () => {
   let component: RedefinirSenhaComponent;
   let fixture: ComponentFixture<RedefinirSenhaComponent>;
-  let autenticacaoService: any;
-  let cadastroUsuariosService: any;
-  let messageTrackerService: any;
+  let autenticacaoService: jasmine.SpyObj<AutenticacaoService>;
+  let cadastroUsuariosService: jasmine.SpyObj<CadastroUsuariosService>;
+  let messageTrackerService: jasmine.SpyObj<MessageTrackerService>;
 
   beforeEach(waitForAsync(() => {
-    const autenticacaoServiceSpy = jasmine.createSpyObj('AutenticacaoService', ['login', 'setLoginInfo', 'getLoginInfo']);
+    const autenticacaoServiceSpy = jasmine.createSpyObj('AutenticacaoService', ['login']);
     const cadastroUsuariosServiceSpy = jasmine.createSpyObj('CadastroUsuariosService', ['save']);
     const messageTrackerServiceSpy = jasmine.createSpyObj('MessageTrackerService', ['subscribeError']);
 
@@ -43,9 +43,9 @@ describe('RedefinirSenhaComponent', () => {
     }).compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(RedefinirSenhaComponent);
-        autenticacaoService = TestBed.inject(AutenticacaoService);
-        cadastroUsuariosService = TestBed.inject(CadastroUsuariosService);
-        messageTrackerService = TestBed.inject(MessageTrackerService);
+        autenticacaoService = TestBed.inject(AutenticacaoService) as jasmine.SpyObj<AutenticacaoService>;
+        cadastroUsuariosService = TestBed.inject(CadastroUsuariosService) as jasmine.SpyObj<CadastroUsuariosService>;
+        messageTrackerService = TestBed.inject(MessageTrackerService) as jasmine.SpyObj<MessageTrackerService>;
         component = fixture.componentInstance;
         fixture.detectChanges();
       });

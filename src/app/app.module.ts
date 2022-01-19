@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { CURRENCY_MASK_CONFIG } from 'ngx-currency';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 import { MatNativeDateModule } from '@angular/material/core';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -19,7 +19,7 @@ import { MessageTrackerModule } from './shared/components/message-tracker/messag
 import { FooterModule } from './core/components/footer/footer.module';
 import { HeaderModule } from './core/components/header/header.module';
 import { SidenavModule } from './core/components/sidenav/sidenav.module';
-import { AuthGuard } from './core/auth/auth.guard';
+import { RequestInterceptor } from './core/auth/request-interceptor';
 
 const maskConfig: Partial<IConfig> = {
   validation: false
@@ -45,10 +45,10 @@ const maskConfig: Partial<IConfig> = {
     MatSidenavModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     { provide: CURRENCY_MASK_CONFIG, useValue: customCurrencyMaskConfig },
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline', color: 'accent' } },
-    AuthGuard
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline', color: 'accent' } }
   ],
   bootstrap: [AppComponent]
 })

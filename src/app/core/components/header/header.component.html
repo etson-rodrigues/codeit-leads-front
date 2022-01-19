@@ -1,13 +1,13 @@
 <header class="container-header">
   <mat-toolbar>
     <div class="container-menu-logo">
-      <button class="openSidenavButton" (click)="toggleSidenav()">
-        <i class="fas fa-bars icon-md-36" aria-hidden="true"></i>
+      <button mat-icon-button aria-label="Menu" [autofocus]="false" class="openSidenavButton" (click)="toggleSidenav()">
+        <mat-icon fontSet="fas" fontIcon="fa-bars" class="icon-md-36"></mat-icon>
       </button>
       <div id="logo"></div>
     </div>
-    <button routerLink="/login">
-      <i class="fas fa-power-off icon-md-36" aria-hidden="true"></i>
+    <button mat-icon-button aria-label="logout" (click)="logout()">
+      <mat-icon fontSet="fas" fontIcon="fa-power-off" class="icon-md-36"></mat-icon>
     </button>
 
   </mat-toolbar>

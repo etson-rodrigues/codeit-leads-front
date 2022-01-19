@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+import { environment } from 'src/environments/environment';
 import { PerfisListResponse } from '../../models/perfil';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PerfisService {
-  private _url: string = 'https://localhost:5001/api/';
+  private _url: string = environment.url;
 
   constructor(private _http: HttpClient) { }
 

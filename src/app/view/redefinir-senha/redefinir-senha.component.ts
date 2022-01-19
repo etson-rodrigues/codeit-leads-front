@@ -7,7 +7,6 @@ import { finalize } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
 import { Autenticacao } from 'src/app/core/models/autenticacao';
-import { AutenticacaoService } from 'src/app/core/services/autenticacao/autenticacao.service';
 import { CadastroUsuariosService } from 'src/app/core/services/cadastro-usuarios/cadastro-usuarios.service';
 import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
 import { validationInput } from 'src/app/core/validators/error-input';
@@ -15,6 +14,10 @@ import { mustBeTheSame } from 'src/app/core/validators/same-password-validator';
 import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
 import { inputFocus } from 'src/app/shared/utils/inputFocus';
 import { CadastroUsuarioRequest } from '../cadastros-gerais/gerenciamento-usuarios/steps/cadastro/cadastro.model';
+import { LocalStorageService } from 'src/app/core/services/local-storage/local-storage.service';
+import { ChavesLocalStorage } from 'src/app/core/enums/local-storage.enum';
+import { ChavesCookies } from 'src/app/core/enums/cookie.enum';
+import { CookiesService } from 'src/app/core/services/cookies/cookies.service';
 
 @Component({
   selector: 'app-redefinir-senha',
@@ -34,7 +37,8 @@ export class RedefinirSenhaComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _cadastroUsuariosService: CadastroUsuariosService,
-    private _autenticacaoService: AutenticacaoService,
+    private _cookieService: CookiesService,
+    private _localStorageService: LocalStorageService,
     private _router: Router,
     private _dialog: MatDialog,
     private _spinner: NgxSpinnerService,
@@ -43,7 +47,7 @@ export class RedefinirSenhaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loginData = this._autenticacaoService.getLoginInfo();
+    this.loginData = JSON.parse(this._localStorageService.getItemLocalStorage(ChavesLocalStorage.UserInfo) || '{}');
 
     this.formRedefinirSenha = this._formBuilder.group({
       senha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
@@ -86,12 +90,13 @@ export class RedefinirSenhaComponent implements OnInit {
     const dialogRef = this._dialog.open(DialogComponent, {
       data: {
         titulo: 'SENHA ALTERADA COM SUCESSO',
-        mensagem: '',
+        mensagem: 'Por favor realizar o acesso novamente',
         tipo: 'informative'
       }
     });
     dialogRef.afterClosed().subscribe(() => {
-      this._router.navigate(['processos-judiciais/consulta-geral']);
+      this._cookieService.deleteCookie(ChavesCookies.Token);
+      this._router.navigate(['login']);
     });
   }
 

@@ -3,27 +3,26 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { SidenavComponent } from './sidenav.component';
-import { AutenticacaoService } from '../../services/autenticacao/autenticacao.service';
+import { routes } from 'src/app/app-routing.module';
+import { SidenavModule } from './sidenav.module';
 
 describe('SidenavComponent', () => {
   let component: SidenavComponent;
   let fixture: ComponentFixture<SidenavComponent>;
-  let autenticacaoService: any;
 
   beforeEach(waitForAsync(() => {
-    const autenticacaoServiceSpy = jasmine.createSpyObj('AutenticacaoService', ['getLoginInfo']);
 
     TestBed.configureTestingModule({
       declarations: [SidenavComponent],
-      imports:[RouterTestingModule],
-      providers: [
-        { provide: AutenticacaoService, useValue: autenticacaoServiceSpy }
+      imports: [
+        SidenavModule,
+        RouterTestingModule.withRoutes(routes)
       ],
+      providers: [],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(SidenavComponent);
-        autenticacaoService = TestBed.inject(AutenticacaoService);
         component = fixture.componentInstance;
         fixture.detectChanges();
       });

@@ -1,7 +1,5 @@
 <app-spinner></app-spinner>
 
-
-
 <mat-sidenav-container *ngIf="handleUserLogin(); else userLoggedOut">
   <mat-sidenav mode="push" [opened]="isSidenavOpen" disableClose>
     <app-sidenav (openMenu)="handleOpenMenu()"></app-sidenav>

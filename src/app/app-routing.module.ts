@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from './core/auth/auth.guard';
+import { AuthGuard } from './core/auth/guards/authorization/auth.guard';
+import { LoginGuard } from './core/auth/guards/login/login.guard';
+import { RedefinirSenhaGuard } from './core/auth/guards/redefinir-senha/redefinir-senha.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'login',
-    loadChildren: () =>
-      import('./view/login/login.module').then(m => m.LoginModule),
+    loadChildren: () => import('./view/login/login.module').then(m => m.LoginModule),
+    canActivate: [LoginGuard],
   },
   {
     path: 'redefinir-senha',
     loadChildren: () => import('./view/login/redefinir-senha/redefinir-senha.module').then(m => m.RedefinirSenhaModule),
-    canActivate: [AuthGuard]
+    canActivate: [RedefinirSenhaGuard]
   },
   {
     path: 'processos-judiciais/consulta-geral',
@@ -34,7 +36,9 @@ export const routes: Routes = [
     path: 'seletor-temas',
     loadChildren: () =>
       import('./view/seletor-temas/seletor-temas.module').then(m => m.SeletorTemasModule),
-  }
+    canActivate: [AuthGuard]
+  },
+  { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

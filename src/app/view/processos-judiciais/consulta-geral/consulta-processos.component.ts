@@ -12,7 +12,7 @@ import { validationInput } from 'src/app/core/validators/error-input';
 import { formatarData } from 'src/app/shared/utils/formatarData';
 import { ConsultaProcessosView } from './consulta-processos.model';
 import { ConsultaProcessosResponseData } from 'src/app/core/models/consulta-processos';
-import { Uf } from 'src/app/shared/enums/uf.enum';
+import { Uf } from 'src/app/core/enums/uf.enum';
 
 @Component({
   selector: 'app-consulta-processos',
