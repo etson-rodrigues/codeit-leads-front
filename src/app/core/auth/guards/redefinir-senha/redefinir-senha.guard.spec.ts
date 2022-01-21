@@ -37,7 +37,7 @@ describe('RedefinirSenhaGuard', () => {
 
   it("[CIT-5794] deve acessar rota redefinir-senha caso flag redefinirSenha seja true", fakeAsync(() => {
     localStorageService.getItemLocalStorage.and.returnValue(JSON.stringify(mockLoginResponseRedefinirSenha.data));
-    cookieService.hasItemCookie.and.returnValue(false);
+    cookieService.hasItemCookie.and.returnValue(true);
     flush();
     expect(guard.canActivate(new ActivatedRouteSnapshot(), <RouterStateSnapshot>{ url: 'redefinir-senha' })).toBeTruthy();
   }));

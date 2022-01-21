@@ -1,4 +1,4 @@
-import { PerfisListResponse } from "src/app/core/models/perfil"
+import { PerfisListResponse } from "src/app/core/models/perfil/perfil-response.model"
 
 export const mockPerfisListResponse: PerfisListResponse = {
   data: [

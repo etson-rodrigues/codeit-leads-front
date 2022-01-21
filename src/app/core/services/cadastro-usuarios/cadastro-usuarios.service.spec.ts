@@ -29,7 +29,7 @@ describe('CadastroUsuariosService', () => {
   it('[CIT-5693] deve realizar o cadastro do usuário', () => {
     service.save(mockCadastroUsuarioRequest, false, 0).subscribe(response => {
       expect(response.data.email).withContext('Email deve ser teste@email.com').toBe(mockCadastroUsuarioRequest.email);
-      expect(response.data.primeiroAcesso).withContext('Primeiro acesso deve ser true').toBeTruthy();
+      expect(response.data.redefinirSenha).withContext('Primeiro acesso deve ser true').toBeTruthy();
     });
 
     const req = http.expectOne(`${service["_url"]}usuarios`);
@@ -63,7 +63,7 @@ describe('CadastroUsuariosService', () => {
     const id = 1;
     service.save(mockCadastroUsuarioRequest, true, id).subscribe(response => {
       expect(response.data.email).withContext('Email deve ser teste@email.com').toBe(mockCadastroUsuarioRequest.email);
-      expect(response.data.primeiroAcesso).withContext('Primeiro acesso deve ser true').toBeTruthy();
+      expect(response.data.redefinirSenha).withContext('Primeiro acesso deve ser true').toBeTruthy();
     });
 
     const req = http.expectOne(`${service["_url"]}usuarios/${id}`);
@@ -96,10 +96,10 @@ describe('CadastroUsuariosService', () => {
 
   it('[CIT-5694] deve realizar a atualização do status do usuário', () => {
     const id = mockCadastroUsuarioUpdateStatusRequest.id;
-    const status = mockCadastroUsuarioUpdateStatusRequest.status;
+    const status = mockCadastroUsuarioUpdateStatusRequest.ativo;
     service.updateStatus(mockCadastroUsuarioUpdateStatusRequest).subscribe(response => {
-      expect(response.data.email).withContext('Email deve ser teste@email.com').toBe(mockCadastroUsuarioUpdateStatusRequest.email);
-      expect(response.data.ativo).withContext('Status deve ser true').toBe(mockCadastroUsuarioUpdateStatusRequest.status);
+      expect(response.data.id).withContext('ID deve ser 1').toBe(mockCadastroUsuarioUpdateStatusRequest.id);
+      expect(response.data.ativo).withContext('Status deve ser true').toBe(mockCadastroUsuarioUpdateStatusRequest.ativo);
     });
 
     const req = http.expectOne(`${service["_url"]}usuarios/${id}/atualizar-status?atualizarStatus=${status}`);
@@ -110,7 +110,7 @@ describe('CadastroUsuariosService', () => {
 
   it('[CIT-5694] deve gerar erro se a atualização do status do usuário falhar', () => {
     const id = mockCadastroUsuarioUpdateStatusRequest.id;
-    const status = mockCadastroUsuarioUpdateStatusRequest.status;
+    const status = mockCadastroUsuarioUpdateStatusRequest.ativo;
     service.updateStatus(mockCadastroUsuarioUpdateStatusRequest).subscribe(
       {
         next: () => {

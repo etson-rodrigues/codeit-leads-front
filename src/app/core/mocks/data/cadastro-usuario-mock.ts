@@ -1,6 +1,9 @@
-import { CadastroUsuarioRequest } from "src/app/view/cadastros-gerais/gerenciamento-usuarios/steps/cadastro/cadastro.model"
+
 import { ConsultaUsuarioView } from "src/app/view/cadastros-gerais/gerenciamento-usuarios/steps/consulta/consulta.model";
-import { AtualizarStatusCadastroUsuario, CadastroUsuarioResponse, ConsultaUsuarioPaginateResponse } from "../../models/gerenciamento-usuarios"
+import { AlteracaoUsuarioRequest } from "../../models/gerenciamento-usuarios/alteracao-usuario-request.model";
+import { CadastroUsuarioRequest } from "../../models/gerenciamento-usuarios/cadastro-usuario-request.model";
+import { CadastroUsuarioResponse } from "../../models/gerenciamento-usuarios/cadastro-usuario-response.model";
+import { ConsultaUsuarioResponse } from "../../models/gerenciamento-usuarios/consulta-usuario-response.model";
 
 
 export const mockCadastroUsuarioRequest: CadastroUsuarioRequest = {
@@ -17,23 +20,22 @@ export const mockCadastroUsuarioResponse: CadastroUsuarioResponse = {
   data: {
     id: 1,
     email: "teste@email.com",
-    senha: "AAx32wpLE2gbWcOfJJg9+st4mGWxk08BaeqI4bVukBNf3TemM22ePksVgOmRk3EGuQ==",
     perfil: {
+      id: 2,
       codigo: "002",
       descricao: "Operador"
     },
     ativo: true,
-    primeiroAcesso: true
+    redefinirSenha: true
   }
 };
 
-export const mockCadastroUsuarioUpdateStatusRequest: AtualizarStatusCadastroUsuario = {
+export const mockCadastroUsuarioUpdateStatusRequest: AlteracaoUsuarioRequest = {
   id: 1,
-  email: "teste@email.com",
-  status: true
+  ativo: true
 };
 
-export const mockConsultaUsuarioPaginateResponse: ConsultaUsuarioPaginateResponse = {
+export const mockConsultaUsuarioPaginateResponse: ConsultaUsuarioResponse = {
   pageNumber: 1,
   pageSize: 3,
   firstPage: "https://localhost:5001/api/usuarios?pageNumber=1&pageSize=3",
@@ -45,13 +47,20 @@ export const mockConsultaUsuarioPaginateResponse: ConsultaUsuarioPaginateRespons
   data: [{
     id: 1,
     email: "teste@email.com",
-    senha: "AF/MU5+na5PFwIZ4ZnyEZZijZVYpgmK4p262YtAb4XWzm4qRWZWNhTWmO+6AkTLuBg==",
     perfil: {
       codigo: "002",
-      descricao: "Operador"
+      descricao: "Operador",
+      acoesSeguranca: [
+        {
+          acaoSeguranca: {
+            codigo: "001",
+            descricao: "Consulta de Processos"
+          }
+        }
+      ]
     },
     ativo: true,
-    primeiroAcesso: true
+    redefinirSenha: true
   }]
 };
 
@@ -67,3 +76,53 @@ export const mockConsultaCadastroEdicao: ConsultaUsuarioView = {
     descricao: "Ativo"
   }
 };
+
+export const mockConsultaUsuarioAcaoSegurancaCadastro: ConsultaUsuarioResponse = {
+  ...mockConsultaUsuarioPaginateResponse,
+  data: [{
+    id: 1,
+    email: "admin@email.com",
+    perfil: {
+      codigo: "001",
+      descricao: "Administrador",
+      acoesSeguranca: [
+        {
+          acaoSeguranca: {
+            codigo: "001",
+            descricao: "Consulta de Processos"
+          }
+        },
+        {
+          acaoSeguranca: {
+            codigo: "002",
+            descricao: "Cadastro de Usuarios"
+          }
+        }
+      ]
+    },
+    ativo: true,
+    redefinirSenha: false
+  }]
+}
+
+export const mockConsultaUsuarioAcaoSegurancaProcesso: ConsultaUsuarioResponse = {
+  ...mockConsultaUsuarioPaginateResponse,
+  data: [{
+    id: 1,
+    email: "operador@email.com",
+    perfil: {
+      codigo: "002",
+      descricao: "Operador",
+      acoesSeguranca: [
+        {
+          acaoSeguranca: {
+            codigo: "001",
+            descricao: "Consulta de Processos"
+          }
+        }
+      ]
+    },
+    ativo: true,
+    redefinirSenha: false
+  }]
+}

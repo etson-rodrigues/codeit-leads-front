@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
-import { ConsultaProcessosResponse } from '../../models/consulta-processos';
+import { ConsultaProcessosResponse } from '../../models/consulta-processos/consulta-processos-response.model';
 
 @Injectable({
   providedIn: 'root'

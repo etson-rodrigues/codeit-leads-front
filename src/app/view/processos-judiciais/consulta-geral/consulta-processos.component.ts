@@ -11,7 +11,7 @@ import { MessageTrackerService } from 'src/app/core/services/message-tracker/mes
 import { validationInput } from 'src/app/core/validators/error-input';
 import { formatarData } from 'src/app/shared/utils/formatarData';
 import { ConsultaProcessosView } from './consulta-processos.model';
-import { ConsultaProcessosResponseData } from 'src/app/core/models/consulta-processos';
+import { ConsultaProcessosResponseData } from 'src/app/core/models/consulta-processos/consulta-processos-response.model';
 import { Uf } from 'src/app/core/enums/uf.enum';
 
 @Component({
@@ -127,10 +127,13 @@ export class ConsultaProcessosComponent implements OnInit {
     let numberOfCharacters = 50;
     if (partes.length > 1) {
       partes.slice(0, numberOfElements).forEach((parte => {
-        sufix = parte.length > numberOfCharacters ? '...' : ',';
+        let lastChar = (partes[partes.length - 1] === parte) ? '' : ',';
+        sufix = parte.length > numberOfCharacters ? '...' : lastChar;
         partesArray.push(parte.trim().slice(0, numberOfCharacters) + sufix);
       }));
-      partesArray.push('ENTRE OUTROS...');
+      if (partes.length > numberOfElements) {
+        partesArray.push('ENTRE OUTROS...');
+      }
       return partesArray.join('\r\n');
     }
     sufix = partes.length > numberOfCharacters ? '...' : '';

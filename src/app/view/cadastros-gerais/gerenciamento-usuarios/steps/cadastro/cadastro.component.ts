@@ -5,17 +5,17 @@ import { finalize } from 'rxjs';
 
 import { MatSelect } from '@angular/material/select';
 
-import { Perfil } from 'src/app/core/models/perfil';
+import { Perfil } from 'src/app/core/models/perfil/perfil-response.model';
 import { CadastroUsuariosService } from 'src/app/core/services/cadastro-usuarios/cadastro-usuarios.service';
 import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
 import { PerfisService } from 'src/app/core/services/perfis/perfis.service';
 import { emailValidator } from 'src/app/core/validators/email-validator';
 import { validationInput } from 'src/app/core/validators/error-input';
 import { inputFocus } from 'src/app/shared/utils/inputFocus';
-import { CadastroUsuarioRequest } from './cadastro.model';
 import { ResumoService } from 'src/app/core/services/resumo/resumo.service';
 import { EditarService } from 'src/app/core/services/editar/editar.service';
 import { mustBeTheSame } from 'src/app/core/validators/same-password-validator';
+import { CadastroUsuarioRequest } from 'src/app/core/models/gerenciamento-usuarios/cadastro-usuario-request.model';
 
 @Component({
   selector: 'app-cadastro',

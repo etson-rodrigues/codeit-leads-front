@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './core/auth/guards/authorization/auth.guard';
+import { CadastrosGuard } from './core/auth/guards/cadastros/cadastros.guard';
 import { LoginGuard } from './core/auth/guards/login/login.guard';
 import { RedefinirSenhaGuard } from './core/auth/guards/redefinir-senha/redefinir-senha.guard';
 
@@ -25,7 +26,7 @@ export const routes: Routes = [
   {
     path: 'cadastros-gerais/usuarios',
     loadChildren: () => import('./view/cadastros-gerais/gerenciamento-usuarios/gerenciamento-usuarios.module').then(m => m.GerenciamentoUsuariosModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, CadastrosGuard]
   },
   {
     path: 'usuario/senha',

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { ChavesCookies } from '../../../enums/cookie.enum';
 import { ChavesLocalStorage } from '../../../enums/local-storage.enum';
-import { Autenticacao } from '../../../models/autenticacao';
+import { Autenticacao } from '../../../models/autenticacao/autenticacao.model';
 import { CookiesService } from '../../../services/cookies/cookies.service';
 import { LocalStorageService } from '../../../services/local-storage/local-storage.service';
 

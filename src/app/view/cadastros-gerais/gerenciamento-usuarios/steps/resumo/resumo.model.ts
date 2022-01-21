@@ -1,7 +1,7 @@
-export interface CadastroUsuarioResumo {
-  email: string,
+export interface ResumoUsuarioView {
+  email: string;
   perfil: {
-    descricao: string
+    descricao: string;
   }
-  status: string
+  status: string;
 }

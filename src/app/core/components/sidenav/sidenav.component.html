@@ -8,7 +8,7 @@
   </div>
 
   <mat-nav-list>
-    <a mat-list-item [matMenuTriggerFor]="cadastro" *ngIf="profileAccess()">Cadastros Gerais</a>
+    <a mat-list-item [matMenuTriggerFor]="cadastro" *ngIf="profileAccess('cadastro')">Cadastros Gerais</a>
     <mat-menu #cadastro="matMenu" yPosition="below" xPosition="before">
       <a mat-menu-item (click)="toggleSidenav()" routerLink="/cadastros-gerais/usuarios">Usuários</a>
     </mat-menu>

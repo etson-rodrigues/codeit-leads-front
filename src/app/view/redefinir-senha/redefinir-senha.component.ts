@@ -6,18 +6,18 @@ import { finalize } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { Autenticacao } from 'src/app/core/models/autenticacao';
 import { CadastroUsuariosService } from 'src/app/core/services/cadastro-usuarios/cadastro-usuarios.service';
 import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
 import { validationInput } from 'src/app/core/validators/error-input';
 import { mustBeTheSame } from 'src/app/core/validators/same-password-validator';
 import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
 import { inputFocus } from 'src/app/shared/utils/inputFocus';
-import { CadastroUsuarioRequest } from '../cadastros-gerais/gerenciamento-usuarios/steps/cadastro/cadastro.model';
 import { LocalStorageService } from 'src/app/core/services/local-storage/local-storage.service';
 import { ChavesLocalStorage } from 'src/app/core/enums/local-storage.enum';
 import { ChavesCookies } from 'src/app/core/enums/cookie.enum';
 import { CookiesService } from 'src/app/core/services/cookies/cookies.service';
+import { Autenticacao } from 'src/app/core/models/autenticacao/autenticacao.model';
+import { CadastroUsuarioRequest } from 'src/app/core/models/gerenciamento-usuarios/cadastro-usuario-request.model';
 
 @Component({
   selector: 'app-redefinir-senha',

@@ -1,4 +1,4 @@
-import { AbstractResponse } from "./comum/abstract-response";
+import { AbstractResponse } from "../comum/abstract-response";
 
 export interface Perfil {
   codigo: string;

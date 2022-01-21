@@ -1,12 +1,12 @@
 export interface ConsultaUsuarioView {
-  id: number,
-  email: string,
+  id: number;
+  email: string;
   perfil: {
-    codigo: string,
-    descricao: string
+    codigo: string;
+    descricao: string;
   },
   status: {
-    ativo: boolean,
-    descricao: string
+    ativo: boolean;
+    descricao: string;
   }
 }

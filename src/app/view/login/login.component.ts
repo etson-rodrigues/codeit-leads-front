@@ -6,13 +6,13 @@ import { finalize } from 'rxjs';
 
 import { ChavesCookies } from 'src/app/core/enums/cookie.enum';
 import { ChavesLocalStorage } from 'src/app/core/enums/local-storage.enum';
+import { LoginRequest } from 'src/app/core/models/login/login-request.model';
 import { AutenticacaoService } from 'src/app/core/services/autenticacao/autenticacao.service';
 import { CookiesService } from 'src/app/core/services/cookies/cookies.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage/local-storage.service';
 import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
 import { emailValidator } from 'src/app/core/validators/email-validator';
 import { validationInput } from 'src/app/core/validators/error-input';
-import { LoginRequest } from './login.model';
 
 @Component({
   selector: 'app-login',

@@ -6,7 +6,6 @@ import { finalize } from 'rxjs';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 
-import { AtualizarStatusCadastroUsuario, ConsultaUsuarioResponseData } from 'src/app/core/models/gerenciamento-usuarios';
 import { CadastroUsuariosService } from 'src/app/core/services/cadastro-usuarios/cadastro-usuarios.service';
 import { EditarService } from 'src/app/core/services/editar/editar.service';
 import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
@@ -14,6 +13,8 @@ import { setPaginatorConfig } from 'src/app/core/config/paginator-config';
 import { ConsultaUsuarioView } from './consulta.model';
 import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
 import { ResumoService } from 'src/app/core/services/resumo/resumo.service';
+import { ConsultaUsuarioResponseData } from 'src/app/core/models/gerenciamento-usuarios/consulta-usuario-response.model';
+import { AlteracaoUsuarioRequest } from 'src/app/core/models/gerenciamento-usuarios/alteracao-usuario-request.model';
 
 @Component({
   selector: 'app-consulta',
@@ -132,7 +133,7 @@ export class ConsultaComponent implements OnInit {
   }
 
   updateStatus(element: ConsultaUsuarioView) {
-    const data: AtualizarStatusCadastroUsuario = {
+    const data = {
       id: element.id,
       email: element.email,
       status: !element.status.ativo
@@ -146,8 +147,12 @@ export class ConsultaComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        const userData: AlteracaoUsuarioRequest = {
+          id: data.id,
+          ativo: data.status
+        }
         this._cadastroUsuariosService
-          .updateStatus(data)
+          .updateStatus(userData)
           .pipe(finalize(() => this._spinner.hide()))
           .subscribe(
             {

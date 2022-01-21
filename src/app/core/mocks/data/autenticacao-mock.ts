@@ -1,5 +1,6 @@
-import { LoginRequest } from "src/app/view/login/login.model"
-import { LoginResponse } from "../../models/autenticacao"
+import { LoginRequest } from "../../models/login/login-request.model"
+import { LoginResponse } from "../../models/login/login-response.model"
+
 
 export const mockUserLogin: LoginRequest = {
   email: "teste@email.com",

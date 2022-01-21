@@ -1,9 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { CadastroUsuarioRequest } from 'src/app/view/cadastros-gerais/gerenciamento-usuarios/steps/cadastro/cadastro.model';
+
 import { environment } from 'src/environments/environment';
-import { AtualizarStatusCadastroUsuario, CadastroUsuarioResponse, ConsultaUsuarioPaginateResponse } from '../../models/gerenciamento-usuarios';
+import { AlteracaoUsuarioRequest } from '../../models/gerenciamento-usuarios/alteracao-usuario-request.model';
+import { CadastroUsuarioRequest } from '../../models/gerenciamento-usuarios/cadastro-usuario-request.model';
+import { CadastroUsuarioResponse } from '../../models/gerenciamento-usuarios/cadastro-usuario-response.model';
+import { ConsultaUsuarioResponse } from '../../models/gerenciamento-usuarios/consulta-usuario-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +23,9 @@ export class CadastroUsuariosService {
     return this._http.post<CadastroUsuarioResponse>(`${this._url}usuarios`, data);
   }
 
-  updateStatus(data: AtualizarStatusCadastroUsuario) {
+  updateStatus(data: AlteracaoUsuarioRequest) {
     const params = new HttpParams()
-      .set('atualizarStatus', data.status);
+      .set('atualizarStatus', data.ativo);
     return this._http.put<CadastroUsuarioResponse>(`${this._url}usuarios/${data.id}/atualizar-status`, null, { params });
   }
 
@@ -31,6 +34,6 @@ export class CadastroUsuariosService {
       .set('email', email)
       .set('pageNumber', pageNumber)
       .set('pageSize', pageSize);
-    return this._http.get<ConsultaUsuarioPaginateResponse>(`${this._url}usuarios`, { params });
+    return this._http.get<ConsultaUsuarioResponse>(`${this._url}usuarios`, { params });
   }
 }

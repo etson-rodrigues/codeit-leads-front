@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 
-import { ErrorData, ErrorDetail, ErrorResponse, Progress } from 'src/app/core/models/error-model';
+import { ErrorDataInterface, ErrorDetail, ErrorResponse, Progress } from 'src/app/core/interfaces/components/error.interface';
 import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class MessageTrackerComponent {
   private _timeOuts: any[] = [];
 
   constructor(
-    @Inject(MAT_SNACK_BAR_DATA) public data: ErrorData,
+    @Inject(MAT_SNACK_BAR_DATA) public data: ErrorDataInterface,
     public snackBarRef: MatSnackBarRef<MessageTrackerComponent>,
     private _messageTrackerService: MessageTrackerService) {
     this.intercept(data.error, data.progress);

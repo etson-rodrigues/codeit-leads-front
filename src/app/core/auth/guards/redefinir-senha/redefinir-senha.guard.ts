@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { ChavesCookies } from 'src/app/core/enums/cookie.enum';
 import { ChavesLocalStorage } from 'src/app/core/enums/local-storage.enum';
-import { Autenticacao } from 'src/app/core/models/autenticacao';
+import { Autenticacao } from 'src/app/core/models/autenticacao/autenticacao.model';
 import { CookiesService } from 'src/app/core/services/cookies/cookies.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage/local-storage.service';
 
@@ -24,7 +24,7 @@ export class RedefinirSenhaGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const userInfo: Autenticacao = JSON.parse(this._localStorageService.getItemLocalStorage(ChavesLocalStorage.UserInfo) || '{}');
     const redefinirSenha: boolean = userInfo.redefinirSenha;
-    if (redefinirSenha) {
+    if (this._cookieService.hasItemCookie(ChavesCookies.Token) && redefinirSenha) {
       return true;
     }
     if (this._cookieService.hasItemCookie(ChavesCookies.Token)) {
@@ -34,5 +34,4 @@ export class RedefinirSenhaGuard implements CanActivate {
     this._router.navigate(['login']);
     return false;
   }
-
 }

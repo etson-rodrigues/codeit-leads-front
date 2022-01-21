@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import { ResumoService } from 'src/app/core/services/resumo/resumo.service';
-import { CadastroUsuarioResumo } from './resumo.model';
+import { ResumoUsuarioView } from './resumo.model';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { CadastroUsuarioResumo } from './resumo.model';
   styleUrls: ['./resumo.component.scss']
 })
 export class ResumoComponent implements OnInit {
-  userData: CadastroUsuarioResumo = {
+  userData: ResumoUsuarioView = {
     email: '',
     perfil: {
       descricao: ''

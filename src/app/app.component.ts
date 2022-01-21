@@ -2,11 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { ChavesCookies } from './core/enums/cookie.enum';
-import { ChavesLocalStorage } from './core/enums/local-storage.enum';
-import { Autenticacao } from './core/models/autenticacao';
 import { ControleRotaService } from './core/services/controle-rota/controle-rota.service';
 import { CookiesService } from './core/services/cookies/cookies.service';
-import { LocalStorageService } from './core/services/local-storage/local-storage.service';
 import { ThemeService } from './core/services/theme/theme.service';
 
 @Component({
@@ -22,8 +19,7 @@ export class AppComponent implements OnInit {
     private _themeService: ThemeService,
     private _router: Router,
     private _controleRotaService: ControleRotaService,
-    private _cookieService: CookiesService,
-    private _localStorageService: LocalStorageService
+    private _cookieService: CookiesService
   ) { }
 
   ngOnInit(): void {
@@ -43,9 +39,7 @@ export class AppComponent implements OnInit {
   }
 
   handleUserLogin() {
-    const userInfo: Autenticacao = JSON.parse(this._localStorageService.getItemLocalStorage(ChavesLocalStorage.UserInfo) || '{}');
-    const redefinirSenha: boolean = userInfo.redefinirSenha;
-    if (!redefinirSenha && this._cookieService.hasItemCookie(ChavesCookies.Token) && this.currentUrl != '/redefinir-senha') {
+    if (this._cookieService.hasItemCookie(ChavesCookies.Token) && (this.currentUrl != '/login' && this.currentUrl != '' && this.currentUrl != '/redefinir-senha')) {
       return true;
     }
     return false;

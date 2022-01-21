@@ -1,4 +1,4 @@
-import { ConsultaProcessosResponse } from "../../models/consulta-processos";
+import { ConsultaProcessosResponse } from "../../models/consulta-processos/consulta-processos-response.model";
 
 export const mockConsultaProcessosResponse: ConsultaProcessosResponse = {
   firstPage: "https://localhost:5001/api/processos-judiciais?pageNumber=1&pageSize=3",

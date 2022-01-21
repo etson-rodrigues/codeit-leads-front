@@ -1,7 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
+import { AcoesSeguranca } from '../../enums/acoes-seguranca.enum';
 import { ChavesLocalStorage } from '../../enums/local-storage.enum';
-import { Autenticacao } from '../../models/autenticacao';
+import { Autenticacao } from '../../models/autenticacao/autenticacao.model';
 import { LocalStorageService } from '../../services/local-storage/local-storage.service';
 
 @Component({
@@ -19,20 +20,22 @@ export class SidenavComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const localStorageData: Autenticacao = JSON.parse(this._localStorageService.getItemLocalStorage(ChavesLocalStorage.UserInfo) || '{}');
-
-    if (Object.values(localStorageData).length == 0) {
+    if (Object.values(JSON.parse(this._localStorageService.getItemLocalStorage(ChavesLocalStorage.UserInfo) || '{}')).length == 0) {
       return;
     }
-
-    this.accessData = localStorageData;
+    this.accessData = JSON.parse(this._localStorageService.getItemLocalStorage(ChavesLocalStorage.UserInfo) || '{}');
   }
 
   toggleSidenav() {
     this.openMenu.emit();
   }
 
-  profileAccess() {
-    return this.accessData.perfil.descricao == 'Administrador';
+  profileAccess(perfil: string) {
+    switch (perfil) {
+      case 'cadastro':
+        return this.accessData.perfil.acoesSeguranca.find(acao => acao.acaoSeguranca.codigo == AcoesSeguranca.CadastroUsuarios);
+      default:
+        break;
+    }
   }
 }
