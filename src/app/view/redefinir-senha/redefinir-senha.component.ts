@@ -6,7 +6,6 @@ import { finalize } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { CadastroUsuariosService } from 'src/app/core/services/cadastro-usuarios/cadastro-usuarios.service';
 import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
 import { validationInput } from 'src/app/core/validators/error-input';
 import { mustBeTheSame } from 'src/app/core/validators/same-password-validator';
@@ -18,6 +17,7 @@ import { ChavesCookies } from 'src/app/core/enums/cookie.enum';
 import { CookiesService } from 'src/app/core/services/cookies/cookies.service';
 import { Autenticacao } from 'src/app/core/models/autenticacao/autenticacao.model';
 import { CadastroUsuarioRequest } from 'src/app/core/models/gerenciamento-usuarios/cadastro-usuario-request.model';
+import { RedefinirSenhaService } from 'src/app/core/services/redefinir-senha/redefinir-senha.service';
 
 @Component({
   selector: 'app-redefinir-senha',
@@ -29,14 +29,14 @@ export class RedefinirSenhaComponent implements OnInit {
   hidePassword: boolean = true;
   hideConfirmPassword: boolean = true;
   listRef: any[] = [];
-  loginData!: Autenticacao;
+  loginInfo!: Autenticacao;
 
   @ViewChild('senhaRef') senhaRef!: ElementRef;
   @ViewChild('confirmarSenhaRef') confirmarSenhaRef!: ElementRef;
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _cadastroUsuariosService: CadastroUsuariosService,
+    private _redefinirSenhaService: RedefinirSenhaService,
     private _cookieService: CookiesService,
     private _localStorageService: LocalStorageService,
     private _router: Router,
@@ -47,7 +47,7 @@ export class RedefinirSenhaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loginData = JSON.parse(this._localStorageService.getItemLocalStorage(ChavesLocalStorage.UserInfo) || '{}');
+    this.loginInfo = JSON.parse(this._localStorageService.getItemLocalStorage(ChavesLocalStorage.UserInfo) || '{}');
 
     this.formRedefinirSenha = this._formBuilder.group({
       senha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
@@ -59,19 +59,11 @@ export class RedefinirSenhaComponent implements OnInit {
 
   changePassword() {
     if (this.formRedefinirSenha.valid) {
-      const data: CadastroUsuarioRequest = {
-        email: this.loginData.email,
-        senha: this.formRedefinirSenha.controls.confirmarSenha.value,
-        perfil: {
-          codigo: this.loginData.perfil.codigo
-        },
-        ativo: true,
-        redefinirSenha: false
-      };
+      const novaSenha: string = this.formRedefinirSenha.controls.confirmarSenha.value;
 
       this._spinner.show();
-      this._cadastroUsuariosService
-        .save(data, true, this.loginData.id)
+      this._redefinirSenhaService
+        .redefinePassword(this.loginInfo.id, novaSenha)
         .pipe(finalize(() => this._spinner.hide()))
         .subscribe(
           {

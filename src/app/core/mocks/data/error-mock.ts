@@ -1,4 +1,4 @@
-import { ErrorResponse } from "../../interfaces/components/error.interface"
+import { ErrorResponse } from "../../interfaces/components/error-data.interface"
 
 export const mockError: ErrorResponse = {
   status: 500,

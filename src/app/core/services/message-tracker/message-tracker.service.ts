@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+
 import { MessageTrackerComponent } from 'src/app/shared/components/message-tracker/message-tracker.component';
-import { Progress } from '../../interfaces/components/error.interface';
+import { Progress } from '../../interfaces/components/error-data.interface';
 
 @Injectable({
   providedIn: 'root'

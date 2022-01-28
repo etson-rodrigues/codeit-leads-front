@@ -8,8 +8,8 @@ import { routes } from 'src/app/app-routing.module';
 import { mockLoginResponse } from 'src/app/core/mocks/data/autenticacao-mock';
 import { mockCadastroUsuarioResponse } from 'src/app/core/mocks/data/cadastro-usuario-mock';
 import { AutenticacaoService } from 'src/app/core/services/autenticacao/autenticacao.service';
-import { CadastroUsuariosService } from 'src/app/core/services/cadastro-usuarios/cadastro-usuarios.service';
 import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
+import { RedefinirSenhaService } from 'src/app/core/services/redefinir-senha/redefinir-senha.service';
 import { RedefinirSenhaComponent } from './redefinir-senha.component';
 import { RedefinirSenhaModule } from './redefinir-senha.module';
 
@@ -17,12 +17,12 @@ describe('RedefinirSenhaComponent', () => {
   let component: RedefinirSenhaComponent;
   let fixture: ComponentFixture<RedefinirSenhaComponent>;
   let autenticacaoService: jasmine.SpyObj<AutenticacaoService>;
-  let cadastroUsuariosService: jasmine.SpyObj<CadastroUsuariosService>;
+  let redefinirSenhaService: jasmine.SpyObj<RedefinirSenhaService>;
   let messageTrackerService: jasmine.SpyObj<MessageTrackerService>;
 
   beforeEach(waitForAsync(() => {
     const autenticacaoServiceSpy = jasmine.createSpyObj('AutenticacaoService', ['login']);
-    const cadastroUsuariosServiceSpy = jasmine.createSpyObj('CadastroUsuariosService', ['save']);
+    const redefinirSenhaServiceSpy = jasmine.createSpyObj('RedefinirSenhaService', ['redefinePassword']);
     const messageTrackerServiceSpy = jasmine.createSpyObj('MessageTrackerService', ['subscribeError']);
 
     TestBed.configureTestingModule({
@@ -36,7 +36,7 @@ describe('RedefinirSenhaComponent', () => {
       ],
       providers: [
         { provide: AutenticacaoService, useValue: autenticacaoServiceSpy },
-        { provide: CadastroUsuariosService, useValue: cadastroUsuariosServiceSpy },
+        { provide: RedefinirSenhaService, useValue: redefinirSenhaServiceSpy },
         { provide: MessageTrackerService, useValue: messageTrackerServiceSpy }
       ],
       schemas: [NO_ERRORS_SCHEMA]
@@ -44,7 +44,7 @@ describe('RedefinirSenhaComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(RedefinirSenhaComponent);
         autenticacaoService = TestBed.inject(AutenticacaoService) as jasmine.SpyObj<AutenticacaoService>;
-        cadastroUsuariosService = TestBed.inject(CadastroUsuariosService) as jasmine.SpyObj<CadastroUsuariosService>;
+        redefinirSenhaService = TestBed.inject(RedefinirSenhaService) as jasmine.SpyObj<RedefinirSenhaService>;
         messageTrackerService = TestBed.inject(MessageTrackerService) as jasmine.SpyObj<MessageTrackerService>;
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -117,7 +117,7 @@ describe('RedefinirSenhaComponent', () => {
     const confirmarSenhaInput = component.formRedefinirSenha.get('confirmarSenha');
     senhaInput!.setValue('senha12345');
     confirmarSenhaInput!.setValue('senha12345');
-    cadastroUsuariosService.save.and.returnValue(of(mockCadastroUsuarioResponse));
+    redefinirSenhaService.redefinePassword.and.returnValue(of(mockCadastroUsuarioResponse));
     component.changePassword();
     expect(component.login).withContext('Deve chamar função de login após redefinir a senha do usuário com sucesso').toHaveBeenCalledTimes(1);
   });
@@ -128,7 +128,7 @@ describe('RedefinirSenhaComponent', () => {
     const confirmarSenhaInput = component.formRedefinirSenha.get('confirmarSenha');
     senhaInput!.setValue('senha12345');
     confirmarSenhaInput!.setValue('senha12345');
-    cadastroUsuariosService.save.and.returnValue(throwError(() => new Error()));
+    redefinirSenhaService.redefinePassword.and.returnValue(throwError(() => new Error()));
     component.changePassword();
     expect(messageTrackerService.subscribeError).withContext('Deve abrir o messageTracker ao gerar erro ao redefinir senha do usuário').toHaveBeenCalledTimes(1);
   });
