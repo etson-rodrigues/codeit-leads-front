@@ -14,7 +14,7 @@ import { validationInput } from 'src/app/core/validators/error-input';
 import { inputFocus } from 'src/app/shared/utils/inputFocus';
 import { ResumoService } from 'src/app/core/services/resumo/resumo.service';
 import { EditarService } from 'src/app/core/services/editar/editar.service';
-import { mustBeTheSame } from 'src/app/core/validators/same-password-validator';
+import { samePasswordValidator } from 'src/app/core/validators/same-password-validator';
 import { CadastroUsuarioRequest } from 'src/app/core/models/gerenciamento-usuarios/cadastro-usuario-request.model';
 
 @Component({
@@ -56,7 +56,7 @@ export class CadastroComponent implements OnInit {
       confirmarSenha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
       perfil: ['', [Validators.required]]
     }, {
-      validator: mustBeTheSame('senha', 'confirmarSenha')
+      validator: samePasswordValidator('senha', 'confirmarSenha')
     } as AbstractControlOptions);
   }
 

@@ -6,3 +6,11 @@ export interface ConsultaProcessosView {
   primeiraData: string;
   dataUltimaAtualizacao: string;
 }
+export interface ConsultaProcessosFilterOptions {
+  value: string;
+  viewValue: string;
+}
+export interface ConsultaProcessosSelectedFilters {
+  key: string;
+  name: string
+}

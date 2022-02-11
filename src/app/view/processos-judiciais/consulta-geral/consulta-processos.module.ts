@@ -8,10 +8,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DateAdapter, MatNativeDateModule} from '@angular/material/core';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { ConsultaProcessosRoutingModule } from './consulta-processos-routing.module';
 import { ConsultaProcessosComponent } from './consulta-processos.component';
+import { CustomDateAdapter } from 'src/app/core/config/date-adapter';
 
 @NgModule({
   declarations: [
@@ -27,7 +32,14 @@ import { ConsultaProcessosComponent } from './consulta-processos.component';
     MatIconModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatChipsModule,
+    MatDividerModule
+  ],
+  providers: [
+    { provide: DateAdapter, useClass: CustomDateAdapter }
   ]
 })
 export class ConsultaProcessosModule { }

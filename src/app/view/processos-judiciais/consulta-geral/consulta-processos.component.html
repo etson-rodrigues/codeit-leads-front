@@ -16,11 +16,57 @@
           <mat-error>{{validationInput('razaoSocial')}}</mat-error>
         </mat-form-field>
 
+        <div class="criterio-data">
+          <mat-form-field>
+            <mat-label>Critério por data</mat-label>
+            <mat-select formControlName="criterioData">
+              <mat-option>--</mat-option>
+              <mat-option *ngFor="let option of dateOptions" [value]="option.value">
+                {{option.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Data Inicial</mat-label>
+            <input matInput formControlName="dataInicial" id="dataInicial" [matDatepicker]="dataInicial" [max]="maxDate"
+              (input)="validateEmptyField($event, 'dataInicial')" (focus)="validateEmptyField($event, 'dataInicial')">
+            <mat-datepicker-toggle matSuffix [for]="dataInicial"></mat-datepicker-toggle>
+            <mat-datepicker #dataInicial></mat-datepicker>
+            <mat-error>{{validationInput('dataInicial')}}</mat-error>
+          </mat-form-field>
+
+          <span>até</span>
+
+          <mat-form-field>
+            <mat-label>Data Final</mat-label>
+            <input matInput formControlName="dataFinal" id="dataFinal" [matDatepicker]="dataFinal" [max]="maxDate"
+              (input)="validateEmptyField($event, 'dataFinal')" (focus)="validateEmptyField($event, 'dataFinal')">
+            <mat-datepicker-toggle matSuffix [for]="dataFinal"></mat-datepicker-toggle>
+            <mat-datepicker #dataFinal></mat-datepicker>
+            <mat-error>{{validationInput('dataFinal')}}</mat-error>
+          </mat-form-field>
+        </div>
+
         <div class="container-button">
           <button type="submit" class="search" mat-raised-button>Pesquisar</button>
           <button type="button" class="cleanFilter" mat-raised-button (click)="cleanFilter()">Limpar Filtro</button>
         </div>
       </form>
+    </div>
+
+    <div class="container-filtros-selecionados" [hidden]="!(filters.length > 0)">
+      <mat-form-field class="example-chip-list">
+        <mat-chip-list aria-label="Filtros selecionados">
+          <mat-chip *ngFor="let filter of filters" (removed)="removeFilter(filter)">
+            {{filter.name}}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+        </mat-chip-list>
+      </mat-form-field>
+      <mat-divider></mat-divider>
     </div>
 
     <div *ngIf="searchResult != null && searchResult.length == 0">

@@ -4,8 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { CURRENCY_MASK_CONFIG } from 'ngx-currency';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
 
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';

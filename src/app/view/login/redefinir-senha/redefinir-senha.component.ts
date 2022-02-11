@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AutenticacaoService } from 'src/app/core/services/autenticacao/autenticacao.service';
 import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
 import { validationInput } from 'src/app/core/validators/error-input';
-import { mustBeTheSame } from 'src/app/core/validators/same-password-validator';
+import { samePasswordValidator } from 'src/app/core/validators/same-password-validator';
 import { inputFocus } from 'src/app/shared/utils/inputFocus';
 import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
 import { CookiesService } from 'src/app/core/services/cookies/cookies.service';
@@ -53,7 +53,7 @@ export class RedefinirSenhaComponent implements OnInit {
       senha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
       confirmarSenha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
     }, {
-      validator: mustBeTheSame('senha', 'confirmarSenha')
+      validator: samePasswordValidator('senha', 'confirmarSenha')
     } as AbstractControlOptions);
   }
 

@@ -1,6 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
+import { CriterioData } from '../../enums/criterio-data.enum';
 import { mockConsultaProcessosResponse } from '../../mocks/data/consulta-processos-mock';
 import { ConsultaProcessosService } from './consulta-processos.service';
 
@@ -21,28 +22,38 @@ describe('ConsultaProcessosService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('[CIT-5736] deve retornar dados dos processos', () => {
-    const razaoSocial = 'teste';
+  it('[CIT-5736][CIT-5849] deve retornar dados dos processos', () => {
+    const searchParameters = {
+      razaoSocial: 'teste',
+      criterioData: CriterioData.CriacaoProcesso,
+      dataInicial: '2021-01-01',
+      dataFinal: '2022-01-01'
+    }
     const pageNumber = 1;
     const pageSize = 3;
 
-    service.get(razaoSocial, pageNumber, pageSize).subscribe(response => {
+    service.get(searchParameters, pageNumber, pageSize).subscribe(response => {
       expect(response.data.length).withContext('Deve retornar array com 3 elementos').toBe(3);
       expect(response.data.filter(item => item.numeroUnicoProtocolo == "2222222-22.2222.2.22.2222")).withContext('Deve possuir o NUP 2222222-22.2222.2.22.2222').toBeTruthy();
     })
 
-    const req = http.expectOne(`${service["_url"]}processos-judiciais?razaoSocial=teste&pageNumber=1&pageSize=3`);
+    const req = http.expectOne(`${service["_url"]}processos-judiciais?razaoSocial=teste&criterioData=PrimeiraData&dataInicial=2021-01-01&dataFinal=2022-01-01&pageNumber=1&pageSize=3`);
     expect(req.request.method).toBe("GET");
 
     req.flush(mockConsultaProcessosResponse);
   });
 
-  it('[CIT-5736] deve retornar erro caso consulta dos processos falhar', () => {
-    const razaoSocial = 'teste';
+  it('[CIT-5736][CIT-5849] deve retornar erro caso consulta dos processos falhar', () => {
+    const searchParameters = {
+      razaoSocial: 'teste',
+      criterioData: CriterioData.CriacaoProcesso,
+      dataInicial: '2021-01-01',
+      dataFinal: '2022-01-01'
+    }
     const pageNumber = 1;
     const pageSize = 3;
 
-    service.get(razaoSocial, pageNumber, pageSize).subscribe({
+    service.get(searchParameters, pageNumber, pageSize).subscribe({
       next: () => {
         fail('Operação de consultar processos deveria ter falhado');
       },
@@ -51,7 +62,7 @@ describe('ConsultaProcessosService', () => {
       }
     });
 
-    const req = http.expectOne(`${service["_url"]}processos-judiciais?razaoSocial=teste&pageNumber=1&pageSize=3`);
+    const req = http.expectOne(`${service["_url"]}processos-judiciais?razaoSocial=teste&criterioData=PrimeiraData&dataInicial=2021-01-01&dataFinal=2022-01-01&pageNumber=1&pageSize=3`);
     expect(req.request.method).toBe("GET");
 
     req.flush('Erro', {

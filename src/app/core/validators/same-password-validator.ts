@@ -1,6 +1,6 @@
 import { AbstractControl } from "@angular/forms";
 
-export function mustBeTheSame(senha: string, confirmarSenha: string) {
+export function samePasswordValidator(senha: string, confirmarSenha: string) {
   return (controls: AbstractControl) => {
     const controlSenha = controls.get(senha);
     const controlConfirmarSenha = controls.get(confirmarSenha);
