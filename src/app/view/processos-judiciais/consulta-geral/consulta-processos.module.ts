@@ -10,11 +10,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { DateAdapter, MatNativeDateModule} from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { ConsultaProcessosRoutingModule } from './consulta-processos-routing.module';
+import { DialogModule } from 'src/app/shared/components/dialog/dialog.module';
 import { ConsultaProcessosComponent } from './consulta-processos.component';
 import { CustomDateAdapter } from 'src/app/core/config/date-adapter';
 
@@ -36,7 +39,10 @@ import { CustomDateAdapter } from 'src/app/core/config/date-adapter';
     MatDatepickerModule,
     MatNativeDateModule,
     MatChipsModule,
-    MatDividerModule
+    MatDividerModule,
+    MatTooltipModule,
+    MatMenuModule,
+    DialogModule
   ],
   providers: [
     { provide: DateAdapter, useClass: CustomDateAdapter }

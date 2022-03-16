@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { catchError, Observable, of, throwError } from "rxjs";
+import { catchError, from, Observable, of, throwError } from "rxjs";
 
 import { environment } from "src/environments/environment";
 import { ChavesCookies } from "../enums/cookie.enum";
@@ -32,7 +32,13 @@ export class RequestInterceptor implements HttpInterceptor {
           }
         });
       }
-      return next.handle(req).pipe(catchError(error => this.handleAuthError(error)));
+
+      return next.handle(req).pipe(catchError((error: HttpErrorResponse) => {
+        if (req.responseType === 'blob' && error.error instanceof Blob) {
+          return from(Promise.resolve(error).then(async x => { throw new HttpErrorResponse({ error: JSON.parse(await x.error.text()), headers: x.headers, status: x.status, statusText: x.statusText, url: x.url ?? undefined }) }));
+        }
+        return this.handleAuthError(error);
+      }));
     }
     return next.handle(req).pipe(catchError(error => this.handleAuthError(error)));
   }
@@ -44,7 +50,6 @@ export class RequestInterceptor implements HttpInterceptor {
       this._router.navigate(['login']);
       return of(error.status);
     }
-    this._messageTrackerService.subscribeError(error.error);
-    return throwError(() => new Error(error.status.toString()));
+    return throwError(() => error);
   }
 }

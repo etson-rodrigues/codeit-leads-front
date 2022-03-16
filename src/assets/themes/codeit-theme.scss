@@ -379,8 +379,21 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
           }
         }
       }
+      .export {
+        color: mat-color($app-accent, 800);
+      }
       .result-table {
         .mat-header-cell {
+          color: mat-color($app-accent, 800);
+        }
+      }
+    }
+  }
+  // menu export - consulta de processos
+  .menu-export {
+    .mat-menu-content {
+      .mat-menu-item {
+        .mat-icon {
           color: mat-color($app-accent, 800);
         }
       }

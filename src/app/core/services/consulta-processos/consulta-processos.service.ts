@@ -4,13 +4,13 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ConsultaProcessosRequest } from '../../models/consulta-processos/consulta-processos-request.model';
 import { ConsultaProcessosResponse } from '../../models/consulta-processos/consulta-processos-response.model';
+import { formatarDataParaRequest } from 'src/app/shared/utils/formatar-data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConsultaProcessosService {
   private _url: string = environment.url;
-  private _urlMock: string = 'https://619f8da81ac52a0017ba48ed.mockapi.io/api/';
 
   constructor(private _http: HttpClient) { }
 
@@ -22,15 +22,14 @@ export class ConsultaProcessosService {
       params = params.set('criterioData', searchParameters.criterioData);
     }
     if (searchParameters.dataInicial) {
-      params = params.set('dataInicial', searchParameters.dataInicial.split('/').reverse().join('-'));
+      params = params.set('dataInicial', formatarDataParaRequest(searchParameters.dataInicial));
     }
 
     params = params
-      .set('dataFinal', searchParameters.dataFinal.split('/').reverse().join('-'))
+      .set('dataFinal', formatarDataParaRequest(searchParameters.dataFinal))
       .set('pageNumber', pageNumber)
       .set('pageSize', pageSize)
 
     return this._http.get<ConsultaProcessosResponse>(`${this._url}processos-judiciais`, { params });
-    //return this._http.get<ConsultaProcessosResponse>(`${this._urlMock}processos`, { params });
   }
 }

@@ -26,18 +26,30 @@ describe('ConsultaProcessosService', () => {
     const searchParameters = {
       razaoSocial: 'teste',
       criterioData: CriterioData.CriacaoProcesso,
-      dataInicial: '2021-01-01',
-      dataFinal: '2022-01-01'
+      dataInicial: '01/01/2021',
+      dataFinal: '01/01/2022'
     }
     const pageNumber = 1;
     const pageSize = 3;
+
+    const params = {
+      ...searchParameters,
+      dataInicial: '2021-01-01',
+      dataFinal: '2022-01-01',
+      pageNumber: 1,
+      pageSize: 3
+    }
+    let urlParams = '';
+    for (const [chave, valor] of Object.entries(params)) {
+      urlParams += `${chave}=${valor}&`;
+    }
 
     service.get(searchParameters, pageNumber, pageSize).subscribe(response => {
       expect(response.data.length).withContext('Deve retornar array com 3 elementos').toBe(3);
       expect(response.data.filter(item => item.numeroUnicoProtocolo == "2222222-22.2222.2.22.2222")).withContext('Deve possuir o NUP 2222222-22.2222.2.22.2222').toBeTruthy();
     })
 
-    const req = http.expectOne(`${service["_url"]}processos-judiciais?razaoSocial=teste&criterioData=PrimeiraData&dataInicial=2021-01-01&dataFinal=2022-01-01&pageNumber=1&pageSize=3`);
+    const req = http.expectOne(`${service["_url"]}processos-judiciais?${urlParams.slice(0, -1)}`);
     expect(req.request.method).toBe("GET");
 
     req.flush(mockConsultaProcessosResponse);
@@ -47,11 +59,23 @@ describe('ConsultaProcessosService', () => {
     const searchParameters = {
       razaoSocial: 'teste',
       criterioData: CriterioData.CriacaoProcesso,
-      dataInicial: '2021-01-01',
-      dataFinal: '2022-01-01'
+      dataInicial: '01/01/2021',
+      dataFinal: '01/01/2022'
     }
     const pageNumber = 1;
     const pageSize = 3;
+
+    const params = {
+      ...searchParameters,
+      dataInicial: '2021-01-01',
+      dataFinal: '2022-01-01',
+      pageNumber: 1,
+      pageSize: 3
+    }
+    let urlParams = '';
+    for (const [chave, valor] of Object.entries(params)) {
+      urlParams += `${chave}=${valor}&`;
+    }
 
     service.get(searchParameters, pageNumber, pageSize).subscribe({
       next: () => {
@@ -62,7 +86,7 @@ describe('ConsultaProcessosService', () => {
       }
     });
 
-    const req = http.expectOne(`${service["_url"]}processos-judiciais?razaoSocial=teste&criterioData=PrimeiraData&dataInicial=2021-01-01&dataFinal=2022-01-01&pageNumber=1&pageSize=3`);
+    const req = http.expectOne(`${service["_url"]}processos-judiciais?${urlParams.slice(0, -1)}`);
     expect(req.request.method).toBe("GET");
 
     req.flush('Erro', {

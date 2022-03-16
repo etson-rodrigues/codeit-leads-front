@@ -4,22 +4,27 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of, throwError } from 'rxjs';
 
+import { MatDialogRef } from '@angular/material/dialog';
+
 import { ConsultaProcessosComponent } from './consulta-processos.component';
 import { ConsultaProcessosModule } from './consulta-processos.module';
 import { ConsultaProcessosService } from 'src/app/core/services/consulta-processos/consulta-processos.service';
+import { ExportarConsultaProcessosService } from 'src/app/core/services/exportar-consulta-processos/exportar-consulta-processos.service';
 import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
 import { mockConsultaProcessosResponse } from 'src/app/core/mocks/data/consulta-processos-mock';
-import { formatarData } from 'src/app/shared/utils/formatarData';
+import { formatarDataPtBr } from 'src/app/shared/utils/formatar-data';
 import { CriterioData } from 'src/app/core/enums/criterio-data.enum';
 
 describe('ConsultaProcessosComponent', () => {
   let component: ConsultaProcessosComponent;
   let fixture: ComponentFixture<ConsultaProcessosComponent>;
-  let consultaProcessosService: any;
-  let messageTrackerService: any;
+  let consultaProcessosService: jasmine.SpyObj<ConsultaProcessosService>;
+  let exportarConsultaProcessosService: jasmine.SpyObj<ExportarConsultaProcessosService>;
+  let messageTrackerService: jasmine.SpyObj<MessageTrackerService>;
 
   beforeEach(waitForAsync(() => {
     const consultaProcessosServiceSpy = jasmine.createSpyObj('ConsultaProcessosService', ['get']);
+    const exportarConsultaProcessosServiceSpy = jasmine.createSpyObj('ExportarConsultaProcessosService', ['export']);
     const messageTrackerServiceSpy = jasmine.createSpyObj('MessageTrackerService', ['subscribeError']);
 
     TestBed.configureTestingModule({
@@ -33,6 +38,7 @@ describe('ConsultaProcessosComponent', () => {
       ],
       providers: [
         { provide: ConsultaProcessosService, useValue: consultaProcessosServiceSpy },
+        { provide: ExportarConsultaProcessosService, useValue: exportarConsultaProcessosServiceSpy },
         { provide: MessageTrackerService, useValue: messageTrackerServiceSpy }
       ],
       schemas: [NO_ERRORS_SCHEMA]
@@ -40,8 +46,9 @@ describe('ConsultaProcessosComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(ConsultaProcessosComponent);
         component = fixture.componentInstance;
-        consultaProcessosService = TestBed.inject(ConsultaProcessosService);
-        messageTrackerService = TestBed.inject(MessageTrackerService);
+        consultaProcessosService = TestBed.inject(ConsultaProcessosService) as jasmine.SpyObj<ConsultaProcessosService>;
+        exportarConsultaProcessosService = TestBed.inject(ExportarConsultaProcessosService) as jasmine.SpyObj<ExportarConsultaProcessosService>;
+        messageTrackerService = TestBed.inject(MessageTrackerService) as jasmine.SpyObj<MessageTrackerService>;
         fixture.detectChanges();
       });
   }));
@@ -127,8 +134,8 @@ describe('ConsultaProcessosComponent', () => {
     consultaProcessosService.get.and.returnValue(of(mockConsultaProcessosResponse));
     let presentDate = new Date();
     let pastDate = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
-    let formattedPresentDate = formatarData(presentDate.toString());
-    let formattedPastDate = formatarData(pastDate.toString());
+    let formattedPresentDate = formatarDataPtBr(presentDate.toString());
+    let formattedPastDate = formatarDataPtBr(pastDate.toString());
 
     const razaoSocialInput = component.formConsulta.get('razaoSocial');
     const criterioDataInput = component.formConsulta.get('criterioData');
@@ -152,8 +159,8 @@ describe('ConsultaProcessosComponent', () => {
   it('[CIT-5849] deve preencher variável filters com dados do searchParameters', () => {
     let presentDate = new Date();
     let pastDate = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
-    let formattedPresentDate = formatarData(presentDate.toString());
-    let formattedPastDate = formatarData(pastDate.toString());
+    let formattedPresentDate = formatarDataPtBr(presentDate.toString());
+    let formattedPastDate = formatarDataPtBr(pastDate.toString());
     let searchParameters = {
       razaoSocial: 'teste',
       criterioData: 'ultimo-andamento',
@@ -173,7 +180,7 @@ describe('ConsultaProcessosComponent', () => {
       razaoSocial: 'teste',
       criterioData: 'ultima-atualizacao',
       dataInicial: null,
-      dataFinal: formatarData(new Date().toString())
+      dataFinal: formatarDataPtBr(new Date().toString())
     }
     let selecttedFilter = {
       key: "criterioData",
@@ -319,4 +326,28 @@ describe('ConsultaProcessosComponent', () => {
       'WAGNER BITTENCOURT DE OLIVEIRA,' + '\r\n' +
       'ENTRE OUTROS...');
   });
+
+  it('[CIT-5881] deve realizar exportação dos processos pesquisados', () => {
+    component.searchParameters = {
+      razaoSocial: 'teste',
+      criterioData: CriterioData.CriacaoProcesso,
+      dataInicial: '01/03/2022',
+      dataFinal: '01/03/2022'
+    }
+
+    const fakeResponse = new Blob([''], { type: 'text/csv' });
+    spyOn(component['_dialog'], 'open').and.returnValue({ afterClosed: () => of(true) } as MatDialogRef<typeof component>);
+    exportarConsultaProcessosService.export.and.returnValue(of(fakeResponse));
+    spyOn(component.downloadAnchor, 'click');
+    component.export();
+    expect(exportarConsultaProcessosService.export).withContext('Deve chamar serviço de exportação após confirmação do usuário').toHaveBeenCalled();
+  })
+
+  it('[CIT-5881] deve retornar erro caso exportação dos processos pesquisados falhar', () => {
+    spyOn(component['_dialog'], 'open').and.returnValue({ afterClosed: () => of(true) } as MatDialogRef<typeof component>);
+    exportarConsultaProcessosService.export.and.returnValue(throwError(() => new Error()));
+    component.export();
+    expect(exportarConsultaProcessosService.export).withContext('Deve chamar serviço de exportação após confirmação do usuário').toHaveBeenCalled();
+    expect(messageTrackerService.subscribeError).withContext('Deve abrir o messageTracker ao gerar erro na exportação dos processos').toHaveBeenCalled();
+  })
 });

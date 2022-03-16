@@ -1,6 +1,6 @@
 import { AbstractControl } from "@angular/forms";
 
-import { formatarData } from "src/app/shared/utils/formatarData";
+import { formatarDataPtBr } from "src/app/shared/utils/formatar-data";
 
 export function dateFormatValidator(control: AbstractControl) {
   if (control.pristine) {
@@ -8,7 +8,7 @@ export function dateFormatValidator(control: AbstractControl) {
   }
 
   const reg = /(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)\d\d/;
-  let data = formatarData(control.value);
+  let data = formatarDataPtBr(control.value);
 
   if (!control.value || !data.match(reg)) {
     return { errorFormatoData: true };

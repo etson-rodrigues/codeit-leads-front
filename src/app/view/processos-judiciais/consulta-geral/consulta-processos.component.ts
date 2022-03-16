@@ -4,12 +4,14 @@ import { finalize } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
 
 import { setPaginatorConfig } from 'src/app/core/config/paginator-config';
 import { ConsultaProcessosService } from 'src/app/core/services/consulta-processos/consulta-processos.service';
+import { ExportarConsultaProcessosService } from 'src/app/core/services/exportar-consulta-processos/exportar-consulta-processos.service';
 import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
 import { validationInput } from 'src/app/core/validators/error-input';
-import { formatarData } from 'src/app/shared/utils/formatarData';
+import { formatarDataPtBr } from 'src/app/shared/utils/formatar-data';
 import { ConsultaProcessosFilterOptions, ConsultaProcessosSelectedFilters, ConsultaProcessosView } from './consulta-processos.model';
 import { ConsultaProcessosResponseData } from 'src/app/core/models/consulta-processos/consulta-processos-response.model';
 import { Uf } from 'src/app/core/enums/uf.enum';
@@ -18,6 +20,7 @@ import { compareDateValidator } from 'src/app/core/validators/compare-date-valid
 import { dateFormatValidator } from 'src/app/core/validators/date-format-validator';
 import { ConsultaProcessosRequest } from 'src/app/core/models/consulta-processos/consulta-processos-request.model';
 import { CriterioData } from 'src/app/core/enums/criterio-data.enum';
+import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
 
 
 @Component({
@@ -42,12 +45,18 @@ export class ConsultaProcessosComponent implements OnInit {
   totalRecords!: number;
   pageSize!: number;
 
+  totalRecordsForExport: number = 100;
+
+  downloadAnchor: HTMLAnchorElement = document.createElement('a');
+
   @ViewChild('formDirective') formDirective!: NgForm;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private _formBuilder: FormBuilder,
     private _consultaProcessosServices: ConsultaProcessosService,
+    private _exportarConsultaProcessosService: ExportarConsultaProcessosService,
+    private _dialog: MatDialog,
     private _spinner: NgxSpinnerService,
     private _messageTrackerService: MessageTrackerService
   ) { }
@@ -72,8 +81,8 @@ export class ConsultaProcessosComponent implements OnInit {
       let dataFinalInput: Date = this.formConsulta.controls.dataFinal.value;
 
       let criterioData: string | null = criterioDataInput ? criterioDataInput : null;
-      let dataInicial: string | null = dataInicialInput ? formatarData(dataInicialInput.toString()) : null;
-      let dataFinal: string = dataFinalInput ? formatarData(dataFinalInput.toString()) : formatarData(new Date().toString());
+      let dataInicial: string | null = dataInicialInput ? formatarDataPtBr(dataInicialInput.toString()) : null;
+      let dataFinal: string = dataFinalInput ? formatarDataPtBr(dataFinalInput.toString()) : formatarDataPtBr(new Date().toString());
 
       this.searchParameters = {
         razaoSocial: razaoSocialInput,
@@ -95,10 +104,10 @@ export class ConsultaProcessosComponent implements OnInit {
                 return {
                   nup: item.numeroUnicoProtocolo,
                   uf: Uf[Number(item.uf.codigo)],
-                  dataUltimaAtualizacao: formatarData(item.dataUltimaAtualizacao),
+                  dataUltimaAtualizacao: formatarDataPtBr(item.dataUltimaAtualizacao),
                   partesAtivas: this.formatPartes(item.sumarioInstancias[0].partesAtivas),
                   partesPassivas: this.formatPartes(item.sumarioInstancias[0].partesPassivas),
-                  primeiraData: formatarData(item.sumarioInstancias[0].primeiraData),
+                  primeiraData: formatarDataPtBr(item.sumarioInstancias[0].primeiraData),
                 }
               }));
 
@@ -129,10 +138,10 @@ export class ConsultaProcessosComponent implements OnInit {
               return {
                 nup: item.numeroUnicoProtocolo,
                 uf: Uf[Number(item.uf.codigo)],
-                dataUltimaAtualizacao: formatarData(item.dataUltimaAtualizacao),
+                dataUltimaAtualizacao: formatarDataPtBr(item.dataUltimaAtualizacao),
                 partesAtivas: this.formatPartes(item.sumarioInstancias[0].partesAtivas),
                 partesPassivas: this.formatPartes(item.sumarioInstancias[0].partesPassivas),
-                primeiraData: formatarData(item.sumarioInstancias[0].primeiraData),
+                primeiraData: formatarDataPtBr(item.sumarioInstancias[0].primeiraData),
               }
             }));
 
@@ -150,6 +159,38 @@ export class ConsultaProcessosComponent implements OnInit {
   cleanFilter() {
     this.formDirective.resetForm();
     this.filters = [];
+  }
+
+  export() {
+    const dialogRef = this._dialog.open(DialogComponent, {
+      data: {
+        titulo: `DESEJA EXPORTAR PARA PLANILHA TODOS OS DADOS DO RESULTADO DA PESQUISA?`,
+        mensagem: '',
+        tipo: 'question'
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this._spinner.show();
+        this._exportarConsultaProcessosService.export(this.searchParameters)
+          .pipe(finalize(() => this._spinner.hide()))
+          .subscribe(
+            {
+              next: (response) => {
+                const file = new window.Blob([response], { type: 'text/csv' });
+                this.downloadAnchor.style.display = "none";
+                const fileURL = URL.createObjectURL(file);
+                this.downloadAnchor.href = fileURL;
+                this.downloadAnchor.download = `planilha-${this.searchParameters.razaoSocial.replace(/[^\w\s]/gi, '').trim().split(' ').join('')}.csv`;
+                this.downloadAnchor.click();
+              },
+              error: (error) => {
+                this._messageTrackerService.subscribeError(error.error);
+              }
+            }
+          )
+      }
+    });
   }
 
   addFilter(searchParameters: ConsultaProcessosRequest) {

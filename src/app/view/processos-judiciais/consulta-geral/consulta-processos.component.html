@@ -55,25 +55,42 @@
       </form>
     </div>
 
-    <div class="container-filtros-selecionados" [hidden]="!(filters.length > 0)">
-      <mat-form-field class="example-chip-list">
-        <mat-chip-list aria-label="Filtros selecionados">
-          <mat-chip *ngFor="let filter of filters" (removed)="removeFilter(filter)">
-            {{filter.name}}
-            <button matChipRemove>
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip>
-        </mat-chip-list>
-      </mat-form-field>
-      <mat-divider></mat-divider>
+    <div class="wrapper">
+      <div class="container-filtros-selecionados" [hidden]="!(filters.length > 0)">
+        <mat-form-field class="example-chip-list">
+          <mat-chip-list aria-label="Filtros selecionados">
+            <mat-chip *ngFor="let filter of filters" (removed)="removeFilter(filter)">
+              {{filter.name}}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+          </mat-chip-list>
+        </mat-form-field>
+      </div>
+
+      <div class="export" matTooltip="Exportar para Planilha (máximo 100 registros)" matTooltipPosition="above"
+        *ngIf="(searchResult && searchResult.length > 0)">
+        <button mat-icon-button [matMenuTriggerFor]="exportMenu" [disabled]="totalRecords >= totalRecordsForExport"
+          aria-label="Exportar processos">
+          <mat-icon fontSet="fas" fontIcon="fa-file-export" class="icon-md-24"></mat-icon>
+          <span>Exportar</span>
+        </button>
+        <mat-menu class="menu-export" #exportMenu="matMenu" xPosition="before">
+          <button mat-menu-item (click)="export()">
+            <mat-icon fontSet="fas" fontIcon="fa-file-download" class="icon-md-24"></mat-icon>
+            <span>Exportar para CSV</span>
+          </button>
+        </mat-menu>
+      </div>
     </div>
 
     <div *ngIf="searchResult != null && searchResult.length == 0">
       <p>Nenhum resultado foi encontrado</p>
     </div>
 
-    <div [hidden]="!(searchResult && searchResult.length > 0)">
+    <div class="container-table" [hidden]="!(searchResult && searchResult.length > 0)">
+      <mat-divider></mat-divider>
       <table mat-table [dataSource]="searchResult" class="result-table">
 
         <ng-container matColumnDef="nup">
