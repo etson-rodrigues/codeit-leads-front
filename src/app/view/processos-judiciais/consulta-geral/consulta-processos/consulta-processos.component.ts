@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -6,21 +6,24 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 
-import { setPaginatorConfig } from 'src/app/core/config/paginator-config';
 import { ConsultaProcessosService } from 'src/app/core/services/consulta-processos/consulta-processos.service';
-import { ExportarConsultaProcessosService } from 'src/app/core/services/exportar-consulta-processos/exportar-consulta-processos.service';
+import { DetalhesProcessoService } from 'src/app/core/services/detalhes-processo/detalhes-processo.service';
+import { ExportarProcessosService } from 'src/app/core/services/exportar-processos/exportar-processos.service';
+import { StepperService } from 'src/app/core/services/stepper/stepper.service';
 import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
-import { validationInput } from 'src/app/core/validators/error-input';
-import { formatarDataPtBr } from 'src/app/shared/utils/formatar-data';
-import { ConsultaProcessosFilterOptions, ConsultaProcessosSelectedFilters, ConsultaProcessosView } from './consulta-processos.model';
+import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
+import { ConsultaProcessosRequest } from 'src/app/core/models/consulta-processos/consulta-processos-request.model';
 import { ConsultaProcessosResponseData } from 'src/app/core/models/consulta-processos/consulta-processos-response.model';
-import { Uf } from 'src/app/core/enums/uf.enum';
+import { DetalhesProcesso } from 'src/app/core/models/detalhes-processo/detalhes-processo-response.model';
+import { ConsultaProcessosFilterOptions, ConsultaProcessosSelectedFilters, ConsultaProcessosView } from './consulta-processos.model';
+import { setPaginatorConfig } from 'src/app/core/config/paginator-config';
+import { formatarDataPtBr } from 'src/app/shared/utils/formatar-data';
+import { validationInput } from 'src/app/core/validators/error-input';
 import { maxDateValidator } from 'src/app/core/validators/max-date-validator';
 import { compareDateValidator } from 'src/app/core/validators/compare-date-validator';
 import { dateFormatValidator } from 'src/app/core/validators/date-format-validator';
-import { ConsultaProcessosRequest } from 'src/app/core/models/consulta-processos/consulta-processos-request.model';
+import { Uf } from 'src/app/core/enums/uf.enum';
 import { CriterioData } from 'src/app/core/enums/criterio-data.enum';
-import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
 
 
 @Component({
@@ -40,7 +43,7 @@ export class ConsultaProcessosComponent implements OnInit {
   filters: ConsultaProcessosSelectedFilters[] = [];
 
   searchResult!: ConsultaProcessosView[];
-  displayedColumns: string[] = ['nup', 'uf', 'partesAtivas', 'partesPassivas', 'primeiraData', 'dataUltimaAtualizacao'];
+  displayedColumns: string[] = ['nup', 'uf', 'partesAtivas', 'partesPassivas', 'primeiraData', 'dataUltimaAtualizacao', 'detalheProcesso'];
 
   totalRecords!: number;
   pageSize!: number;
@@ -52,13 +55,17 @@ export class ConsultaProcessosComponent implements OnInit {
   @ViewChild('formDirective') formDirective!: NgForm;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  @Output() detalhesProcesso: EventEmitter<DetalhesProcesso> = new EventEmitter();
+
   constructor(
     private _formBuilder: FormBuilder,
     private _consultaProcessosServices: ConsultaProcessosService,
-    private _exportarConsultaProcessosService: ExportarConsultaProcessosService,
+    private _consultaProcessoDetalheService: DetalhesProcessoService,
+    private _exportarConsultaProcessosService: ExportarProcessosService,
+    private _stepperService: StepperService,
     private _dialog: MatDialog,
     private _spinner: NgxSpinnerService,
-    private _messageTrackerService: MessageTrackerService
+    private _messageTrackerService: MessageTrackerService,
   ) { }
 
   ngOnInit(): void {
@@ -156,9 +163,22 @@ export class ConsultaProcessosComponent implements OnInit {
       )
   }
 
-  cleanFilter() {
-    this.formDirective.resetForm();
-    this.filters = [];
+  processDetail(nup: string) {
+    this._spinner.show();
+    this._consultaProcessoDetalheService
+      .get(nup)
+      .pipe(finalize(() => this._spinner.hide()))
+      .subscribe(
+        {
+          next: (response) => {
+            this.detalhesProcesso.emit(response.data[0]);
+            this._stepperService.next();
+          },
+          error: (error) => {
+            this._messageTrackerService.subscribeError(error.error);
+          }
+        }
+      )
   }
 
   export() {
@@ -229,6 +249,11 @@ export class ConsultaProcessosComponent implements OnInit {
 
       this.filters.push({ key: key, name: `${name}: ${value}` });
     })
+  }
+
+  cleanFilter() {
+    this.formDirective.resetForm();
+    this.filters = [];
   }
 
   removeFilter(filter: ConsultaProcessosSelectedFilters) {

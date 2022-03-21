@@ -1,18 +1,18 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { ExportarConsultaProcessosService } from './exportar-consulta-processos.service';
+import { ExportarProcessosService } from './exportar-processos.service';
 import { CriterioData } from '../../enums/criterio-data.enum';
 
 describe('ExportarConsultaProcessosService', () => {
-  let service: ExportarConsultaProcessosService;
+  let service: ExportarProcessosService;
   let http: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
     });
-    service = TestBed.inject(ExportarConsultaProcessosService);
+    service = TestBed.inject(ExportarProcessosService);
     http = TestBed.inject(HttpTestingController);
   });
 

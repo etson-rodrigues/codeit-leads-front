@@ -3,20 +3,20 @@ import { Injectable } from '@angular/core';
 
 import { environment } from 'src/environments/environment';
 import { ConsultaProcessosRequest } from '../../models/consulta-processos/consulta-processos-request.model';
-import { ExportarConsultaProcessosRequest } from '../../models/consulta-processos/exportar-consulta-processos-request.model';
+import { ExportarProcessosRequest } from '../../models/consulta-processos/exportar-consulta-processos-request.model';
 import { formatarDataParaRequest } from 'src/app/shared/utils/formatar-data';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ExportarConsultaProcessosService {
+export class ExportarProcessosService {
   private _url: string = environment.url;
 
   constructor(private _http: HttpClient) { }
 
   export(searchParameters: ConsultaProcessosRequest) {
 
-    let params: ExportarConsultaProcessosRequest = {
+    let params: ExportarProcessosRequest = {
       razaoSocial: searchParameters.razaoSocial,
       dataFinal: formatarDataParaRequest(searchParameters.dataFinal)
     };

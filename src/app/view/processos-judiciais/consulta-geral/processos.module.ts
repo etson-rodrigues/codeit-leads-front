@@ -13,21 +13,27 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 
-import { ConsultaProcessosRoutingModule } from './consulta-processos-routing.module';
+import { ProcessosRoutingModule } from './processos-routing.module';
 import { DialogModule } from 'src/app/shared/components/dialog/dialog.module';
-import { ConsultaProcessosComponent } from './consulta-processos.component';
+import { ProcessosComponent } from './processos.component';
+import { DetalhesProcessoComponent } from './detalhes-processo/detalhes-processo.component';
+import { ConsultaProcessosComponent } from './consulta-processos/consulta-processos.component';
 import { CustomDateAdapter } from 'src/app/core/config/date-adapter';
 
 @NgModule({
   declarations: [
-    ConsultaProcessosComponent
+    ProcessosComponent,
+    ConsultaProcessosComponent,
+    DetalhesProcessoComponent
   ],
   imports: [
     CommonModule,
-    ConsultaProcessosRoutingModule,
+    ProcessosRoutingModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -40,6 +46,8 @@ import { CustomDateAdapter } from 'src/app/core/config/date-adapter';
     MatNativeDateModule,
     MatChipsModule,
     MatDividerModule,
+    MatStepperModule,
+    MatCardModule,
     MatTooltipModule,
     MatMenuModule,
     DialogModule
@@ -48,4 +56,4 @@ import { CustomDateAdapter } from 'src/app/core/config/date-adapter';
     { provide: DateAdapter, useClass: CustomDateAdapter }
   ]
 })
-export class ConsultaProcessosModule { }
+export class ProcessosModule { }

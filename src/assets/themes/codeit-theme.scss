@@ -303,8 +303,7 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
     }
   }
 
-  // gerenciamento usuarios
-  .gerenciamento-usuarios-title {
+  .container-title {
     background-color: mat-color($app-primary, 700);
     color: mat-color($app-accent, 50);
   }
@@ -353,48 +352,71 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
     }
   }
 
-  // consulta de processos
+  // processos - consulta processos
   .container-consulta-processos {
-    background-color: mat-color($app-accent, 50);
-    .container-consulta {
-      .form {
-        .container-button {
-          .search {
-            color: mat-color($app-accent, 50);
-            background-color: mat-color($app-accent, 800);
-          }
-          .cleanFilter {
-            background-color: mat-color($app-accent, 300);
-          }
+    .form {
+      .container-button {
+        .search {
+          color: mat-color($app-accent, 50);
+          background-color: mat-color($app-accent, 800);
         }
-      }
-      .container-filtros-selecionados {
-        .mat-form-field {
-          .mat-chip {
-            color: mat-color($app-accent, 50);
-            background-color: mat-color($app-primary, 700);
-            .mat-icon {
-              color: mat-color($app-accent, 50);
-            }
-          }
-        }
-      }
-      .export {
-        color: mat-color($app-accent, 800);
-      }
-      .result-table {
-        .mat-header-cell {
-          color: mat-color($app-accent, 800);
+        .cleanFilter {
+          background-color: mat-color($app-accent, 300);
         }
       }
     }
+    .container-filtros-selecionados {
+      .mat-form-field {
+        .mat-chip {
+          color: mat-color($app-accent, 50);
+          background-color: mat-color($app-primary, 700);
+          .mat-icon {
+            color: mat-color($app-accent, 50);
+          }
+        }
+      }
+    }
+    .export {
+      color: mat-color($app-accent, 800);
+    }
+    .result-table {
+      .mat-header-cell,
+      button {
+        color: mat-color($app-accent, 800);
+      }
+    }
   }
+
   // menu export - consulta de processos
   .menu-export {
     .mat-menu-content {
       .mat-menu-item {
         .mat-icon {
           color: mat-color($app-accent, 800);
+        }
+      }
+    }
+  }
+
+  // detalhe do processo - consulta processos
+  .container-detalhes-processo {
+    button {
+      color: mat-color($app-accent, 800);
+    }
+
+    .detalhe {
+      .andamentos {
+        .andamentos-table {
+          table {
+            .mat-header-cell {
+              color: mat-color($app-accent, 800);
+            }
+          }
+
+          .mat-button {
+            color: mat-color($app-accent, 50);
+            background-color: mat-color($app-accent, 800);
+          }
         }
       }
     }

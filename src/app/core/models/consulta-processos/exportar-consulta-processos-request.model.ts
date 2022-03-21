@@ -1,4 +1,4 @@
-export interface ExportarConsultaProcessosRequest {
+export interface ExportarProcessosRequest {
   razaoSocial: string;
   criterioData?: string;
   dataInicial?: string;

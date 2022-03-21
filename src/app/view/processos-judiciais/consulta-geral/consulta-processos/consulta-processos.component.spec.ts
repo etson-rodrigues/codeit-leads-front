@@ -6,12 +6,15 @@ import { of, throwError } from 'rxjs';
 
 import { MatDialogRef } from '@angular/material/dialog';
 
+import { ProcessosModule } from '../processos.module';
 import { ConsultaProcessosComponent } from './consulta-processos.component';
-import { ConsultaProcessosModule } from './consulta-processos.module';
 import { ConsultaProcessosService } from 'src/app/core/services/consulta-processos/consulta-processos.service';
-import { ExportarConsultaProcessosService } from 'src/app/core/services/exportar-consulta-processos/exportar-consulta-processos.service';
+import { DetalhesProcessoService } from 'src/app/core/services/detalhes-processo/detalhes-processo.service';
+import { ExportarProcessosService } from 'src/app/core/services/exportar-processos/exportar-processos.service';
+import { StepperService } from 'src/app/core/services/stepper/stepper.service';
 import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
 import { mockConsultaProcessosResponse } from 'src/app/core/mocks/data/consulta-processos-mock';
+import { mockDetalhesProcessoResponse } from 'src/app/core/mocks/data/detalhes-processo-mock';
 import { formatarDataPtBr } from 'src/app/shared/utils/formatar-data';
 import { CriterioData } from 'src/app/core/enums/criterio-data.enum';
 
@@ -19,12 +22,16 @@ describe('ConsultaProcessosComponent', () => {
   let component: ConsultaProcessosComponent;
   let fixture: ComponentFixture<ConsultaProcessosComponent>;
   let consultaProcessosService: jasmine.SpyObj<ConsultaProcessosService>;
-  let exportarConsultaProcessosService: jasmine.SpyObj<ExportarConsultaProcessosService>;
+  let consultaProcessoDetalheService: jasmine.SpyObj<DetalhesProcessoService>;
+  let exportarConsultaProcessosService: jasmine.SpyObj<ExportarProcessosService>;
+  let stepperService: jasmine.SpyObj<StepperService>;
   let messageTrackerService: jasmine.SpyObj<MessageTrackerService>;
 
   beforeEach(waitForAsync(() => {
     const consultaProcessosServiceSpy = jasmine.createSpyObj('ConsultaProcessosService', ['get']);
+    const consultaProcessoDetalheServiceSpy = jasmine.createSpyObj('ConsultaProcessoDetalheService', ['get']);
     const exportarConsultaProcessosServiceSpy = jasmine.createSpyObj('ExportarConsultaProcessosService', ['export']);
+    const stepperServiceSpy = jasmine.createSpyObj('StepperService', ['next']);
     const messageTrackerServiceSpy = jasmine.createSpyObj('MessageTrackerService', ['subscribeError']);
 
     TestBed.configureTestingModule({
@@ -32,13 +39,15 @@ describe('ConsultaProcessosComponent', () => {
         ConsultaProcessosComponent
       ],
       imports: [
-        ConsultaProcessosModule,
+        ProcessosModule,
         RouterTestingModule,
         NoopAnimationsModule
       ],
       providers: [
         { provide: ConsultaProcessosService, useValue: consultaProcessosServiceSpy },
-        { provide: ExportarConsultaProcessosService, useValue: exportarConsultaProcessosServiceSpy },
+        { provide: DetalhesProcessoService, useValue: consultaProcessoDetalheServiceSpy },
+        { provide: ExportarProcessosService, useValue: exportarConsultaProcessosServiceSpy },
+        { provide: StepperService, useValue: stepperServiceSpy },
         { provide: MessageTrackerService, useValue: messageTrackerServiceSpy }
       ],
       schemas: [NO_ERRORS_SCHEMA]
@@ -47,7 +56,9 @@ describe('ConsultaProcessosComponent', () => {
         fixture = TestBed.createComponent(ConsultaProcessosComponent);
         component = fixture.componentInstance;
         consultaProcessosService = TestBed.inject(ConsultaProcessosService) as jasmine.SpyObj<ConsultaProcessosService>;
-        exportarConsultaProcessosService = TestBed.inject(ExportarConsultaProcessosService) as jasmine.SpyObj<ExportarConsultaProcessosService>;
+        consultaProcessoDetalheService = TestBed.inject(DetalhesProcessoService) as jasmine.SpyObj<DetalhesProcessoService>;
+        exportarConsultaProcessosService = TestBed.inject(ExportarProcessosService) as jasmine.SpyObj<ExportarProcessosService>;
+        stepperService = TestBed.inject(StepperService) as jasmine.SpyObj<StepperService>;
         messageTrackerService = TestBed.inject(MessageTrackerService) as jasmine.SpyObj<MessageTrackerService>;
         fixture.detectChanges();
       });
@@ -143,7 +154,7 @@ describe('ConsultaProcessosComponent', () => {
     const dataFinalInput = component.formConsulta.get('dataFinal');
 
     razaoSocialInput!.setValue('teste');
-    criterioDataInput!.setValue('criacao');
+    criterioDataInput!.setValue(CriterioData.CriacaoProcesso);
     dataInicialInput!.setValue(pastDate);
     dataFinalInput!.setValue(presentDate);
     fixture.detectChanges();
@@ -151,7 +162,7 @@ describe('ConsultaProcessosComponent', () => {
     component.search();
 
     expect(component.searchParameters.razaoSocial).withContext('Campo razão social deve ser "teste"').toBe('teste');
-    expect(component.searchParameters.criterioData).withContext('Campo critério por data deve ser "criacao"').toBe('criacao');
+    expect(component.searchParameters.criterioData).withContext('Campo critério por data deve ser "criacao"').toBe('PrimeiraData');
     expect(component.searchParameters.dataInicial).withContext(`Campo data inicial deve ser ${formattedPastDate}`).toBe(formattedPastDate);
     expect(component.searchParameters.dataFinal).withContext(`Campo data final deve ser ${formattedPresentDate}`).toBe(formattedPresentDate);
   });
@@ -163,7 +174,7 @@ describe('ConsultaProcessosComponent', () => {
     let formattedPastDate = formatarDataPtBr(pastDate.toString());
     let searchParameters = {
       razaoSocial: 'teste',
-      criterioData: 'ultimo-andamento',
+      criterioData: CriterioData.UltimoAndamento,
       dataInicial: formattedPastDate,
       dataFinal: formattedPresentDate
     }
@@ -209,7 +220,7 @@ describe('ConsultaProcessosComponent', () => {
     const dataFinalInput = component.formConsulta.get('dataFinal');
 
     razaoSocialInput!.setValue('teste');
-    criterioDataInput!.setValue('criacao');
+    criterioDataInput!.setValue(CriterioData.UltimaAtualizacao);
     dataInicialInput!.setValue(pastDate);
     dataFinalInput!.setValue(presentDate);
     fixture.detectChanges();
@@ -268,7 +279,7 @@ describe('ConsultaProcessosComponent', () => {
     expect(messageTrackerService.subscribeError).withContext('Deve abrir o messageTracker ao gerar erro na consulta de processos').toHaveBeenCalledTimes(1);
   });
 
-  it('[CIT-5736][CIT-5849] deve campos após limpar filtro', () => {
+  it('[CIT-5736][CIT-5849] deve limpar campos após limpar filtro', () => {
     let presentDate = new Date();
     let pastDate = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
 
@@ -325,6 +336,28 @@ describe('ConsultaProcessosComponent', () => {
       'VITORIO SERGIO SEVERINO DOS SANTOS,' + '\r\n' +
       'WAGNER BITTENCOURT DE OLIVEIRA,' + '\r\n' +
       'ENTRE OUTROS...');
+  });
+
+  it('[CIT-5870] deve realizar consulta de detalhe do processo', () => {
+    consultaProcessoDetalheService.get.and.returnValue(of(mockDetalhesProcessoResponse));
+
+    const nup = '0000984-73.2017.5.12.0019';
+    component.processDetail(nup);
+
+    expect(stepperService.next).withContext('Método next do serviço stepper deve ser chamado uma vez').toHaveBeenCalledTimes(1);
+    expect(consultaProcessoDetalheService.get).withContext('Serviço de consulta de detalhe do processo deve ser chamado uma vez').toHaveBeenCalledTimes(1);
+    expect(messageTrackerService.subscribeError).withContext('MessageTracker não deve ser chamado').toHaveBeenCalledTimes(0);
+  });
+
+  it('[CIT-5870] deve retornar erro caso requisição de detalhe do processo falhar', () => {
+    consultaProcessoDetalheService.get.and.returnValue(throwError(() => new Error()));
+
+    const nup = '0000984-73.2017.5.12.0019';
+    component.processDetail(nup);
+
+    expect(stepperService.next).withContext('Método next do serviço stepper não deve ser chamado').toHaveBeenCalledTimes(0);
+    expect(consultaProcessoDetalheService.get).withContext('Serviço de consulta de detalhe do processo deve ser chamado uma vez').toHaveBeenCalledTimes(1);
+    expect(messageTrackerService.subscribeError).withContext('Deve abrir o messageTracker ao gerar erro na consulta de processos').toHaveBeenCalledTimes(1);
   });
 
   it('[CIT-5881] deve realizar exportação dos processos pesquisados', () => {

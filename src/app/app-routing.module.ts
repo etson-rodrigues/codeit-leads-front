@@ -20,7 +20,7 @@ export const routes: Routes = [
   },
   {
     path: 'processos-judiciais/consulta-geral',
-    loadChildren: () => import('./view/processos-judiciais/consulta-geral/consulta-processos.module').then(m => m.ConsultaProcessosModule),
+    loadChildren: () => import('./view/processos-judiciais/consulta-geral/processos.module').then(m => m.ProcessosModule),
     canActivate: [AuthGuard]
   },
   {

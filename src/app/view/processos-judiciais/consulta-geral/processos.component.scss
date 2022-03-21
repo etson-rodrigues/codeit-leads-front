@@ -10,23 +10,23 @@
   }
 }
 
-.container-gerenciamento-usuarios {
+.container-processos {
   width: 85%;
   margin: 2rem auto;
 
-  ::ng-deep .mat-step-header {
-    pointer-events: none;
+  ::ng-deep .mat-horizontal-stepper-header-container {
+    display: none;
   }
 }
 
 @media screen and (max-width: $desktop-medium) {
-  .container-gerenciamento-usuarios {
+  .container-consulta-processos {
     width: 90%;
   }
 }
 
 @media screen and (max-width: $desktop-base) {
-  .container-gerenciamento-usuarios {
+  .container-consulta-processos {
     width: 95%;
   }
 }
