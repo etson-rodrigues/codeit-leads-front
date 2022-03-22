@@ -10,15 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { SidenavComponent } from './sidenav.component';
 
 @NgModule({
-  declarations: [SidenavComponent],
-  exports: [SidenavComponent],
-  imports: [
-    CommonModule,
-    RouterModule,
-    MatListModule,
-    MatMenuModule,
-    MatButtonModule,
-    MatIconModule
-  ]
+    declarations: [SidenavComponent],
+    exports: [SidenavComponent],
+    imports: [CommonModule, RouterModule, MatListModule, MatMenuModule, MatButtonModule, MatIconModule]
 })
-export class SidenavModule { }
+export class SidenavModule {}

@@ -20,84 +20,85 @@ import { CadastroUsuarioRequest } from 'src/app/core/models/gerenciamento-usuari
 import { RedefinirSenhaService } from 'src/app/core/services/redefinir-senha/redefinir-senha.service';
 
 @Component({
-  selector: 'app-redefinir-senha',
-  templateUrl: './redefinir-senha.component.html',
-  styleUrls: ['./redefinir-senha.component.scss']
+    selector: 'app-redefinir-senha',
+    templateUrl: './redefinir-senha.component.html',
+    styleUrls: ['./redefinir-senha.component.scss']
 })
 export class RedefinirSenhaComponent implements OnInit {
-  formRedefinirSenha: FormGroup = new FormGroup({});
-  hidePassword: boolean = true;
-  hideConfirmPassword: boolean = true;
-  listRef: any[] = [];
-  loginInfo!: Autenticacao;
+    formRedefinirSenha: FormGroup = new FormGroup({});
+    hidePassword: boolean = true;
+    hideConfirmPassword: boolean = true;
+    listRef: any[] = [];
+    loginInfo!: Autenticacao;
 
-  @ViewChild('senhaRef') senhaRef!: ElementRef;
-  @ViewChild('confirmarSenhaRef') confirmarSenhaRef!: ElementRef;
+    @ViewChild('senhaRef') senhaRef!: ElementRef;
+    @ViewChild('confirmarSenhaRef') confirmarSenhaRef!: ElementRef;
 
-  constructor(
-    private _formBuilder: FormBuilder,
-    private _redefinirSenhaService: RedefinirSenhaService,
-    private _cookieService: CookiesService,
-    private _localStorageService: LocalStorageService,
-    private _router: Router,
-    private _dialog: MatDialog,
-    private _spinner: NgxSpinnerService,
-    private _changeDetector: ChangeDetectorRef,
-    private _messageTrackerService: MessageTrackerService
-  ) { }
+    constructor(
+        private _formBuilder: FormBuilder,
+        private _redefinirSenhaService: RedefinirSenhaService,
+        private _cookieService: CookiesService,
+        private _localStorageService: LocalStorageService,
+        private _router: Router,
+        private _dialog: MatDialog,
+        private _spinner: NgxSpinnerService,
+        private _changeDetector: ChangeDetectorRef,
+        private _messageTrackerService: MessageTrackerService
+    ) {}
 
-  ngOnInit(): void {
-    this.loginInfo = JSON.parse(this._localStorageService.getItemLocalStorage(ChavesLocalStorage.UserInfo) || '{}');
+    ngOnInit(): void {
+        this.loginInfo = JSON.parse(this._localStorageService.getItemLocalStorage(ChavesLocalStorage.UserInfo) || '{}');
 
-    this.formRedefinirSenha = this._formBuilder.group({
-      senha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
-      confirmarSenha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
-    }, {
-      validator: samePasswordValidator('senha', 'confirmarSenha')
-    } as AbstractControlOptions);
-  }
-
-  changePassword() {
-    if (this.formRedefinirSenha.valid) {
-      const novaSenha: string = this.formRedefinirSenha.controls.confirmarSenha.value;
-
-      this._spinner.show();
-      this._redefinirSenhaService
-        .redefinePassword(this.loginInfo.id, novaSenha)
-        .pipe(finalize(() => this._spinner.hide()))
-        .subscribe(
-          {
-            next: () => {
-              this.openDialog();
+        this.formRedefinirSenha = this._formBuilder.group(
+            {
+                senha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
+                confirmarSenha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]]
             },
-            error: (error) => {
-              this._messageTrackerService.subscribeError(error.error);
-            }
-          }
+            {
+                validator: samePasswordValidator('senha', 'confirmarSenha')
+            } as AbstractControlOptions
         );
     }
-  }
 
-  openDialog() {
-    const dialogRef = this._dialog.open(DialogComponent, {
-      data: {
-        titulo: 'SENHA ALTERADA COM SUCESSO',
-        mensagem: 'Por favor realizar o acesso novamente',
-        tipo: 'informative'
-      }
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      this._cookieService.deleteCookie(ChavesCookies.Token);
-      this._router.navigate(['login']);
-    });
-  }
+    changePassword() {
+        if (this.formRedefinirSenha.valid) {
+            const novaSenha: string = this.formRedefinirSenha.controls.confirmarSenha.value;
 
-  validationInput(formControlName: string): string | undefined {
-    return validationInput(this.formRedefinirSenha, formControlName);
-  }
+            this._spinner.show();
+            this._redefinirSenhaService
+                .redefinePassword(this.loginInfo.id, novaSenha)
+                .pipe(finalize(() => this._spinner.hide()))
+                .subscribe({
+                    next: () => {
+                        this.openDialog();
+                    },
+                    error: (error) => {
+                        this._messageTrackerService.subscribeError(error.error);
+                    }
+                });
+        }
+    }
 
-  changeFocus() {
-    this.listRef = [this.senhaRef, this.confirmarSenhaRef];
-    inputFocus(this.formRedefinirSenha, this.listRef, this._changeDetector);
-  }
+    openDialog() {
+        const dialogRef = this._dialog.open(DialogComponent, {
+            data: {
+                titulo: 'SENHA ALTERADA COM SUCESSO',
+                mensagem: 'Por favor realizar o acesso novamente',
+                tipo: 'informative'
+            }
+        });
+        dialogRef.afterClosed().subscribe(() => {
+            this._cookieService.deleteCookie(ChavesCookies.Token);
+            this._router.navigate(['login']);
+        });
+    }
+
+    validationInput(formControlName: string): string | undefined {
+        return validationInput(this.formRedefinirSenha, formControlName);
+    }
+
+    changeFocus() {
+        this.listRef = [this.senhaRef, this.confirmarSenhaRef];
+        inputFocus(this.formRedefinirSenha, this.listRef, this._changeDetector);
+    }
 }

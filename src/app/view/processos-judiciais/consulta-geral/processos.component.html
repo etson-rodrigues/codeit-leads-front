@@ -1,21 +1,21 @@
 <div class="container-title">
-  <button mat-icon-button aria-label="Retornar" routerLink="/processos-judiciais/consulta-geral">
-    <mat-icon fontSet="fas" fontIcon="fa-chevron-left" class="icon-md-24"></mat-icon>
-  </button>
-  <h1>Consulta de Processos</h1>
+    <button mat-icon-button aria-label="Retornar" routerLink="/processos-judiciais/consulta-geral">
+        <mat-icon fontSet="fas" fontIcon="fa-chevron-left" class="icon-md-24"></mat-icon>
+    </button>
+    <h1>Consulta de Processos</h1>
 </div>
 
 <div class="container-processos">
-  <mat-horizontal-stepper linear #stepper>
-    <mat-step>
-      <ng-template matStepContent>
-        <app-consulta-processos (detalhesProcesso)="passingData($event)"></app-consulta-processos>
-      </ng-template>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepContent>
-        <app-detalhes-processo [detalhesProcesso]="detalhesProcesso"></app-detalhes-processo>
-      </ng-template>
-    </mat-step>
-  </mat-horizontal-stepper>
+    <mat-horizontal-stepper linear #stepper>
+        <mat-step>
+            <ng-template matStepContent>
+                <app-consulta-processos (detalhesProcesso)="passingData($event)"></app-consulta-processos>
+            </ng-template>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepContent>
+                <app-detalhes-processo [detalhesProcesso]="detalhesProcesso"></app-detalhes-processo>
+            </ng-template>
+        </mat-step>
+    </mat-horizontal-stepper>
 </div>

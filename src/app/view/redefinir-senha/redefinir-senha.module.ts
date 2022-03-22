@@ -11,20 +11,8 @@ import { RedefinirSenhaRoutingModule } from './redefinir-senha-routing.module';
 import { RedefinirSenhaComponent } from './redefinir-senha.component';
 import { DialogModule } from 'src/app/shared/components/dialog/dialog.module';
 
-
 @NgModule({
-  declarations: [
-    RedefinirSenhaComponent
-  ],
-  imports: [
-    CommonModule,
-    RedefinirSenhaRoutingModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    DialogModule
-  ]
+    declarations: [RedefinirSenhaComponent],
+    imports: [CommonModule, RedefinirSenhaRoutingModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, DialogModule]
 })
-export class RedefinirSenhaModule { }
+export class RedefinirSenhaModule {}

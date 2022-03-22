@@ -1,4 +1,4 @@
 export enum AcoesSeguranca {
-  ConsultaProcessos = '001',
-  CadastroUsuarios = '002'
+    ConsultaProcessos = '001',
+    CadastroUsuarios = '002'
 }

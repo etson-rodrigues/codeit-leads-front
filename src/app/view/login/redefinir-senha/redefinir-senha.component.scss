@@ -1,72 +1,72 @@
-@import "../../../../assets/variaveis.scss";
+@import '../../../../assets/variaveis.scss';
 
 .container-redefinir-senha {
-  height: 100vh;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 4rem;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
 
-  .container-mensagem {
-    margin-left: 1rem;
-    h1 {
-      font-size: 1.75rem;
-      font-weight: bold;
-      margin-bottom: 0;
+    .container-mensagem {
+        margin-left: 1rem;
+        h1 {
+            font-size: 1.75rem;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+        p {
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
     }
-    p {
-      font-size: 1rem;
-      margin-top: 1rem;
+
+    .container-form {
+        margin-right: 1rem;
+        padding: 2rem 2rem;
+        border-radius: 20px;
+        min-width: 20%;
+
+        .form-redefinir-senha {
+            ::ng-deep .mat-form-field-suffix {
+                top: 0;
+            }
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+
+            h1 {
+                max-width: 350px;
+                font-weight: bold;
+                margin: 0;
+                white-space: pre-wrap;
+            }
+
+            button {
+                font-size: 1rem;
+                padding: 5px;
+                width: 50%;
+                margin: 5px auto;
+            }
+        }
     }
-  }
-
-  .container-form {
-    margin-right: 1rem;
-    padding: 2rem 2rem;
-    border-radius: 20px;
-    min-width: 20%;
-
-    .form-redefinir-senha {
-      ::ng-deep .mat-form-field-suffix {
-        top: 0;
-      }
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-
-      h1 {
-        max-width: 350px;
-        font-weight: bold;
-        margin: 0;
-        white-space: pre-wrap;
-      }
-
-      button {
-        font-size: 1rem;
-        padding: 5px;
-        width: 50%;
-        margin: 5px auto;
-      }
-    }
-  }
 }
 
 @media screen and (max-width: $desktop-base) {
-  .container-redefinir-senha {
-    .container-form {
-      margin-top: 5rem;
-      .form-redefinir-senha {
-        gap: 1rem;
-        h1 {
-          max-width: 270px;
-          font-size: 1.25rem;
-          line-height: 1.75rem;
+    .container-redefinir-senha {
+        .container-form {
+            margin-top: 5rem;
+            .form-redefinir-senha {
+                gap: 1rem;
+                h1 {
+                    max-width: 270px;
+                    font-size: 1.25rem;
+                    line-height: 1.75rem;
+                }
+                button {
+                    width: 60%;
+                }
+            }
         }
-        button {
-          width: 60%;
-        }
-      }
     }
-  }
 }

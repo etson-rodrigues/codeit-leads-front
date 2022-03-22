@@ -1,3 +1,3 @@
 export interface AbstractResponse<T> {
-  data: T;
+    data: T;
 }

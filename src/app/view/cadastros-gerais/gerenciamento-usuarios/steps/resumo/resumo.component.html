@@ -1,28 +1,27 @@
 <div class="container-resumo">
-  <div class="message">
-    <mat-icon fontSet="far" fontIcon="fa-check-circle" class="sucess-icon icon-md-48"></mat-icon>
-    <h2>{{isEdited ? 'Atualização realizada' : 'Cadastro realizado'}} com sucesso</h2>
-  </div>
-  <div class="user-data">
-    <div class="user">
-      <span>Usuário</span>
-      <p>{{userData.email}}</p>
+    <div class="message">
+        <mat-icon fontSet="far" fontIcon="fa-check-circle" class="sucess-icon icon-md-48"></mat-icon>
+        <h2>{{ isEdited ? 'Atualização realizada' : 'Cadastro realizado' }} com sucesso</h2>
     </div>
-    <div class="perfil">
-      <span>Perfil</span>
-      <p>{{userData.perfil.descricao}}</p>
+    <div class="user-data">
+        <div class="user">
+            <span>Usuário</span>
+            <p>{{ userData.email }}</p>
+        </div>
+        <div class="perfil">
+            <span>Perfil</span>
+            <p>{{ userData.perfil.descricao }}</p>
+        </div>
+        <div class="status">
+            <span>Status</span>
+            <p>{{ userData.status }}</p>
+        </div>
     </div>
-    <div class="status">
-      <span>Status</span>
-      <p>{{userData.status}}</p>
-    </div>
-  </div>
 
-
-  <div class="new-search">
-    <button mat-button aria-label="Nova Consulta" (click)="newSearch()">
-      <span>Nova Consulta </span>
-      <mat-icon fontSet="fas" fontIcon="fa-search"></mat-icon>
-    </button>
-  </div>
+    <div class="new-search">
+        <button mat-button aria-label="Nova Consulta" (click)="newSearch()">
+            <span>Nova Consulta </span>
+            <mat-icon fontSet="fas" fontIcon="fa-search"></mat-icon>
+        </button>
+    </div>
 </div>

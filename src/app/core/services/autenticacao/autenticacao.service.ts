@@ -6,14 +6,14 @@ import { LoginRequest } from '../../models/login/login-request.model';
 import { LoginResponse } from '../../models/login/login-response.model';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AutenticacaoService {
-  private _url: string = environment.url;
+    private _url: string = environment.url;
 
-  constructor(private _http: HttpClient) { }
+    constructor(private _http: HttpClient) {}
 
-  login(data: LoginRequest) {
-    return this._http.post<LoginResponse>(`${this._url}login`, data);
-  }
+    login(data: LoginRequest) {
+        return this._http.post<LoginResponse>(`${this._url}login`, data);
+    }
 }

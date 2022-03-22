@@ -19,28 +19,22 @@ import { CadastroComponent } from './steps/cadastro/cadastro.component';
 import { ResumoComponent } from './steps/resumo/resumo.component';
 import { DialogModule } from 'src/app/shared/components/dialog/dialog.module';
 
-
 @NgModule({
-  declarations: [
-    GerenciamentoUsuariosComponent,
-    ConsultaComponent,
-    CadastroComponent,
-    ResumoComponent
-  ],
-  imports: [
-    CommonModule,
-    GerenciamentoUsuariosRoutingModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatStepperModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatTableModule,
-    MatSelectModule,
-    MatPaginatorModule,
-    DialogModule
-  ]
+    declarations: [GerenciamentoUsuariosComponent, ConsultaComponent, CadastroComponent, ResumoComponent],
+    imports: [
+        CommonModule,
+        GerenciamentoUsuariosRoutingModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatStepperModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatTableModule,
+        MatSelectModule,
+        MatPaginatorModule,
+        DialogModule
+    ]
 })
-export class GerenciamentoUsuariosModule { }
+export class GerenciamentoUsuariosModule {}

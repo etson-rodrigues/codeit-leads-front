@@ -1,133 +1,133 @@
-@use "@angular/material" as mat;
-@import "@angular/material/theming";
+@use '@angular/material' as mat;
+@import '@angular/material/theming';
 
 @include mat.core();
 
 $app-black-color: (
-  // Non-accent Backgrounds
-  // General
-  50: #ffffff,
-  // Most far away
-  100: #dfdfdf,
-  // Far far away
-  200: #c0c0c0,
-  // Far away
-  300: #aaaaaa,
-  // Middle far
-  400: #818181,
-  // Middle
-  500: #636363,
-  // Middle close
-  600: #505050,
-  // Close
-  700: #3b3b3b,
-  // Very close
-  800: #085986,
-  // Very very Close
-  900: #050505,
-  // Closest
-  A100: #cfcfcf,
-  // Most far away
-  A200: #919191,
-  // Middle
-  A400: #5d5d5d,
-  // Close
-  A700: #141414,
-  // Closest
-  contrast:
-    (
-      50: $dark-primary-text,
-      // Most far away
-      100: $dark-primary-text,
-      // Far far away
-      200: $dark-primary-text,
-      // Far away
-      300: $dark-primary-text,
-      // Middle far
-      400: $dark-primary-text,
-      // Middle
-      500: $light-primary-text,
-      // Middle close
-      600: $light-primary-text,
-      // Close
-      700: $light-primary-text,
-      // Very close
-      800: $light-primary-text,
-      // Very very Close
-      900: $light-primary-text,
-      // Closest
-      A100: $dark-primary-text,
-      // Most far away
-      A200: $light-primary-text,
-      // Middle
-      A400: $light-primary-text,
-      // Close
-      A700: $light-primary-text,
-      // Closest
-    )
+    // Non-accent Backgrounds
+    // General
+    50: #ffffff,
+    // Most far away
+    100: #dfdfdf,
+    // Far far away
+    200: #c0c0c0,
+    // Far away
+    300: #aaaaaa,
+    // Middle far
+    400: #818181,
+    // Middle
+    500: #636363,
+    // Middle close
+    600: #505050,
+    // Close
+    700: #3b3b3b,
+    // Very close
+    800: #085986,
+    // Very very Close
+    900: #050505,
+    // Closest
+    A100: #cfcfcf,
+    // Most far away
+    A200: #919191,
+    // Middle
+    A400: #5d5d5d,
+    // Close
+    A700: #141414,
+    // Closest
+    contrast:
+        (
+            50: $dark-primary-text,
+            // Most far away
+            100: $dark-primary-text,
+            // Far far away
+            200: $dark-primary-text,
+            // Far away
+            300: $dark-primary-text,
+            // Middle far
+            400: $dark-primary-text,
+            // Middle
+            500: $light-primary-text,
+            // Middle close
+            600: $light-primary-text,
+            // Close
+            700: $light-primary-text,
+            // Very close
+            800: $light-primary-text,
+            // Very very Close
+            900: $light-primary-text,
+            // Closest
+            A100: $dark-primary-text,
+            // Most far away
+            A200: $light-primary-text,
+            // Middle
+            A400: $light-primary-text,
+            // Close
+            A700: $light-primary-text,
+            // Closest
+        )
 );
 $app-primary-color: (
-  // Non-accent Backgrounds
-  // General
-  50: #e3f2fd,
-  // Most far away
-  100: #bbdefb,
-  // Far far away
-  200: #90caf9,
-  // Far away
-  300: #64b5f6,
-  // Middle far
-  400: #42a5f5,
-  // Middle
-  500: #2196f3,
-  // Middle close
-  600: #1e88e5,
-  // Close
-  700: #043957,
-  // Very close
-  800: #1565c0,
-  // Very very Close
-  900: #0d47a1,
-  // Closest
-  A100: #82b1ff,
-  // Most far away
-  A200: #448aff,
-  // Middle
-  A400: #2979ff,
-  // Close
-  A700: #2962ff,
-  // Closest
-  A800: #1cbfde,
-  contrast: (
-    50: $dark-primary-text,
+    // Non-accent Backgrounds
+    // General
+    50: #e3f2fd,
     // Most far away
-    100: $dark-primary-text,
+    100: #bbdefb,
     // Far far away
-    200: $dark-primary-text,
+    200: #90caf9,
     // Far away
-    300: $dark-primary-text,
+    300: #64b5f6,
     // Middle far
-    400: $dark-primary-text,
+    400: #42a5f5,
     // Middle
-    500: $light-primary-text,
+    500: #2196f3,
     // Middle close
-    600: $light-primary-text,
+    600: #1e88e5,
     // Close
-    700: $light-primary-text,
+    700: #043957,
     // Very close
-    800: $light-primary-text,
+    800: #1565c0,
     // Very very Close
-    900: $light-primary-text,
+    900: #0d47a1,
     // Closest
-    A100: $dark-primary-text,
+    A100: #82b1ff,
     // Most far away
-    A200: $light-primary-text,
+    A200: #448aff,
     // Middle
-    A400: $light-primary-text,
+    A400: #2979ff,
     // Close
-    A700: $light-primary-text,
+    A700: #2962ff,
     // Closest
-  )
+    A800: #1cbfde,
+    contrast: (
+        50: $dark-primary-text,
+        // Most far away
+        100: $dark-primary-text,
+        // Far far away
+        200: $dark-primary-text,
+        // Far away
+        300: $dark-primary-text,
+        // Middle far
+        400: $dark-primary-text,
+        // Middle
+        500: $light-primary-text,
+        // Middle close
+        600: $light-primary-text,
+        // Close
+        700: $light-primary-text,
+        // Very close
+        800: $light-primary-text,
+        // Very very Close
+        900: $light-primary-text,
+        // Closest
+        A100: $dark-primary-text,
+        // Most far away
+        A200: $light-primary-text,
+        // Middle
+        A400: $light-primary-text,
+        // Close
+        A700: $light-primary-text,
+        // Closest
+    )
 );
 
 $app-primary: mat-palette($app-primary-color, 700);
@@ -137,303 +137,316 @@ $app-warn: mat-palette($mat-red);
 $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 
 .codeit-theme {
-  @include angular-material-theme($app-theme);
+    @include angular-material-theme($app-theme);
 
-  // componente message-tracker
-  .message-error {
-    color: mat-color($app-accent, A700);
+    // componente message-tracker
+    .message-error {
+        color: mat-color($app-accent, A700);
 
-    .error {
-      background-color: mat-color($app-accent, 50);
+        .error {
+            background-color: mat-color($app-accent, 50);
 
-      .container-item {
-        .button-close {
-          color: mat-color($app-accent, A700);
-        }
-      }
-
-      .border-error {
-        .progress-error {
-          background-color: mat-color($app-warn);
-        }
-      }
-    }
-  }
-
-  // reset MatSnackBar
-  .reset-snackbar {
-    background: transparent !important;
-    box-shadow: none !important;
-  }
-
-  // ícones dentro de inputs
-  .mat-form-field {
-    .mat-icon {
-      color: mat-color($app-accent, A400);
-    }
-  }
-
-  // dialog
-  .container-dialog {
-    .mat-dialog-title {
-      color: mat-color($app-accent, 800);
-    }
-
-    .mat-dialog-content {
-    }
-
-    .mat-dialog-actions {
-      .cancel {
-        background-color: mat-color($app-accent, 300);
-      }
-      .confirm {
-        color: mat-color($app-accent, 50);
-        background-color: mat-color($app-accent, 800);
-      }
-    }
-  }
-
-  // tela login
-  .container-login {
-    background: url(../images/codeit/codeit-bg.jpg) no-repeat center center fixed;
-    background-size: cover;
-    .container-mensagem {
-      color: mat-color($app-accent, 50);
-    }
-
-    .container-form {
-      background-color: mat-color($app-accent, 50);
-      .formLogin {
-        h1 {
-          color: mat-color($app-accent, 800);
-        }
-        button {
-          color: mat-color($app-accent, 50);
-          background-color: mat-color($app-accent, 800);
-
-          &:disabled {
-            background-color: mat-color($app-accent, 300);
-          }
-        }
-      }
-    }
-  }
-
-  // tela login/redefinir senha
-  .container-redefinir-senha {
-    background: url(../images/codeit/codeit-bg.jpg) no-repeat center center fixed;
-    background-size: cover;
-    .container-mensagem {
-      color: mat-color($app-accent, 50);
-    }
-
-    .container-form {
-      background-color: mat-color($app-accent, 50);
-      .form-redefinir-senha {
-        h1 {
-          color: mat-color($app-accent, 800);
-        }
-        button {
-          color: mat-color($app-accent, 50);
-          background-color: mat-color($app-accent, 800);
-
-          &:disabled {
-            background-color: mat-color($app-accent, 300);
-          }
-        }
-      }
-    }
-  }
-
-  // header
-  .container-header {
-    .mat-toolbar {
-      background-color: mat-color($app-accent, 800);
-      color: mat-color($app-accent, 50);
-      button {
-        background-color: mat-color($app-accent, 800);
-        color: mat-color($app-accent, 50);
-        &:hover {
-          color: mat-color($app-accent, 300);
-        }
-      }
-      .container-menu-logo {
-        #logo {
-          background-image: url(../images/codeit/codeit-logo.png);
-          min-width: 180px;
-          min-height: 55px;
-          background-size: cover;
-          background-repeat: none;
-        }
-      }
-    }
-  }
-
-  // footer
-  .container-footer {
-    background-color: mat-color($app-primary, 700);
-    .mensagem {
-      color: mat-color($app-accent, 50);
-    }
-  }
-
-  // sidenav
-  .container-sidenav {
-    background-color: mat-color($app-accent, 50);
-
-    .closeSidenavButton {
-      background-color: mat-color($app-accent, 800);
-      color: mat-color($app-accent, 50);
-      &:hover {
-        color: mat-color($app-accent, 300);
-      }
-    }
-
-    .user-info {
-      background-color: mat-color($app-accent, 800);
-      color: mat-color($app-accent, 50);
-    }
-
-    .mat-nav-list {
-      .mat-list-item {
-        &:hover {
-          background-color: mat-color($app-accent, 100);
-        }
-      }
-    }
-  }
-
-  .container-title {
-    background-color: mat-color($app-primary, 700);
-    color: mat-color($app-accent, 50);
-  }
-
-  // cadastro - gerenciamento usuarios
-  .container-form-cadastro {
-    .container-button {
-      color: mat-color($app-accent, 800);
-    }
-  }
-
-  // consulta - gerenciamento usuarios
-  .container-consulta-usuario {
-    .container-form {
-      .container-button {
-        .search {
-          color: mat-color($app-accent, 50);
-          background-color: mat-color($app-accent, 800);
-        }
-        .cleanFilter {
-          background-color: mat-color($app-accent, 300);
-        }
-      }
-    }
-    .next-step {
-      color: mat-color($app-accent, 800);
-    }
-    .result-table {
-      .mat-header-cell {
-        color: mat-color($app-accent, 800);
-      }
-      .mat-column-editar,
-      .mat-column-desativar {
-        color: mat-color($app-accent, 800);
-      }
-    }
-  }
-
-  // resumo - gerenciamento usuarios
-  .container-resumo {
-    .message {
-      color: #3acb3e;
-    }
-    .new-search {
-      color: mat-color($app-accent, 800);
-    }
-  }
-
-  // processos - consulta processos
-  .container-consulta-processos {
-    .form {
-      .container-button {
-        .search {
-          color: mat-color($app-accent, 50);
-          background-color: mat-color($app-accent, 800);
-        }
-        .cleanFilter {
-          background-color: mat-color($app-accent, 300);
-        }
-      }
-    }
-    .container-filtros-selecionados {
-      .mat-form-field {
-        .mat-chip {
-          color: mat-color($app-accent, 50);
-          background-color: mat-color($app-primary, 700);
-          .mat-icon {
-            color: mat-color($app-accent, 50);
-          }
-        }
-      }
-    }
-    .export {
-      color: mat-color($app-accent, 800);
-    }
-    .result-table {
-      .mat-header-cell,
-      button {
-        color: mat-color($app-accent, 800);
-      }
-    }
-  }
-
-  // menu export - consulta de processos
-  .menu-export {
-    .mat-menu-content {
-      .mat-menu-item {
-        .mat-icon {
-          color: mat-color($app-accent, 800);
-        }
-      }
-    }
-  }
-
-  // detalhe do processo - consulta processos
-  .container-detalhes-processo {
-    button {
-      color: mat-color($app-accent, 800);
-    }
-
-    .detalhe {
-      .andamentos {
-        .andamentos-table {
-          table {
-            .mat-header-cell {
-              color: mat-color($app-accent, 800);
+            .container-item {
+                .button-close {
+                    color: mat-color($app-accent, A700);
+                }
             }
-          }
 
-          .mat-button {
-            color: mat-color($app-accent, 50);
-            background-color: mat-color($app-accent, 800);
-          }
+            .border-error {
+                .progress-error {
+                    background-color: mat-color($app-warn);
+                }
+            }
         }
-      }
     }
-  }
 
-  // redefinir senha
-  .redefinir-senha-title {
-    background-color: mat-color($app-primary, 700);
-    color: mat-color($app-accent, 50);
-  }
+    // reset MatSnackBar
+    .reset-snackbar {
+        background: transparent !important;
+        box-shadow: none !important;
+    }
 
-  .container-redefinir-senha-usuario {
-    .form-redefinir-senha {
-      button {
+    // ícones dentro de inputs
+    .mat-form-field {
+        .mat-icon {
+            color: mat-color($app-accent, A400);
+        }
+    }
+
+    // dialog
+    .container-dialog {
+        .mat-dialog-title {
+            color: mat-color($app-accent, 800);
+        }
+
+        .mat-dialog-content {
+        }
+
+        .mat-dialog-actions {
+            .cancel {
+                background-color: mat-color($app-accent, 300);
+            }
+            .confirm {
+                color: mat-color($app-accent, 50);
+                background-color: mat-color($app-accent, 800);
+            }
+        }
+    }
+
+    // tela login
+    .container-login {
+        background: url(../images/codeit/codeit-bg.jpg) no-repeat center center fixed;
+        background-size: cover;
+        .container-mensagem {
+            color: mat-color($app-accent, 50);
+        }
+
+        .container-form {
+            background-color: mat-color($app-accent, 50);
+            .formLogin {
+                h1 {
+                    color: mat-color($app-accent, 800);
+                }
+                button {
+                    color: mat-color($app-accent, 50);
+                    background-color: mat-color($app-accent, 800);
+
+                    &:disabled {
+                        background-color: mat-color($app-accent, 300);
+                    }
+                }
+            }
+        }
+    }
+
+    // tela login/redefinir senha
+    .container-redefinir-senha {
+        background: url(../images/codeit/codeit-bg.jpg) no-repeat center center fixed;
+        background-size: cover;
+        .container-mensagem {
+            color: mat-color($app-accent, 50);
+        }
+
+        .container-form {
+            background-color: mat-color($app-accent, 50);
+            .form-redefinir-senha {
+                h1 {
+                    color: mat-color($app-accent, 800);
+                }
+                button {
+                    color: mat-color($app-accent, 50);
+                    background-color: mat-color($app-accent, 800);
+
+                    &:disabled {
+                        background-color: mat-color($app-accent, 300);
+                    }
+                }
+            }
+        }
+    }
+
+    // header
+    .container-header {
+        .mat-toolbar {
+            background-color: mat-color($app-accent, 800);
+            color: mat-color($app-accent, 50);
+            button {
+                background-color: mat-color($app-accent, 800);
+                color: mat-color($app-accent, 50);
+                &:hover {
+                    color: mat-color($app-accent, 300);
+                }
+            }
+            .container-menu-logo {
+                #logo {
+                    background-image: url(../images/codeit/codeit-logo.png);
+                    min-width: 180px;
+                    min-height: 55px;
+                    background-size: cover;
+                    background-repeat: none;
+                }
+            }
+        }
+    }
+
+    // footer
+    .container-footer {
+        background-color: mat-color($app-primary, 700);
+        .mensagem {
+            color: mat-color($app-accent, 50);
+        }
+    }
+
+    // sidenav
+    .container-sidenav {
+        background-color: mat-color($app-accent, 50);
+
+        .closeSidenavButton {
+            background-color: mat-color($app-accent, 800);
+            color: mat-color($app-accent, 50);
+            &:hover {
+                color: mat-color($app-accent, 300);
+            }
+        }
+
+        .user-info {
+            background-color: mat-color($app-accent, 800);
+            color: mat-color($app-accent, 50);
+        }
+
+        .mat-nav-list {
+            .mat-list-item {
+                &:hover {
+                    background-color: mat-color($app-accent, 100);
+                }
+            }
+        }
+    }
+
+    .container-title {
+        background-color: mat-color($app-primary, 700);
         color: mat-color($app-accent, 50);
-        background-color: mat-color($app-accent, 800);
-      }
     }
-  }
+
+    // cadastro - gerenciamento usuarios
+    .container-form-cadastro {
+        .container-button {
+            color: mat-color($app-accent, 800);
+        }
+    }
+
+    // consulta - gerenciamento usuarios
+    .container-consulta-usuario {
+        .container-form {
+            .container-button {
+                .search {
+                    color: mat-color($app-accent, 50);
+                    background-color: mat-color($app-accent, 800);
+                }
+                .cleanFilter {
+                    background-color: mat-color($app-accent, 300);
+                }
+            }
+        }
+        .next-step {
+            color: mat-color($app-accent, 800);
+        }
+        .result-table {
+            .mat-header-cell {
+                color: mat-color($app-accent, 800);
+            }
+            .mat-column-editar,
+            .mat-column-desativar {
+                color: mat-color($app-accent, 800);
+            }
+        }
+    }
+
+    // resumo - gerenciamento usuarios
+    .container-resumo {
+        .message {
+            color: #3acb3e;
+        }
+        .new-search {
+            color: mat-color($app-accent, 800);
+        }
+    }
+
+    // processos - consulta processos
+    .container-consulta-processos {
+        .form {
+            .container-button {
+                .search {
+                    color: mat-color($app-accent, 50);
+                    background-color: mat-color($app-accent, 800);
+                }
+                .cleanFilter {
+                    background-color: mat-color($app-accent, 300);
+                }
+            }
+        }
+        .container-filtros-selecionados {
+            .mat-form-field {
+                .mat-chip {
+                    color: mat-color($app-accent, 50);
+                    background-color: mat-color($app-primary, 700);
+                    .mat-icon {
+                        color: mat-color($app-accent, 50);
+                    }
+                }
+            }
+        }
+        .export {
+            color: mat-color($app-accent, 800);
+        }
+        .result-table {
+            .mat-header-cell,
+            button {
+                color: mat-color($app-accent, 800);
+            }
+        }
+    }
+
+    // menu export - consulta de processos
+    .menu-export {
+        .mat-menu-content {
+            .mat-menu-item {
+                .mat-icon {
+                    color: mat-color($app-accent, 800);
+                }
+            }
+        }
+    }
+
+    // detalhe do processo - consulta processos
+    .container-detalhes-processo {
+        button {
+            color: mat-color($app-accent, 800);
+        }
+
+        .detalhe {
+            .andamentos {
+                .andamentos-table {
+                    table {
+                        .mat-header-cell {
+                            color: mat-color($app-accent, 800);
+                        }
+                    }
+
+                    .mat-button {
+                        color: mat-color($app-accent, 50);
+                        background-color: mat-color($app-accent, 800);
+                    }
+                }
+            }
+        }
+    }
+
+    // redefinir senha
+    .redefinir-senha-title {
+        background-color: mat-color($app-primary, 700);
+        color: mat-color($app-accent, 50);
+    }
+
+    .container-redefinir-senha-usuario {
+        .form-redefinir-senha {
+            button {
+                color: mat-color($app-accent, 50);
+                background-color: mat-color($app-accent, 800);
+            }
+        }
+    }
+
+    // tela de página não encontrada
+    .container-not-found {
+        .container-mensagem-principal {
+            color: mat-color($app-accent, 800);
+        }
+
+        .container-timer {
+            section {
+                color: mat-color($app-accent, 800);
+            }
+        }
+    }
 }

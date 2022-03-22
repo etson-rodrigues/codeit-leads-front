@@ -1,4 +1,4 @@
 export interface AlteracaoUsuarioRequest {
-  id: number;
-  ativo: boolean;
+    id: number;
+    ativo: boolean;
 }

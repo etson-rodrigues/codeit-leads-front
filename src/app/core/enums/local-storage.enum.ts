@@ -1,3 +1,3 @@
 export enum ChavesLocalStorage {
-  UserInfo = '@codeit-user-info'
+    UserInfo = '@codeit-user-info'
 }

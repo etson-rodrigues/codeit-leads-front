@@ -1,20 +1,20 @@
 <section class="container-sidenav" *ngIf="accessData">
-  <button mat-icon-button aria-label="Fechar menu" class="closeSidenavButton" (click)="toggleSidenav()">
-    <mat-icon fontSet="fas" fontIcon="fa-times" class="icon-md-24"></mat-icon>
-  </button>
-  <div class="user-info">
-    <h2>{{accessData.email}}</h2>
-    <p>{{accessData.perfil.descricao}}</p>
-  </div>
+    <button mat-icon-button aria-label="Fechar menu" class="closeSidenavButton" (click)="toggleSidenav()">
+        <mat-icon fontSet="fas" fontIcon="fa-times" class="icon-md-24"></mat-icon>
+    </button>
+    <div class="user-info">
+        <h2>{{ accessData.email }}</h2>
+        <p>{{ accessData.perfil.descricao }}</p>
+    </div>
 
-  <mat-nav-list>
-    <a mat-list-item [matMenuTriggerFor]="cadastro" *ngIf="profileAccess('cadastro')">Cadastros Gerais</a>
-    <mat-menu #cadastro="matMenu" yPosition="below" xPosition="before">
-      <a mat-menu-item (click)="toggleSidenav()" routerLink="/cadastros-gerais/usuarios">Usuários</a>
-    </mat-menu>
-    <a mat-list-item [matMenuTriggerFor]="processosjudiciais">Processos Judiciais</a>
-    <mat-menu #processosjudiciais="matMenu" yPosition="below" xPosition="before">
-      <a mat-menu-item (click)="toggleSidenav()" routerLink="/processos-judiciais/consulta-geral">Consulta Geral</a>
-    </mat-menu>
-  </mat-nav-list>
+    <mat-nav-list>
+        <a mat-list-item [matMenuTriggerFor]="cadastro" *ngIf="profileAccess('cadastro')">Cadastros Gerais</a>
+        <mat-menu #cadastro="matMenu" yPosition="below" xPosition="before">
+            <a mat-menu-item (click)="toggleSidenav()" routerLink="/cadastros-gerais/usuarios">Usuários</a>
+        </mat-menu>
+        <a mat-list-item [matMenuTriggerFor]="processosjudiciais">Processos Judiciais</a>
+        <mat-menu #processosjudiciais="matMenu" yPosition="below" xPosition="before">
+            <a mat-menu-item (click)="toggleSidenav()" routerLink="/processos-judiciais/consulta-geral">Consulta Geral</a>
+        </mat-menu>
+    </mat-nav-list>
 </section>

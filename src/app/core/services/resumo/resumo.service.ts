@@ -1,17 +1,16 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ResumoService {
+    constructor() {}
 
-  constructor() { }
+    @Output() getValues: EventEmitter<any> = new EventEmitter<any>();
+    @Output() getIsEditing: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output() getValues: EventEmitter<any> = new EventEmitter<any>();
-  @Output() getIsEditing: EventEmitter<any> = new EventEmitter<any>();
-
-  setValues(userData: any, isEditing: boolean) {
-    this.getValues.emit(userData.data);
-    this.getIsEditing.emit(isEditing);
-  }
+    setValues(userData: any, isEditing: boolean) {
+        this.getValues.emit(userData.data);
+        this.getIsEditing.emit(isEditing);
+    }
 }

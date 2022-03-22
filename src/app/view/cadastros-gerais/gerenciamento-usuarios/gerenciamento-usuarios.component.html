@@ -1,34 +1,29 @@
 <div class="container-title">
-  <button mat-icon-button aria-label="Retornar" routerLink="/processos-judiciais/consulta-geral">
-    <mat-icon fontSet="fas" fontIcon="fa-chevron-left" class="icon-md-24"></mat-icon>
-  </button>
-  <h1>Gerenciamento de Usuários</h1>
+    <button mat-icon-button aria-label="Retornar" routerLink="/processos-judiciais/consulta-geral">
+        <mat-icon fontSet="fas" fontIcon="fa-chevron-left" class="icon-md-24"></mat-icon>
+    </button>
+    <h1>Gerenciamento de Usuários</h1>
 </div>
 <div class="container-gerenciamento-usuarios mat-elevation-z24">
-  <mat-stepper [orientation]="(stepperOrientation | async)!" #stepper>
+    <mat-stepper [orientation]="(stepperOrientation | async)!" #stepper>
+        <mat-step label="Consulta">
+            <app-consulta #consulta (nextStep)="setNextStep()" (isEditing)="setIsEditing($event)" (isUpdatedStatus)="getIsUpdatedStatus($event)"></app-consulta>
+        </mat-step>
 
-    <mat-step label="Consulta">
-      <app-consulta #consulta (nextStep)="setNextStep()" (isEditing)="setIsEditing($event)"
-        (isUpdatedStatus)="getIsUpdatedStatus($event)"></app-consulta>
-    </mat-step>
+        <mat-step [stepControl]="cadastro.formCadastro" label="Cadastro">
+            <app-cadastro #cadastro (isRegistered)="getIsRegistered($event)" (previousStep)="setPreviousStep()" [isEditing]="isEditing"> </app-cadastro>
+        </mat-step>
 
-    <mat-step [stepControl]="cadastro.formCadastro" label="Cadastro">
-      <app-cadastro #cadastro (isRegistered)="getIsRegistered($event)" (previousStep)="setPreviousStep()"
-        [isEditing]="isEditing">
-      </app-cadastro>
-    </mat-step>
+        <mat-step label="Resumo">
+            <app-resumo #resumo (isFinished)="getIsFinished($event)"></app-resumo>
+        </mat-step>
 
-    <mat-step label="Resumo">
-      <app-resumo #resumo (isFinished)="getIsFinished($event)"></app-resumo>
-    </mat-step>
+        <ng-template matStepperIcon="edit">
+            <mat-icon>done</mat-icon>
+        </ng-template>
 
-    <ng-template matStepperIcon="edit">
-      <mat-icon>done</mat-icon>
-    </ng-template>
-
-    <ng-template matStepperIcon="number">
-      <mat-icon>more_horiz</mat-icon>
-    </ng-template>
-
-  </mat-stepper>
+        <ng-template matStepperIcon="number">
+            <mat-icon>more_horiz</mat-icon>
+        </ng-template>
+    </mat-stepper>
 </div>

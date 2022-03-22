@@ -18,124 +18,121 @@ import { samePasswordValidator } from 'src/app/core/validators/same-password-val
 import { CadastroUsuarioRequest } from 'src/app/core/models/gerenciamento-usuarios/cadastro-usuario-request.model';
 
 @Component({
-  selector: 'app-cadastro',
-  templateUrl: './cadastro.component.html',
-  styleUrls: ['./cadastro.component.scss']
+    selector: 'app-cadastro',
+    templateUrl: './cadastro.component.html',
+    styleUrls: ['./cadastro.component.scss']
 })
 export class CadastroComponent implements OnInit {
-  formCadastro!: FormGroup;
-  perfis: Perfil[] = [];
-  userID: number = 0;
-  hidePassword: boolean = true;
-  hideConfirmPassword: boolean = true;
-  listRef: any[] = [];
+    formCadastro!: FormGroup;
+    perfis: Perfil[] = [];
+    userID: number = 0;
+    hidePassword: boolean = true;
+    hideConfirmPassword: boolean = true;
+    listRef: any[] = [];
 
-  @ViewChild('formDirective') formDirective!: NgForm;
-  @ViewChild('emailRef') emailRef!: ElementRef;
-  @ViewChild('senhaRef') senhaRef!: ElementRef;
-  @ViewChild('confirmarSenhaRef') confirmarSenhaRef!: ElementRef;
-  @ViewChild('perfilRef') perfilRef!: MatSelect;
+    @ViewChild('formDirective') formDirective!: NgForm;
+    @ViewChild('emailRef') emailRef!: ElementRef;
+    @ViewChild('senhaRef') senhaRef!: ElementRef;
+    @ViewChild('confirmarSenhaRef') confirmarSenhaRef!: ElementRef;
+    @ViewChild('perfilRef') perfilRef!: MatSelect;
 
-  @Output() isRegistered: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Input() isEditing: boolean = false;
+    @Output() isRegistered: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Input() isEditing: boolean = false;
 
-  constructor(
-    private _formBuilder: FormBuilder,
-    private _cadastroUsuariosService: CadastroUsuariosService,
-    private _perfisService: PerfisService,
-    private _resumoService: ResumoService,
-    private _editarService: EditarService,
-    private _spinner: NgxSpinnerService,
-    private _changeDetector: ChangeDetectorRef,
-    private _messageTrackerService: MessageTrackerService
-  ) {
-    this.formCadastro = this._formBuilder.group({
-      email: ['', [Validators.required, emailValidator, Validators.maxLength(50)]],
-      senha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
-      confirmarSenha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
-      perfil: ['', [Validators.required]]
-    }, {
-      validator: samePasswordValidator('senha', 'confirmarSenha')
-    } as AbstractControlOptions);
-  }
-
-  ngOnInit(): void {
-    this.fillPerfilSelect();
-    this.fillFormEditing();
-  }
-
-  fillFormEditing() {
-    this._editarService.getValues.subscribe(data => {
-      Object.entries(data).forEach(() => {
-        this.userID = data.id;
-        this.formCadastro.controls.email.patchValue(data.email);
-        this.formCadastro.controls.perfil.patchValue(data.perfil.codigo);
-      });
-    });
-  }
-
-  fillPerfilSelect() {
-    this._perfisService
-      .getPerfis()
-      .subscribe(
-        {
-          next: (response) => {
-            this.perfis = response.data;
-          },
-          error: (error) => {
-            this._messageTrackerService.subscribeError(error.error);
-          }
-        }
-      );
-  }
-
-  register() {
-    if (this.formCadastro.valid) {
-      const data: CadastroUsuarioRequest = {
-        email: this.formCadastro.controls.email.value,
-        senha: this.formCadastro.controls.confirmarSenha.value,
-        perfil: {
-          codigo: this.formCadastro.controls.perfil.value
-        },
-        ativo: true,
-        redefinirSenha: true
-      };
-
-      this._spinner.show();
-      this._cadastroUsuariosService
-        .save(data, this.isEditing, this.userID)
-        .pipe(finalize(() => this._spinner.hide()))
-        .subscribe(
-          {
-            next: (response) => {
-              this.isRegistered.emit(true);
-              this.userID = 0;
-              this._resumoService.setValues(response, this.isEditing);
+    constructor(
+        private _formBuilder: FormBuilder,
+        private _cadastroUsuariosService: CadastroUsuariosService,
+        private _perfisService: PerfisService,
+        private _resumoService: ResumoService,
+        private _editarService: EditarService,
+        private _spinner: NgxSpinnerService,
+        private _changeDetector: ChangeDetectorRef,
+        private _messageTrackerService: MessageTrackerService
+    ) {
+        this.formCadastro = this._formBuilder.group(
+            {
+                email: ['', [Validators.required, emailValidator, Validators.maxLength(50)]],
+                senha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
+                confirmarSenha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
+                perfil: ['', [Validators.required]]
             },
-            error: (error) => {
-              this._messageTrackerService.subscribeError(error.error);
-            }
-          }
+            {
+                validator: samePasswordValidator('senha', 'confirmarSenha')
+            } as AbstractControlOptions
         );
     }
-  }
 
-  handlePreviousStep() {
-    this.previousStep.emit();
-    this.resetForm();
-  }
+    ngOnInit(): void {
+        this.fillPerfilSelect();
+        this.fillFormEditing();
+    }
 
-  resetForm() {
-    this.formDirective.resetForm();
-  }
+    fillFormEditing() {
+        this._editarService.getValues.subscribe((data) => {
+            Object.entries(data).forEach(() => {
+                this.userID = data.id;
+                this.formCadastro.controls.email.patchValue(data.email);
+                this.formCadastro.controls.perfil.patchValue(data.perfil.codigo);
+            });
+        });
+    }
 
-  validationInput(formControlName: string): string | undefined {
-    return validationInput(this.formCadastro, formControlName);
-  }
+    fillPerfilSelect() {
+        this._perfisService.getPerfis().subscribe({
+            next: (response) => {
+                this.perfis = response.data;
+            },
+            error: (error) => {
+                this._messageTrackerService.subscribeError(error.error);
+            }
+        });
+    }
 
-  changeFocus() {
-    this.listRef = [this.emailRef, this.senhaRef, this.confirmarSenhaRef, this.perfilRef];
-    inputFocus(this.formCadastro, this.listRef, this._changeDetector);
-  }
+    register() {
+        if (this.formCadastro.valid) {
+            const data: CadastroUsuarioRequest = {
+                email: this.formCadastro.controls.email.value,
+                senha: this.formCadastro.controls.confirmarSenha.value,
+                perfil: {
+                    codigo: this.formCadastro.controls.perfil.value
+                },
+                ativo: true,
+                redefinirSenha: true
+            };
+
+            this._spinner.show();
+            this._cadastroUsuariosService
+                .save(data, this.isEditing, this.userID)
+                .pipe(finalize(() => this._spinner.hide()))
+                .subscribe({
+                    next: (response) => {
+                        this.isRegistered.emit(true);
+                        this.userID = 0;
+                        this._resumoService.setValues(response, this.isEditing);
+                    },
+                    error: (error) => {
+                        this._messageTrackerService.subscribeError(error.error);
+                    }
+                });
+        }
+    }
+
+    handlePreviousStep() {
+        this.previousStep.emit();
+        this.resetForm();
+    }
+
+    resetForm() {
+        this.formDirective.resetForm();
+    }
+
+    validationInput(formControlName: string): string | undefined {
+        return validationInput(this.formCadastro, formControlName);
+    }
+
+    changeFocus() {
+        this.listRef = [this.emailRef, this.senhaRef, this.confirmarSenhaRef, this.perfilRef];
+        inputFocus(this.formCadastro, this.listRef, this._changeDetector);
+    }
 }

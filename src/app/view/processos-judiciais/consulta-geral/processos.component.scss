@@ -1,32 +1,32 @@
-@import "../../../../assets/variaveis.scss";
+@import '../../../../assets/variaveis.scss';
 
 .container-title {
-  height: 3rem;
-  display: flex;
-  align-items: center;
+    height: 3rem;
+    display: flex;
+    align-items: center;
 
-  h1 {
-    margin: 0;
-  }
+    h1 {
+        margin: 0;
+    }
 }
 
 .container-processos {
-  width: 85%;
-  margin: 2rem auto;
+    width: 85%;
+    margin: 2rem auto;
 
-  ::ng-deep .mat-horizontal-stepper-header-container {
-    display: none;
-  }
+    ::ng-deep .mat-horizontal-stepper-header-container {
+        display: none;
+    }
 }
 
 @media screen and (max-width: $desktop-medium) {
-  .container-consulta-processos {
-    width: 90%;
-  }
+    .container-consulta-processos {
+        width: 90%;
+    }
 }
 
 @media screen and (max-width: $desktop-base) {
-  .container-consulta-processos {
-    width: 95%;
-  }
+    .container-consulta-processos {
+        width: 95%;
+    }
 }

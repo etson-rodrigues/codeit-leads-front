@@ -22,34 +22,32 @@ import { SidenavModule } from './core/components/sidenav/sidenav.module';
 import { RequestInterceptor } from './core/auth/request-interceptor';
 
 const maskConfig: Partial<IConfig> = {
-  validation: false
+    validation: false
 };
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    MatNativeDateModule,
-    HttpClientModule,
-    SpinnerModule,
-    MatSnackBarModule,
-    MessageTrackerModule,
-    NgxMaskModule.forRoot(maskConfig),
-    FooterModule,
-    HeaderModule,
-    SidenavModule,
-    MatSidenavModule
-  ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
-    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
-    { provide: CURRENCY_MASK_CONFIG, useValue: customCurrencyMaskConfig },
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline', color: 'accent' } }
-  ],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        MatNativeDateModule,
+        HttpClientModule,
+        SpinnerModule,
+        MatSnackBarModule,
+        MessageTrackerModule,
+        NgxMaskModule.forRoot(maskConfig),
+        FooterModule,
+        HeaderModule,
+        SidenavModule,
+        MatSidenavModule
+    ],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
+        { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+        { provide: CURRENCY_MASK_CONFIG, useValue: customCurrencyMaskConfig },
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline', color: 'accent' } }
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

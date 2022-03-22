@@ -1,3 +1,3 @@
 export interface RedefinirSenhaRequest {
-  novaSenha: string;
+    novaSenha: string;
 }

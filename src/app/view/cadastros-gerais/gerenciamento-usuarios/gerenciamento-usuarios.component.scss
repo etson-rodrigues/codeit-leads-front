@@ -1,32 +1,32 @@
-@import "../../../../assets/variaveis.scss";
+@import '../../../../assets/variaveis.scss';
 
 .container-title {
-  height: 3rem;
-  display: flex;
-  align-items: center;
+    height: 3rem;
+    display: flex;
+    align-items: center;
 
-  h1 {
-    margin: 0;
-  }
+    h1 {
+        margin: 0;
+    }
 }
 
 .container-gerenciamento-usuarios {
-  width: 85%;
-  margin: 2rem auto;
+    width: 85%;
+    margin: 2rem auto;
 
-  ::ng-deep .mat-step-header {
-    pointer-events: none;
-  }
+    ::ng-deep .mat-step-header {
+        pointer-events: none;
+    }
 }
 
 @media screen and (max-width: $desktop-medium) {
-  .container-gerenciamento-usuarios {
-    width: 90%;
-  }
+    .container-gerenciamento-usuarios {
+        width: 90%;
+    }
 }
 
 @media screen and (max-width: $desktop-base) {
-  .container-gerenciamento-usuarios {
-    width: 95%;
-  }
+    .container-gerenciamento-usuarios {
+        width: 95%;
+    }
 }

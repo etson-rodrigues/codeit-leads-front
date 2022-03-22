@@ -1,3 +1,3 @@
 export enum ChavesCookies {
-  Token = '@codeit-accessToken'
+    Token = '@codeit-accessToken'
 }

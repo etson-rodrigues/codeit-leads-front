@@ -12,32 +12,32 @@ import { MessageTrackerService } from 'src/app/core/services/message-tracker/mes
 import { CadastrosGuard } from './cadastros.guard';
 
 describe('CadastrosGuard', () => {
-  let guard: CadastrosGuard;
-  let cadastroUsuariosService: jasmine.SpyObj<CadastroUsuariosService>;
-  let localStorageService: jasmine.SpyObj<LocalStorageService>;
-  let messageTrackerService: MessageTrackerService;
+    let guard: CadastrosGuard;
+    let cadastroUsuariosService: jasmine.SpyObj<CadastroUsuariosService>;
+    let localStorageService: jasmine.SpyObj<LocalStorageService>;
+    let messageTrackerService: MessageTrackerService;
 
-  beforeEach(() => {
-    const localStorageServiceSpy = jasmine.createSpyObj('LocalStorageService', ['getItemLocalStorage']);
-    const cadastroUsuariosServiceSpy = jasmine.createSpyObj('CadastroUsuariosService', ['get']);
-    const messageTrackerServiceSpy = jasmine.createSpyObj('MessageTrackerService', ['subscribeError']);
+    beforeEach(() => {
+        const localStorageServiceSpy = jasmine.createSpyObj('LocalStorageService', ['getItemLocalStorage']);
+        const cadastroUsuariosServiceSpy = jasmine.createSpyObj('CadastroUsuariosService', ['get']);
+        const messageTrackerServiceSpy = jasmine.createSpyObj('MessageTrackerService', ['subscribeError']);
 
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes(routes)],
-      providers: [
-        { provide: LocalStorageService, useValue: localStorageServiceSpy },
-        { provide: CadastroUsuariosService, useValue: cadastroUsuariosServiceSpy },
-        { provide: MessageTrackerService, useValue: messageTrackerServiceSpy }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
+        TestBed.configureTestingModule({
+            imports: [RouterTestingModule.withRoutes(routes)],
+            providers: [
+                { provide: LocalStorageService, useValue: localStorageServiceSpy },
+                { provide: CadastroUsuariosService, useValue: cadastroUsuariosServiceSpy },
+                { provide: MessageTrackerService, useValue: messageTrackerServiceSpy }
+            ],
+            schemas: [NO_ERRORS_SCHEMA]
+        });
+        guard = TestBed.inject(CadastrosGuard);
+        cadastroUsuariosService = TestBed.inject(CadastroUsuariosService) as jasmine.SpyObj<CadastroUsuariosService>;
+        localStorageService = TestBed.inject(LocalStorageService) as jasmine.SpyObj<LocalStorageService>;
+        messageTrackerService = TestBed.inject(MessageTrackerService);
     });
-    guard = TestBed.inject(CadastrosGuard);
-    cadastroUsuariosService = TestBed.inject(CadastroUsuariosService) as jasmine.SpyObj<CadastroUsuariosService>;
-    localStorageService = TestBed.inject(LocalStorageService) as jasmine.SpyObj<LocalStorageService>;
-    messageTrackerService = TestBed.inject(MessageTrackerService);
-  });
 
-  it('[CIT-5819] deve ser criado', () => {
-    expect(guard).toBeTruthy();
-  });
+    it('[CIT-5819] deve ser criado', () => {
+        expect(guard).toBeTruthy();
+    });
 });

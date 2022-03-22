@@ -6,27 +6,24 @@ import { StepperService } from 'src/app/core/services/stepper/stepper.service';
 import { DetalhesProcesso } from 'src/app/core/models/detalhes-processo/detalhes-processo-response.model';
 
 @Component({
-  selector: 'app-processos',
-  templateUrl: './processos.component.html',
-  styleUrls: ['./processos.component.scss']
+    selector: 'app-processos',
+    templateUrl: './processos.component.html',
+    styleUrls: ['./processos.component.scss']
 })
 export class ProcessosComponent implements OnInit {
+    detalhesProcesso!: DetalhesProcesso;
 
-  detalhesProcesso!: DetalhesProcesso;
+    @ViewChild('stepper') private _stepper!: MatStepper;
 
-  @ViewChild('stepper') private _stepper!: MatStepper;
+    constructor(private _stepperService: StepperService) {}
 
-  constructor(
-    private _stepperService: StepperService
-  ) { }
+    ngOnInit(): void {
+        setTimeout(() => {
+            this._stepperService.stepper = this._stepper;
+        });
+    }
 
-  ngOnInit(): void {
-    setTimeout(() => {
-      this._stepperService.stepper = this._stepper;
-    });
-  }
-
-  passingData(data: DetalhesProcesso) {
-    this.detalhesProcesso = data;
-  }
+    passingData(data: DetalhesProcesso) {
+        this.detalhesProcesso = data;
+    }
 }

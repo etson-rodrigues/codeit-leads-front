@@ -1,14 +1,13 @@
 <header class="container-header">
-  <mat-toolbar>
-    <div class="container-menu-logo">
-      <button mat-icon-button aria-label="Menu" [autofocus]="false" class="openSidenavButton" (click)="toggleSidenav()">
-        <mat-icon fontSet="fas" fontIcon="fa-bars" class="icon-md-36"></mat-icon>
-      </button>
-      <div id="logo"></div>
-    </div>
-    <button mat-icon-button aria-label="logout" (click)="logout()">
-      <mat-icon fontSet="fas" fontIcon="fa-power-off" class="icon-md-36"></mat-icon>
-    </button>
-
-  </mat-toolbar>
+    <mat-toolbar>
+        <div class="container-menu-logo">
+            <button mat-icon-button aria-label="Menu" [autofocus]="false" class="openSidenavButton" (click)="toggleSidenav()" *ngIf="isUserLogged()">
+                <mat-icon fontSet="fas" fontIcon="fa-bars" class="icon-md-36"></mat-icon>
+            </button>
+            <div id="logo"></div>
+        </div>
+        <button mat-icon-button aria-label="logout" (click)="logout()" *ngIf="isUserLogged()">
+            <mat-icon fontSet="fas" fontIcon="fa-power-off" class="icon-md-36"></mat-icon>
+        </button>
+    </mat-toolbar>
 </header>

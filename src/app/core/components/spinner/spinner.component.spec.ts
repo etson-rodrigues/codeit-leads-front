@@ -4,25 +4,25 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { SpinnerComponent } from './spinner.component';
 
 describe('SpinnerComponent', () => {
-  let component: SpinnerComponent;
-  let fixture: ComponentFixture<SpinnerComponent>;
+    let component: SpinnerComponent;
+    let fixture: ComponentFixture<SpinnerComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [SpinnerComponent],
-        imports: [NgxSpinnerModule]
-      }).compileComponents();
-    })
-  );
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [SpinnerComponent],
+                imports: [NgxSpinnerModule]
+            }).compileComponents();
+        })
+    );
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SpinnerComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(SpinnerComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('[CIT-5596] deve criar', () => {
-    expect(component).toBeTruthy();
-  });
+    it('[CIT-5596] deve criar', () => {
+        expect(component).toBeTruthy();
+    });
 });

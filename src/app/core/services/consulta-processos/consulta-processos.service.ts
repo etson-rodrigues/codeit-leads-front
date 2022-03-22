@@ -7,29 +7,25 @@ import { ConsultaProcessosResponse } from '../../models/consulta-processos/consu
 import { formatarDataParaRequest } from 'src/app/shared/utils/formatar-data';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ConsultaProcessosService {
-  private _url: string = environment.url;
+    private _url: string = environment.url;
 
-  constructor(private _http: HttpClient) { }
+    constructor(private _http: HttpClient) {}
 
-  get(searchParameters: ConsultaProcessosRequest, pageNumber: number, pageSize: number) {
-    let params = new HttpParams()
-      .set('razaoSocial', searchParameters.razaoSocial);
+    get(searchParameters: ConsultaProcessosRequest, pageNumber: number, pageSize: number) {
+        let params = new HttpParams().set('razaoSocial', searchParameters.razaoSocial);
 
-    if (searchParameters.criterioData) {
-      params = params.set('criterioData', searchParameters.criterioData);
+        if (searchParameters.criterioData) {
+            params = params.set('criterioData', searchParameters.criterioData);
+        }
+        if (searchParameters.dataInicial) {
+            params = params.set('dataInicial', formatarDataParaRequest(searchParameters.dataInicial));
+        }
+
+        params = params.set('dataFinal', formatarDataParaRequest(searchParameters.dataFinal)).set('pageNumber', pageNumber).set('pageSize', pageSize);
+
+        return this._http.get<ConsultaProcessosResponse>(`${this._url}processos-judiciais`, { params });
     }
-    if (searchParameters.dataInicial) {
-      params = params.set('dataInicial', formatarDataParaRequest(searchParameters.dataInicial));
-    }
-
-    params = params
-      .set('dataFinal', formatarDataParaRequest(searchParameters.dataFinal))
-      .set('pageNumber', pageNumber)
-      .set('pageSize', pageSize)
-
-    return this._http.get<ConsultaProcessosResponse>(`${this._url}processos-judiciais`, { params });
-  }
 }

@@ -5,27 +5,27 @@ import { ChavesCookies } from '../../enums/cookie.enum';
 import { CookiesService } from '../../services/cookies/cookies.service';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+    @Output() openMenu: EventEmitter<boolean> = new EventEmitter();
 
-  @Output() openMenu: EventEmitter<boolean> = new EventEmitter();
+    constructor(private _cookieService: CookiesService, private _router: Router) {}
 
-  constructor(
-    private _cookieService: CookiesService,
-    private _router: Router
-  ) { }
+    ngOnInit(): void {}
 
-  ngOnInit(): void { }
+    isUserLogged(): boolean {
+        return this._cookieService.hasItemCookie(ChavesCookies.Token);
+    }
 
-  toggleSidenav() {
-    this.openMenu.emit();
-  }
+    toggleSidenav() {
+        this.openMenu.emit();
+    }
 
-  logout() {
-    this._cookieService.deleteCookie(ChavesCookies.Token);
-    this._router.navigate(['login']);
-  }
+    logout() {
+        this._cookieService.deleteCookie(ChavesCookies.Token);
+        this._router.navigate(['login']);
+    }
 }

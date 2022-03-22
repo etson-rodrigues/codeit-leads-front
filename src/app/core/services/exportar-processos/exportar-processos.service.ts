@@ -7,34 +7,33 @@ import { ExportarProcessosRequest } from '../../models/consulta-processos/export
 import { formatarDataParaRequest } from 'src/app/shared/utils/formatar-data';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ExportarProcessosService {
-  private _url: string = environment.url;
+    private _url: string = environment.url;
 
-  constructor(private _http: HttpClient) { }
+    constructor(private _http: HttpClient) {}
 
-  export(searchParameters: ConsultaProcessosRequest) {
+    export(searchParameters: ConsultaProcessosRequest) {
+        let params: ExportarProcessosRequest = {
+            razaoSocial: searchParameters.razaoSocial,
+            dataFinal: formatarDataParaRequest(searchParameters.dataFinal)
+        };
 
-    let params: ExportarProcessosRequest = {
-      razaoSocial: searchParameters.razaoSocial,
-      dataFinal: formatarDataParaRequest(searchParameters.dataFinal)
-    };
+        if (searchParameters.criterioData) {
+            params = {
+                ...params,
+                criterioData: searchParameters.criterioData
+            };
+        }
 
-    if (searchParameters.criterioData) {
-      params = {
-        ...params,
-        criterioData: searchParameters.criterioData
-      }
+        if (searchParameters.dataInicial) {
+            params = {
+                ...params,
+                dataInicial: formatarDataParaRequest(searchParameters.dataInicial)
+            };
+        }
+
+        return this._http.post(`${this._url}processos-judiciais/exportar`, params, { responseType: 'blob' });
     }
-
-    if (searchParameters.dataInicial) {
-      params = {
-        ...params,
-        dataInicial: formatarDataParaRequest(searchParameters.dataInicial)
-      }
-    }
-
-    return this._http.post(`${this._url}processos-judiciais/exportar`, params, { responseType: 'blob' });
-  }
 }

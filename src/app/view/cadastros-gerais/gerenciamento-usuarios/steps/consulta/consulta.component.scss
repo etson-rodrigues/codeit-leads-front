@@ -1,61 +1,61 @@
 .container-consulta-usuario {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin: 1rem auto;
-
-  .container-form {
     display: flex;
     flex-direction: column;
+    gap: 2rem;
+    margin: 1rem auto;
 
-    .container-button {
-      display: flex;
-      gap: 2rem;
+    .container-form {
+        display: flex;
+        flex-direction: column;
 
-      button {
+        .container-button {
+            display: flex;
+            gap: 2rem;
+
+            button {
+                width: 100%;
+            }
+        }
+    }
+
+    .next-step {
+        display: flex;
+        justify-content: flex-end;
+
+        button {
+            .mat-icon {
+                vertical-align: baseline;
+            }
+
+            span {
+                margin-right: 0.5rem;
+            }
+        }
+    }
+
+    .result-table {
         width: 100%;
-      }
+
+        .mat-header-cell {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .mat-column-email {
+            width: 40%;
+        }
+
+        .mat-column-perfil {
+            width: 30%;
+        }
+
+        .mat-column-ativo {
+            width: 16%;
+        }
+
+        .mat-column-editar,
+        .mat-column-desativar {
+            width: 7%;
+        }
     }
-  }
-
-  .next-step {
-    display: flex;
-    justify-content: flex-end;
-
-    button {
-      .mat-icon {
-        vertical-align: baseline;
-      }
-
-      span {
-        margin-right: 0.5rem;
-      }
-    }
-  }
-
-  .result-table {
-    width: 100%;
-
-    .mat-header-cell {
-      font-size: 1rem;
-      font-weight: bold;
-    }
-
-    .mat-column-email {
-      width: 40%;
-    }
-
-    .mat-column-perfil {
-      width: 30%;
-    }
-
-    .mat-column-ativo {
-      width: 16%;
-    }
-
-    .mat-column-editar,
-    .mat-column-desativar {
-      width: 7%;
-    }
-  }
 }

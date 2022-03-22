@@ -15,123 +15,119 @@ import { RedefinirSenhaComponent } from './redefinir-senha.component';
 import { RedefinirSenhaModule } from './redefinir-senha.module';
 
 describe('RedefinirSenhaComponent', () => {
-  let component: RedefinirSenhaComponent;
-  let fixture: ComponentFixture<RedefinirSenhaComponent>;
-  let autenticacaoService: jasmine.SpyObj<AutenticacaoService>;
-  let redefinirSenhaService: jasmine.SpyObj<RedefinirSenhaService>;
-  let messageTrackerService: jasmine.SpyObj<MessageTrackerService>;
+    let component: RedefinirSenhaComponent;
+    let fixture: ComponentFixture<RedefinirSenhaComponent>;
+    let autenticacaoService: jasmine.SpyObj<AutenticacaoService>;
+    let redefinirSenhaService: jasmine.SpyObj<RedefinirSenhaService>;
+    let messageTrackerService: jasmine.SpyObj<MessageTrackerService>;
 
-  beforeEach(waitForAsync(() => {
-    const autenticacaoServiceSpy = jasmine.createSpyObj('AutenticacaoService', ['']);
-    const redefinirSenhaServiceSpy = jasmine.createSpyObj('RedefinirSenhaService', ['redefinePassword']);
-    const messageTrackerServiceSpy = jasmine.createSpyObj('MessageTrackerService', ['subscribeError']);
+    beforeEach(
+        waitForAsync(() => {
+            const autenticacaoServiceSpy = jasmine.createSpyObj('AutenticacaoService', ['']);
+            const redefinirSenhaServiceSpy = jasmine.createSpyObj('RedefinirSenhaService', ['redefinePassword']);
+            const messageTrackerServiceSpy = jasmine.createSpyObj('MessageTrackerService', ['subscribeError']);
 
-    TestBed.configureTestingModule({
-      declarations: [
-        RedefinirSenhaComponent
-      ],
-      imports: [
-        RedefinirSenhaModule,
-        RouterTestingModule.withRoutes(routes),
-        NoopAnimationsModule
-      ],
-      providers: [
-        { provide: AutenticacaoService, useValue: autenticacaoServiceSpy },
-        { provide: RedefinirSenhaService, useValue: redefinirSenhaServiceSpy },
-        { provide: MessageTrackerService, useValue: messageTrackerServiceSpy }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(RedefinirSenhaComponent);
-        autenticacaoService = TestBed.inject(AutenticacaoService) as jasmine.SpyObj<AutenticacaoService>;
-        redefinirSenhaService = TestBed.inject(RedefinirSenhaService) as jasmine.SpyObj<RedefinirSenhaService>;
-        messageTrackerService = TestBed.inject(MessageTrackerService) as jasmine.SpyObj<MessageTrackerService>;
-        component = fixture.componentInstance;
+            TestBed.configureTestingModule({
+                declarations: [RedefinirSenhaComponent],
+                imports: [RedefinirSenhaModule, RouterTestingModule.withRoutes(routes), NoopAnimationsModule],
+                providers: [
+                    { provide: AutenticacaoService, useValue: autenticacaoServiceSpy },
+                    { provide: RedefinirSenhaService, useValue: redefinirSenhaServiceSpy },
+                    { provide: MessageTrackerService, useValue: messageTrackerServiceSpy }
+                ],
+                schemas: [NO_ERRORS_SCHEMA]
+            })
+                .compileComponents()
+                .then(() => {
+                    fixture = TestBed.createComponent(RedefinirSenhaComponent);
+                    autenticacaoService = TestBed.inject(AutenticacaoService) as jasmine.SpyObj<AutenticacaoService>;
+                    redefinirSenhaService = TestBed.inject(RedefinirSenhaService) as jasmine.SpyObj<RedefinirSenhaService>;
+                    messageTrackerService = TestBed.inject(MessageTrackerService) as jasmine.SpyObj<MessageTrackerService>;
+                    component = fixture.componentInstance;
+                    fixture.detectChanges();
+                });
+        })
+    );
+
+    it('[CIT-5777] deve criar', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it('[CIT-5777] deve validar formulário vazio', () => {
+        expect(component.formRedefinirSenha.valid).withContext('Formulário deve inicializar inválido').toBeFalsy();
+    });
+
+    it('[CIT-5777] deve validar campo de senha', () => {
+        const senhaInput = component.formRedefinirSenha.get('senha');
         fixture.detectChanges();
-      });
-  }));
+        expect(senhaInput!.valid).withContext('Campo senha deve inicializar inválido').toBeFalsy();
 
-  it('[CIT-5777] deve criar', () => {
-    expect(component).toBeTruthy();
-  });
+        senhaInput!.setValue('');
+        fixture.detectChanges();
+        expect(senhaInput!.hasError('required')).withContext('Campo senha é obrigatório').toBeTruthy();
 
-  it('[CIT-5777] deve validar formulário vazio', () => {
-    expect(component.formRedefinirSenha.valid).withContext('Formulário deve inicializar inválido').toBeFalsy();
-  });
+        senhaInput!.setValue('REj%oZs');
+        fixture.detectChanges();
+        expect(senhaInput!.hasError('minlength')).withContext('Campo senha deve ter mais que 8 caracteres').toBeTruthy();
 
-  it('[CIT-5777] deve validar campo de senha', () => {
-    const senhaInput = component.formRedefinirSenha.get('senha');
-    fixture.detectChanges();
-    expect(senhaInput!.valid).withContext('Campo senha deve inicializar inválido').toBeFalsy();
+        senhaInput!.setValue('^R+smUE8_*SbTgFye?B4=Y6%HSautF9^K@tw26!@Lh&+Nqj_#sgC?GsCPk_X6tmUwrFRN=RK#^x=Q!D=uDc!=KuEx8$wJpXAVFBsg');
+        fixture.detectChanges();
+        expect(senhaInput!.hasError('maxlength')).withContext('Campo senha deve ter menos que 100 caracteres').toBeTruthy();
 
-    senhaInput!.setValue('');
-    fixture.detectChanges();
-    expect(senhaInput!.hasError('required')).withContext('Campo senha é obrigatório').toBeTruthy();
+        senhaInput!.setValue('senhateste');
+        fixture.detectChanges();
+        expect(senhaInput!.valid).withContext('Campo senha deve ser válido').toBeTruthy();
+    });
 
-    senhaInput!.setValue('REj%oZs');
-    fixture.detectChanges();
-    expect(senhaInput!.hasError('minlength')).withContext('Campo senha deve ter mais que 8 caracteres').toBeTruthy();
+    it('[CIT-5777] deve validar campo de confirmar senha', () => {
+        const senhaInput = component.formRedefinirSenha.get('senha');
+        const confirmarSenhaInput = component.formRedefinirSenha.get('confirmarSenha');
 
-    senhaInput!.setValue('^R+smUE8_*SbTgFye?B4=Y6%HSautF9^K@tw26!@Lh&+Nqj_#sgC?GsCPk_X6tmUwrFRN=RK#^x=Q!D=uDc!=KuEx8$wJpXAVFBsg');
-    fixture.detectChanges();
-    expect(senhaInput!.hasError('maxlength')).withContext('Campo senha deve ter menos que 100 caracteres').toBeTruthy();
+        fixture.detectChanges();
+        expect(confirmarSenhaInput!.valid).withContext('Campo senha deve inicializar inválido').toBeFalsy();
 
-    senhaInput!.setValue('senhateste');
-    fixture.detectChanges();
-    expect(senhaInput!.valid).withContext('Campo senha deve ser válido').toBeTruthy();
-  });
+        confirmarSenhaInput!.setValue('');
+        fixture.detectChanges();
+        expect(confirmarSenhaInput!.hasError('required')).withContext('Campo senha é obrigatório').toBeTruthy();
 
-  it('[CIT-5777] deve validar campo de confirmar senha', () => {
-    const senhaInput = component.formRedefinirSenha.get('senha');
-    const confirmarSenhaInput = component.formRedefinirSenha.get('confirmarSenha');
+        confirmarSenhaInput!.setValue('REj%oZs');
+        fixture.detectChanges();
+        expect(confirmarSenhaInput!.hasError('minlength')).withContext('Campo senha deve ter mais que 8 caracteres').toBeTruthy();
 
-    fixture.detectChanges();
-    expect(confirmarSenhaInput!.valid).withContext('Campo senha deve inicializar inválido').toBeFalsy();
+        confirmarSenhaInput!.setValue('^R+smUE8_*SbTgFye?B4=Y6%HSautF9^K@tw26!@Lh&+Nqj_#sgC?GsCPk_X6tmUwrFRN=RK#^x=Q!D=uDc!=KuEx8$wJpXAVFBsg');
+        fixture.detectChanges();
+        expect(confirmarSenhaInput!.hasError('maxlength')).withContext('Campo senha deve ter menos que 100 caracteres').toBeTruthy();
 
-    confirmarSenhaInput!.setValue('');
-    fixture.detectChanges();
-    expect(confirmarSenhaInput!.hasError('required')).withContext('Campo senha é obrigatório').toBeTruthy();
+        senhaInput!.setValue('senha1234');
+        confirmarSenhaInput!.setValue('senha4321');
+        fixture.detectChanges();
+        expect(confirmarSenhaInput!.hasError('devemSerSenhasIguais')).withContext('Campo confirmar senha deve ser igual ao campo senha').toBeTruthy();
 
-    confirmarSenhaInput!.setValue('REj%oZs');
-    fixture.detectChanges();
-    expect(confirmarSenhaInput!.hasError('minlength')).withContext('Campo senha deve ter mais que 8 caracteres').toBeTruthy();
+        confirmarSenhaInput!.setValue('senha1234');
+        fixture.detectChanges();
+        expect(confirmarSenhaInput!.valid).withContext('Campo senha deve ser válido').toBeTruthy();
+    });
 
-    confirmarSenhaInput!.setValue('^R+smUE8_*SbTgFye?B4=Y6%HSautF9^K@tw26!@Lh&+Nqj_#sgC?GsCPk_X6tmUwrFRN=RK#^x=Q!D=uDc!=KuEx8$wJpXAVFBsg');
-    fixture.detectChanges();
-    expect(confirmarSenhaInput!.hasError('maxlength')).withContext('Campo senha deve ter menos que 100 caracteres').toBeTruthy();
+    it('[CIT-5777] deve redefinir a senha do usuário', () => {
+        spyOn(component, 'openDialog').and.callThrough();
+        component.loginInfo = mockLoginResponse.data;
+        const senhaInput = component.formRedefinirSenha.get('senha');
+        const confirmarSenhaInput = component.formRedefinirSenha.get('confirmarSenha');
+        senhaInput!.setValue('senha12345');
+        confirmarSenhaInput!.setValue('senha12345');
+        redefinirSenhaService.redefinePassword.and.returnValue(of(mockCadastroUsuarioResponse));
+        component.changePassword();
+        expect(component.openDialog).withContext('Deve abrir o dialog após redefinir a senha do usuário com sucesso').toHaveBeenCalledTimes(1);
+    });
 
-    senhaInput!.setValue('senha1234');
-    confirmarSenhaInput!.setValue('senha4321');
-    fixture.detectChanges();
-    expect(confirmarSenhaInput!.hasError('devemSerSenhasIguais')).withContext('Campo confirmar senha deve ser igual ao campo senha').toBeTruthy();
-
-    confirmarSenhaInput!.setValue('senha1234');
-    fixture.detectChanges();
-    expect(confirmarSenhaInput!.valid).withContext('Campo senha deve ser válido').toBeTruthy();
-  });
-
-  it('[CIT-5777] deve redefinir a senha do usuário', () => {
-    spyOn(component, 'openDialog').and.callThrough();
-    component.loginInfo = mockLoginResponse.data;
-    const senhaInput = component.formRedefinirSenha.get('senha');
-    const confirmarSenhaInput = component.formRedefinirSenha.get('confirmarSenha');
-    senhaInput!.setValue('senha12345');
-    confirmarSenhaInput!.setValue('senha12345');
-    redefinirSenhaService.redefinePassword.and.returnValue(of(mockCadastroUsuarioResponse));
-    component.changePassword();
-    expect(component.openDialog).withContext('Deve abrir o dialog após redefinir a senha do usuário com sucesso').toHaveBeenCalledTimes(1);
-  });
-
-  it('[CIT-5777] deve gerar erro caso redefinição de senha do usuário falhar', () => {
-    component.loginInfo = mockLoginResponse.data;
-    const senhaInput = component.formRedefinirSenha.get('senha');
-    const confirmarSenhaInput = component.formRedefinirSenha.get('confirmarSenha');
-    senhaInput!.setValue('senha12345');
-    confirmarSenhaInput!.setValue('senha12345');
-    redefinirSenhaService.redefinePassword.and.returnValue(throwError(() => new Error()));;
-    component.changePassword();
-    expect(messageTrackerService.subscribeError).withContext('Deve abrir o messageTracker ao gerar erro ao redefinir senha do usuário').toHaveBeenCalledTimes(1);
-  });
-
+    it('[CIT-5777] deve gerar erro caso redefinição de senha do usuário falhar', () => {
+        component.loginInfo = mockLoginResponse.data;
+        const senhaInput = component.formRedefinirSenha.get('senha');
+        const confirmarSenhaInput = component.formRedefinirSenha.get('confirmarSenha');
+        senhaInput!.setValue('senha12345');
+        confirmarSenhaInput!.setValue('senha12345');
+        redefinirSenhaService.redefinePassword.and.returnValue(throwError(() => new Error()));
+        component.changePassword();
+        expect(messageTrackerService.subscribeError).withContext('Deve abrir o messageTracker ao gerar erro ao redefinir senha do usuário').toHaveBeenCalledTimes(1);
+    });
 });

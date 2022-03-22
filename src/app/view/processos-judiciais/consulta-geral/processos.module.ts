@@ -26,34 +26,28 @@ import { ConsultaProcessosComponent } from './consulta-processos/consulta-proces
 import { CustomDateAdapter } from 'src/app/core/config/date-adapter';
 
 @NgModule({
-  declarations: [
-    ProcessosComponent,
-    ConsultaProcessosComponent,
-    DetalhesProcessoComponent
-  ],
-  imports: [
-    CommonModule,
-    ProcessosRoutingModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatChipsModule,
-    MatDividerModule,
-    MatStepperModule,
-    MatCardModule,
-    MatTooltipModule,
-    MatMenuModule,
-    DialogModule
-  ],
-  providers: [
-    { provide: DateAdapter, useClass: CustomDateAdapter }
-  ]
+    declarations: [ProcessosComponent, ConsultaProcessosComponent, DetalhesProcessoComponent],
+    imports: [
+        CommonModule,
+        ProcessosRoutingModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatChipsModule,
+        MatDividerModule,
+        MatStepperModule,
+        MatCardModule,
+        MatTooltipModule,
+        MatMenuModule,
+        DialogModule
+    ],
+    providers: [{ provide: DateAdapter, useClass: CustomDateAdapter }]
 })
-export class ProcessosModule { }
+export class ProcessosModule {}

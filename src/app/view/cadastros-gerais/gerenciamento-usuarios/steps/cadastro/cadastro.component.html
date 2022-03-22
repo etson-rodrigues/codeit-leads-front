@@ -1,48 +1,51 @@
-<form class="container-form-cadastro" [formGroup]="formCadastro" (submit)="register()" (keydown.enter)="false"
-  #formDirective="ngForm">
-  <mat-form-field>
-    <mat-label>E-mail</mat-label>
-    <input matInput formControlName="email" placeholder="seuemail@email.com" id="email" (keyup.enter)="changeFocus()"
-      #emailRef required [readOnly]="isEditing" />
-    <mat-error>{{validationInput('email')}}</mat-error>
-  </mat-form-field>
+<form class="container-form-cadastro" [formGroup]="formCadastro" (submit)="register()" (keydown.enter)="(false)" #formDirective="ngForm">
+    <mat-form-field>
+        <mat-label>E-mail</mat-label>
+        <input matInput formControlName="email" placeholder="seuemail@email.com" id="email" (keyup.enter)="changeFocus()" #emailRef required [readOnly]="isEditing" />
+        <mat-error>{{ validationInput('email') }}</mat-error>
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Senha</mat-label>
-    <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="senha" placeholder="Senha" id="senha"
-      (keyup.enter)="changeFocus()" #senhaRef required />
-    <mat-icon matSuffix (click)="hidePassword = !hidePassword" fontSet="fas"
-      [fontIcon]="!hidePassword ? 'fa-eye' : 'fa-eye-slash'"></mat-icon>
-    <mat-error>{{validationInput('senha')}}</mat-error>
-  </mat-form-field>
+    <mat-form-field>
+        <mat-label>Senha</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="senha" placeholder="Senha" id="senha" (keyup.enter)="changeFocus()" #senhaRef required />
+        <mat-icon matSuffix (click)="hidePassword = !hidePassword" fontSet="fas" [fontIcon]="!hidePassword ? 'fa-eye' : 'fa-eye-slash'"></mat-icon>
+        <mat-error>{{ validationInput('senha') }}</mat-error>
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Confirmar senha</mat-label>
-    <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmarSenha"
-      placeholder="Confirmar Senha" id="confirmarSenha" (keyup.enter)="changeFocus()" #confirmarSenhaRef required />
-    <mat-icon matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" fontSet="fas"
-      [fontIcon]="!hideConfirmPassword ? 'fa-eye' : 'fa-eye-slash'"></mat-icon>
-    <mat-error>{{validationInput('confirmarSenha')}}</mat-error>
-  </mat-form-field>
+    <mat-form-field>
+        <mat-label>Confirmar senha</mat-label>
+        <input
+            matInput
+            [type]="hideConfirmPassword ? 'password' : 'text'"
+            formControlName="confirmarSenha"
+            placeholder="Confirmar Senha"
+            id="confirmarSenha"
+            (keyup.enter)="changeFocus()"
+            #confirmarSenhaRef
+            required
+        />
+        <mat-icon matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" fontSet="fas" [fontIcon]="!hideConfirmPassword ? 'fa-eye' : 'fa-eye-slash'"></mat-icon>
+        <mat-error>{{ validationInput('confirmarSenha') }}</mat-error>
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Perfil de Acesso</mat-label>
-    <mat-select matInput formControlName="perfil" id="perfil" #perfilRef required>
-      <mat-option *ngFor="let perfil of perfis" [value]="perfil.codigo" (click)="changeFocus()">
-        {{ perfil.descricao }}
-      </mat-option>
-    </mat-select>
-    <mat-error>{{validationInput('perfil')}}</mat-error>
-  </mat-form-field>
+    <mat-form-field>
+        <mat-label>Perfil de Acesso</mat-label>
+        <mat-select matInput formControlName="perfil" id="perfil" #perfilRef required>
+            <mat-option *ngFor="let perfil of perfis" [value]="perfil.codigo" (click)="changeFocus()">
+                {{ perfil.descricao }}
+            </mat-option>
+        </mat-select>
+        <mat-error>{{ validationInput('perfil') }}</mat-error>
+    </mat-form-field>
 
-  <div class="container-button">
-    <button type="button" mat-button aria-label="Cancelar" (click)="handlePreviousStep()">
-      <mat-icon fontSet="fas" fontIcon="fa-chevron-left"></mat-icon>
-      <span>Cancelar</span>
-    </button>
-    <button type="submit" mat-button aria-label="Cadastrar/Editar">
-      <span>{{isEditing ? 'Editar' : 'Cadastrar'}}</span>
-      <mat-icon fontSet="fas" fontIcon="fa-chevron-right"></mat-icon>
-    </button>
-  </div>
+    <div class="container-button">
+        <button type="button" mat-button aria-label="Cancelar" (click)="handlePreviousStep()">
+            <mat-icon fontSet="fas" fontIcon="fa-chevron-left"></mat-icon>
+            <span>Cancelar</span>
+        </button>
+        <button type="submit" mat-button aria-label="Cadastrar/Editar">
+            <span>{{ isEditing ? 'Editar' : 'Cadastrar' }}</span>
+            <mat-icon fontSet="fas" fontIcon="fa-chevron-right"></mat-icon>
+        </button>
+    </div>
 </form>

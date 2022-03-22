@@ -1,45 +1,44 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class CookiesService {
+    setCookie(cookieName: string, cookieValue: any, expires: number) {
+        let expiresDate = 'max-age=' + expires * 60 + ';';
 
-  setCookie(cookieName: string, cookieValue: any, expires: number) {
-    let expiresDate = "max-age=" + expires * 60 + ';';
-
-    document.cookie = cookieName + "=" + cookieValue + "; " + "path=/;" + expiresDate;
-  }
-
-  getCookie(cookieName: string) {
-    let cookies = document.cookie;
-    let prefix = cookieName + "=";
-    let begin = cookies.indexOf("; " + prefix);
-
-    if (begin == -1) {
-      begin = cookies.indexOf(prefix);
-      if (begin != 0) {
-        return null;
-      }
-    } else {
-      begin += 2;
+        document.cookie = cookieName + '=' + cookieValue + '; ' + 'path=/;' + expiresDate;
     }
 
-    let end = cookies.indexOf(";", begin);
+    getCookie(cookieName: string) {
+        let cookies = document.cookie;
+        let prefix = cookieName + '=';
+        let begin = cookies.indexOf('; ' + prefix);
 
-    if (end == -1) {
-      end = cookies.length;
+        if (begin == -1) {
+            begin = cookies.indexOf(prefix);
+            if (begin != 0) {
+                return null;
+            }
+        } else {
+            begin += 2;
+        }
+
+        let end = cookies.indexOf(';', begin);
+
+        if (end == -1) {
+            end = cookies.length;
+        }
+        return unescape(cookies.substring(begin + prefix.length, end));
     }
-    return unescape(cookies.substring(begin + prefix.length, end));
-  }
 
-  deleteCookie(cookieName: string) {
-    if (this.getCookie(cookieName)) {
-      document.cookie = cookieName + "=" + ";path=/;expires=Thu, 01-Jan-70 00:00:01 GMT";
+    deleteCookie(cookieName: string) {
+        if (this.getCookie(cookieName)) {
+            document.cookie = cookieName + '=' + ';path=/;expires=Thu, 01-Jan-70 00:00:01 GMT';
+        }
     }
-  }
 
-  hasItemCookie(cookieName: string): boolean {
-    return !!this.getCookie(cookieName);
-  }
+    hasItemCookie(cookieName: string): boolean {
+        return !!this.getCookie(cookieName);
+    }
 }

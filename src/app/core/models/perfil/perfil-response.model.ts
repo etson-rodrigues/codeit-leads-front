@@ -1,8 +1,8 @@
-import { AbstractResponse } from "../comum/abstract-response";
+import { AbstractResponse } from '../comum/abstract-response';
 
 export interface Perfil {
-  codigo: string;
-  descricao: string;
+    codigo: string;
+    descricao: string;
 }
 
-export interface PerfisListResponse extends AbstractResponse<Perfil[]> { }
+export interface PerfisListResponse extends AbstractResponse<Perfil[]> {}

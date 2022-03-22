@@ -10,36 +10,32 @@ import { LocalStorageService } from 'src/app/core/services/local-storage/local-s
 import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class CadastrosGuard implements CanActivate {
+    constructor(
+        private _cadastroUsuariosService: CadastroUsuariosService,
+        private _localStorageService: LocalStorageService,
+        private _messageTrackerService: MessageTrackerService,
+        private _router: Router
+    ) {}
 
-  constructor(
-    private _cadastroUsuariosService: CadastroUsuariosService,
-    private _localStorageService: LocalStorageService,
-    private _messageTrackerService: MessageTrackerService,
-    private _router: Router
-  ) { }
-
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return new Observable<boolean>(obs => {
-      const userInfo: Autenticacao = JSON.parse(this._localStorageService.getItemLocalStorage(ChavesLocalStorage.UserInfo) || '{}');
-      this._cadastroUsuariosService
-        .get(userInfo.email, 1, 10)
-        .subscribe(
-          {
-            next: (response) => {
-              if (!!response.data[0].perfil.acoesSeguranca.find(acao => acao.acaoSeguranca.codigo == AcoesSeguranca.CadastroUsuarios)) {
-                obs.next(true);
-                return;
-              }
-              this._router.navigate(['processos-judiciais/consulta-geral']);
-              obs.next(false);
-            },
-            error: (error) => {
-              this._messageTrackerService.subscribeError(error.error);
-            }
-          });
-    });
-  }
+    canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+        return new Observable<boolean>((obs) => {
+            const userInfo: Autenticacao = JSON.parse(this._localStorageService.getItemLocalStorage(ChavesLocalStorage.UserInfo) || '{}');
+            this._cadastroUsuariosService.get(userInfo.email, 1, 10).subscribe({
+                next: (response) => {
+                    if (!!response.data[0].perfil.acoesSeguranca.find((acao) => acao.acaoSeguranca.codigo == AcoesSeguranca.CadastroUsuarios)) {
+                        obs.next(true);
+                        return;
+                    }
+                    this._router.navigate(['processos-judiciais/consulta-geral']);
+                    obs.next(false);
+                },
+                error: (error) => {
+                    this._messageTrackerService.subscribeError(error.error);
+                }
+            });
+        });
+    }
 }

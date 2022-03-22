@@ -1,17 +1,17 @@
 .container-footer {
-  height: 3rem;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    height: 3rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 9999;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
 
-  .mensagem {
-    font-size: 1rem;
-    margin: 0;
-  }
+    .mensagem {
+        font-size: 1rem;
+        margin: 0;
+    }
 }

@@ -1,15 +1,14 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class EditarService {
+    constructor() {}
 
-  constructor() { }
+    @Output() getValues: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output() getValues: EventEmitter<any> = new EventEmitter<any>();
-
-  setValues(data: any) {
-    this.getValues.emit(data);
-  }
+    setValues(data: any) {
+        this.getValues.emit(data);
+    }
 }

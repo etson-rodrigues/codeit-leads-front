@@ -3,12 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { SeletorTemasComponent } from './seletor-temas.component';
 
-const routes: Routes = [
-  { path: '', component: SeletorTemasComponent },
-];
+const routes: Routes = [{ path: '', component: SeletorTemasComponent }];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
-export class SeletorTemasRoutingModule { }
+export class SeletorTemasRoutingModule {}

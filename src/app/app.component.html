@@ -1,18 +1,18 @@
 <app-spinner></app-spinner>
 
 <mat-sidenav-container *ngIf="handleUserLogin(); else userLoggedOut">
-  <mat-sidenav mode="push" [opened]="isSidenavOpen" disableClose>
-    <app-sidenav (openMenu)="handleOpenMenu()"></app-sidenav>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div class="container-principal">
-      <app-header (openMenu)="handleOpenMenu()"></app-header>
-      <router-outlet></router-outlet>
-      <app-footer></app-footer>
-    </div>
-  </mat-sidenav-content>
+    <mat-sidenav mode="push" [opened]="isSidenavOpen" disableClose>
+        <app-sidenav (openMenu)="handleOpenMenu()"></app-sidenav>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="container-principal">
+            <app-header (openMenu)="handleOpenMenu()"></app-header>
+            <router-outlet></router-outlet>
+            <app-footer></app-footer>
+        </div>
+    </mat-sidenav-content>
 </mat-sidenav-container>
 
 <ng-template #userLoggedOut>
-  <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
 </ng-template>

@@ -11,15 +11,7 @@ import { SeletorTemasComponent } from './seletor-temas.component';
 import { SeletorTemasRoutingModule } from './seletor-temas-routing.module';
 
 @NgModule({
-  declarations: [SeletorTemasComponent],
-  imports: [
-    CommonModule,
-    SeletorTemasRoutingModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatButtonModule
-  ]
+    declarations: [SeletorTemasComponent],
+    imports: [CommonModule, SeletorTemasRoutingModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule]
 })
-export class SeletorTemasModule { }
+export class SeletorTemasModule {}

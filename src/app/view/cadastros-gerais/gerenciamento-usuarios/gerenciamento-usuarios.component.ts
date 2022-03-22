@@ -6,55 +6,52 @@ import { MatStepper } from '@angular/material/stepper';
 import { CadastroComponent } from './steps/cadastro/cadastro.component';
 
 @Component({
-  selector: 'app-gerenciamento-usuarios',
-  templateUrl: './gerenciamento-usuarios.component.html',
-  styleUrls: ['./gerenciamento-usuarios.component.scss']
+    selector: 'app-gerenciamento-usuarios',
+    templateUrl: './gerenciamento-usuarios.component.html',
+    styleUrls: ['./gerenciamento-usuarios.component.scss']
 })
 export class GerenciamentoUsuariosComponent implements OnInit {
-  isEditing: boolean = false;
-  isNewSearch: boolean = false;
-  stepperOrientation!: Observable<StepperOrientation>;
+    isEditing: boolean = false;
+    isNewSearch: boolean = false;
+    stepperOrientation!: Observable<StepperOrientation>;
 
-  @ViewChild('stepper') private stepper!: MatStepper;
-  @ViewChild('cadastro') private cadastro!: CadastroComponent;
+    @ViewChild('stepper') private stepper!: MatStepper;
+    @ViewChild('cadastro') private cadastro!: CadastroComponent;
 
-  constructor(private _breakpointObserver: BreakpointObserver) {
-  }
+    constructor(private _breakpointObserver: BreakpointObserver) {}
 
-  ngOnInit(): void {
-    this.stepperOrientation = this._breakpointObserver
-      .observe('(min-width: 800px)')
-      .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
-  }
-
-  getIsRegistered(isRegistered: boolean) {
-    if (isRegistered) this.stepper.next();
-  }
-
-  getIsFinished(isFinished: boolean) {
-    if (isFinished) {
-      this.stepper.reset();
-      this.cadastro.resetForm();
+    ngOnInit(): void {
+        this.stepperOrientation = this._breakpointObserver.observe('(min-width: 800px)').pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
     }
-  }
 
-  setIsEditing(isEditing: boolean) {
-    this.isEditing = isEditing;
-  }
-
-  getIsUpdatedStatus(IsUpdatedStatus: boolean) {
-    if (IsUpdatedStatus) {
-      this.stepper.selectedIndex = 2;
+    getIsRegistered(isRegistered: boolean) {
+        if (isRegistered) this.stepper.next();
     }
-  }
 
-  setPreviousStep() {
-    this.stepper.previous();
-    this.stepper.selected!.interacted = false;
-  }
+    getIsFinished(isFinished: boolean) {
+        if (isFinished) {
+            this.stepper.reset();
+            this.cadastro.resetForm();
+        }
+    }
 
-  setNextStep() {
-    this.stepper.next();
-    this.stepper.selected!.interacted = false;
-  }
+    setIsEditing(isEditing: boolean) {
+        this.isEditing = isEditing;
+    }
+
+    getIsUpdatedStatus(IsUpdatedStatus: boolean) {
+        if (IsUpdatedStatus) {
+            this.stepper.selectedIndex = 2;
+        }
+    }
+
+    setPreviousStep() {
+        this.stepper.previous();
+        this.stepper.selected!.interacted = false;
+    }
+
+    setNextStep() {
+        this.stepper.next();
+        this.stepper.selected!.interacted = false;
+    }
 }

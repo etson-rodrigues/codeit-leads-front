@@ -1,9 +1,9 @@
 export interface CadastroUsuarioRequest {
-  email: string;
-  senha: string;
-  perfil: {
-    codigo: string;
-  };
-  ativo: boolean;
-  redefinirSenha: boolean;
+    email: string;
+    senha: string;
+    perfil: {
+        codigo: string;
+    };
+    ativo: boolean;
+    redefinirSenha: boolean;
 }

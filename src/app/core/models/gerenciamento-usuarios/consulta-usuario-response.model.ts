@@ -1,10 +1,10 @@
-import { Autenticacao } from "../autenticacao/autenticacao.model";
-import { Paginate } from "../comum/paginate.model";
+import { Autenticacao } from '../autenticacao/autenticacao.model';
+import { Paginate } from '../comum/paginate.model';
 
 export interface ConsultaUsuarioResponseData extends Omit<Autenticacao, 'accessToken'> {
-  ativo: boolean;
+    ativo: boolean;
 }
 
-export interface ConsultaUsuarioResponse extends Paginate{
-  data: ConsultaUsuarioResponseData[];
+export interface ConsultaUsuarioResponse extends Paginate {
+    data: ConsultaUsuarioResponseData[];
 }

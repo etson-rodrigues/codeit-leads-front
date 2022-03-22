@@ -9,14 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MessageTrackerComponent } from './message-tracker.component';
 
 @NgModule({
-  declarations: [MessageTrackerComponent],
-  exports: [MessageTrackerComponent],
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatListModule,
-    MatIconModule
-  ]
+    declarations: [MessageTrackerComponent],
+    exports: [MessageTrackerComponent],
+    imports: [CommonModule, MatButtonModule, MatDividerModule, MatListModule, MatIconModule]
 })
-export class MessageTrackerModule { }
+export class MessageTrackerModule {}

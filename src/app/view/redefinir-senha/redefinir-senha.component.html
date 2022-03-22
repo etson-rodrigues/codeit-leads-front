@@ -1,30 +1,34 @@
 <div class="redefinir-senha-title">
-  <button mat-icon-button aria-label="Retornar" routerLink="/processos-judiciais/consulta-geral">
-    <mat-icon fontSet="fas" fontIcon="fa-chevron-left" class="icon-md-24"></mat-icon>
-  </button>
-  <h1>Redefinição de Senha</h1>
+    <button mat-icon-button aria-label="Retornar" routerLink="/processos-judiciais/consulta-geral">
+        <mat-icon fontSet="fas" fontIcon="fa-chevron-left" class="icon-md-24"></mat-icon>
+    </button>
+    <h1>Redefinição de Senha</h1>
 </div>
 <div class="container-redefinir-senha-usuario mat-elevation-z24">
-  <form class="form-redefinir-senha" [formGroup]="formRedefinirSenha" (submit)="changePassword()">
+    <form class="form-redefinir-senha" [formGroup]="formRedefinirSenha" (submit)="changePassword()">
+        <mat-form-field>
+            <mat-label>Senha</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="senha" id="senha" placeholder="Senha" (keyup.enter)="changeFocus()" #senhaRef required />
+            <mat-icon matSuffix (click)="hidePassword = !hidePassword" fontSet="fas" [fontIcon]="!hidePassword ? 'fa-eye' : 'fa-eye-slash'"></mat-icon>
+            <mat-error>{{ validationInput('senha') }}</mat-error>
+        </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Senha</mat-label>
-      <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="senha" id="senha" placeholder="Senha"
-        (keyup.enter)="changeFocus()" #senhaRef required />
-      <mat-icon matSuffix (click)="hidePassword = !hidePassword" fontSet="fas"
-        [fontIcon]="!hidePassword ? 'fa-eye' : 'fa-eye-slash'"></mat-icon>
-      <mat-error>{{validationInput('senha')}}</mat-error>
-    </mat-form-field>
+        <mat-form-field>
+            <mat-label>Confirmar senha</mat-label>
+            <input
+                matInput
+                [type]="hideConfirmPassword ? 'password' : 'text'"
+                formControlName="confirmarSenha"
+                id="confirmarSenha"
+                placeholder="Confirmar senha"
+                (keyup.enter)="changeFocus()"
+                #confirmarSenhaRef
+                required
+            />
+            <mat-icon matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" fontSet="fas" [fontIcon]="!hideConfirmPassword ? 'fa-eye' : 'fa-eye-slash'"></mat-icon>
+            <mat-error>{{ validationInput('confirmarSenha') }}</mat-error>
+        </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Confirmar senha</mat-label>
-      <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmarSenha"
-        id="confirmarSenha" placeholder="Confirmar senha" (keyup.enter)="changeFocus()" #confirmarSenhaRef required />
-      <mat-icon matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" fontSet="fas"
-        [fontIcon]="!hideConfirmPassword ? 'fa-eye' : 'fa-eye-slash'"></mat-icon>
-      <mat-error>{{validationInput('confirmarSenha')}}</mat-error>
-    </mat-form-field>
-
-    <button mat-raised-button type="submit" [disabled]="!formRedefinirSenha.valid">Enviar</button>
-  </form>
+        <button mat-raised-button type="submit" [disabled]="!formRedefinirSenha.valid">Enviar</button>
+    </form>
 </div>

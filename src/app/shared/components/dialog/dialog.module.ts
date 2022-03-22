@@ -6,14 +6,9 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { DialogComponent } from './dialog.component';
 
-
 @NgModule({
-  declarations: [DialogComponent],
-  exports: [DialogComponent],
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    MatButtonModule
-  ]
+    declarations: [DialogComponent],
+    exports: [DialogComponent],
+    imports: [CommonModule, MatDialogModule, MatButtonModule]
 })
-export class DialogModule { }
+export class DialogModule {}

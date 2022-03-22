@@ -5,7 +5,7 @@ import { GerenciamentoUsuariosComponent } from './gerenciamento-usuarios.compone
 const routes: Routes = [{ path: '', component: GerenciamentoUsuariosComponent }];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
-export class GerenciamentoUsuariosRoutingModule { }
+export class GerenciamentoUsuariosRoutingModule {}

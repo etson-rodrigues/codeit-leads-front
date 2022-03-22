@@ -1,0 +1,16 @@
+<div class="container-not-found">
+    <div class="container-mensagem-principal">
+        <section>
+            <span>Ooops!</span>
+            <h1>A página que você esta procurando não existe!</h1>
+        </section>
+    </div>
+
+    <div class="container-timer">
+        <app-timer #timer [tempoSegundos]="valorContador" [svgSize]="220" [circuloTimerStrokeWidth]="10"></app-timer>
+        <section>
+            <small>Você será redirecionado automaticamente em {{ contador }} segundos</small>
+            <button mat-raised-button (click)="goBack()" color="accent" type="button">Voltar ao início</button>
+        </section>
+    </div>
+</div>

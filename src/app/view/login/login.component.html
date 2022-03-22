@@ -1,26 +1,26 @@
 <section class="container-login">
-  <section class="container-mensagem">
-    <h1>LEADS</h1>
-    <h1>Seguro Garantia</h1>
-    <p>Criando pontes para negócios mais inteligentes</p>
-  </section>
-  <section class="container-form">
-    <form class="formLogin" [formGroup]="formLogin" (submit)="login()">
-      <h1>Login</h1>
-      <mat-form-field>
-        <mat-label>E-mail</mat-label>
-        <input matInput formControlName="email" id="email" placeholder="seuemail@email.com" required />
-        <mat-error>{{validationInput('email')}}</mat-error>
-      </mat-form-field>
+    <section class="container-mensagem">
+        <h1>LEADS</h1>
+        <h1>Seguro Garantia</h1>
+        <p>Criando pontes para negócios mais inteligentes</p>
+    </section>
+    <section class="container-form">
+        <form class="formLogin" [formGroup]="formLogin" (submit)="login()">
+            <h1>Login</h1>
+            <mat-form-field>
+                <mat-label>E-mail</mat-label>
+                <input matInput formControlName="email" id="email" placeholder="seuemail@email.com" required />
+                <mat-error>{{ validationInput('email') }}</mat-error>
+            </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Senha</mat-label>
-        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="senha" id="senha" placeholder="Senha" required />
-        <mat-icon matSuffix (click)="hidePassword = !hidePassword" fontSet="fas" [fontIcon]="!hidePassword ? 'fa-eye' : 'fa-eye-slash'"></mat-icon>
-        <mat-error>{{validationInput('senha')}}</mat-error>
-      </mat-form-field>
+            <mat-form-field>
+                <mat-label>Senha</mat-label>
+                <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="senha" id="senha" placeholder="Senha" required />
+                <mat-icon matSuffix (click)="hidePassword = !hidePassword" fontSet="fas" [fontIcon]="!hidePassword ? 'fa-eye' : 'fa-eye-slash'"></mat-icon>
+                <mat-error>{{ validationInput('senha') }}</mat-error>
+            </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit" id="login" [disabled]="!formLogin.valid">ENTRAR</button>
-    </form>
-  </section>
+            <button mat-raised-button color="primary" type="submit" id="login" [disabled]="!formLogin.valid">ENTRAR</button>
+        </form>
+    </section>
 </section>
