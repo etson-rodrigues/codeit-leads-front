@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
     }
 
     handleUserLogin() {
-        if (this.currentUrl != '/login' && this.currentUrl != '' && this.currentUrl != '/redefinir-senha') {
+        if (this.currentUrl != '/login' && this.currentUrl != '/' && this.currentUrl != '' && this.currentUrl != '/redefinir-senha') {
             return true;
         }
         return false;

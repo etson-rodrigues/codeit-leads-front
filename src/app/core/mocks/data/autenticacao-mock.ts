@@ -1,5 +1,6 @@
 import { LoginRequest } from '../../models/login/login-request.model';
 import { LoginResponse } from '../../models/login/login-response.model';
+import { LogoutResponse } from '../../models/logout/logout-response.model';
 
 export const mockUserLogin: LoginRequest = {
     email: 'teste@email.com',
@@ -38,5 +39,11 @@ export const mockLoginResponseRedefinirSenha: LoginResponse = {
     data: {
         ...mockLoginResponse.data,
         redefinirSenha: true
+    }
+};
+
+export const mockLogoutResponse: LogoutResponse = {
+    data: {
+        email: 'teste@email.com'
     }
 };

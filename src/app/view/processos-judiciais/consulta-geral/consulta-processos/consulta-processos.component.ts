@@ -63,7 +63,7 @@ export class ConsultaProcessosComponent implements OnInit {
         private _exportarConsultaProcessosService: ExportarProcessosService,
         private _stepperService: StepperService,
         private _dialog: MatDialog,
-        private _spinner: NgxSpinnerService,
+        private _spinnerService: NgxSpinnerService,
         private _messageTrackerService: MessageTrackerService
     ) {}
 
@@ -102,10 +102,10 @@ export class ConsultaProcessosComponent implements OnInit {
 
             this.addFilter(this.searchParameters);
 
-            this._spinner.show();
+            this._spinnerService.show();
             this._consultaProcessosServices
                 .get(this.searchParameters, 1, 10)
-                .pipe(finalize(() => this._spinner.hide()))
+                .pipe(finalize(() => this._spinnerService.hide()))
                 .subscribe({
                     next: (response) => {
                         this.searchResult = response.data.map((item: ConsultaProcessosResponseData) => {
@@ -134,10 +134,10 @@ export class ConsultaProcessosComponent implements OnInit {
     onPageChange(event: PageEvent) {
         const pageNumber = event.pageIndex + 1;
 
-        this._spinner.show();
+        this._spinnerService.show();
         this._consultaProcessosServices
             .get(this.searchParameters, pageNumber, 10)
-            .pipe(finalize(() => this._spinner.hide()))
+            .pipe(finalize(() => this._spinnerService.hide()))
             .subscribe({
                 next: (response) => {
                     this.searchResult = response.data.map((item: ConsultaProcessosResponseData) => {
@@ -162,10 +162,10 @@ export class ConsultaProcessosComponent implements OnInit {
     }
 
     processDetail(nup: string) {
-        this._spinner.show();
+        this._spinnerService.show();
         this._consultaProcessoDetalheService
             .get(nup)
-            .pipe(finalize(() => this._spinner.hide()))
+            .pipe(finalize(() => this._spinnerService.hide()))
             .subscribe({
                 next: (response) => {
                     this.detalhesProcesso.emit(response.data[0]);
@@ -187,10 +187,10 @@ export class ConsultaProcessosComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe((result) => {
             if (result) {
-                this._spinner.show();
+                this._spinnerService.show();
                 this._exportarConsultaProcessosService
                     .export(this.searchParameters)
-                    .pipe(finalize(() => this._spinner.hide()))
+                    .pipe(finalize(() => this._spinnerService.hide()))
                     .subscribe({
                         next: (response) => {
                             const file = new window.Blob([response], { type: 'text/csv' });

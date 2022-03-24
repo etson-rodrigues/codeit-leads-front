@@ -41,7 +41,7 @@ export class RedefinirSenhaComponent implements OnInit {
         private _localStorageService: LocalStorageService,
         private _router: Router,
         private _dialog: MatDialog,
-        private _spinner: NgxSpinnerService,
+        private _spinnerService: NgxSpinnerService,
         private _changeDetector: ChangeDetectorRef,
         private _messageTrackerService: MessageTrackerService
     ) {}
@@ -64,10 +64,10 @@ export class RedefinirSenhaComponent implements OnInit {
         if (this.formRedefinirSenha.valid) {
             const novaSenha: string = this.formRedefinirSenha.controls.confirmarSenha.value;
 
-            this._spinner.show();
+            this._spinnerService.show();
             this._redefinirSenhaService
                 .redefinePassword(this.loginInfo.id, novaSenha)
-                .pipe(finalize(() => this._spinner.hide()))
+                .pipe(finalize(() => this._spinnerService.hide()))
                 .subscribe({
                     next: () => {
                         this.openDialog();

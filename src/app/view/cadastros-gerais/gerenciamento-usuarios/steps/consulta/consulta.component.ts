@@ -42,7 +42,7 @@ export class ConsultaComponent implements OnInit {
         private _cadastroUsuariosService: CadastroUsuariosService,
         private _editarService: EditarService,
         private _resumoService: ResumoService,
-        private _spinner: NgxSpinnerService,
+        private _spinnerService: NgxSpinnerService,
         private _dialog: MatDialog,
         private _messageTrackerService: MessageTrackerService
     ) {
@@ -56,10 +56,10 @@ export class ConsultaComponent implements OnInit {
     search() {
         this.triggerSearch = true;
         this.emailInputValue = this.formConsulta.controls.email.value;
-        this._spinner.show();
+        this._spinnerService.show();
         this._cadastroUsuariosService
             .get(this.emailInputValue, 1, 10)
-            .pipe(finalize(() => this._spinner.hide()))
+            .pipe(finalize(() => this._spinnerService.hide()))
             .subscribe({
                 next: (response) => {
                     this.searchResult = response.data.map((item: ConsultaUsuarioResponseData) => {
@@ -87,10 +87,10 @@ export class ConsultaComponent implements OnInit {
 
     onPageChange(event: PageEvent) {
         const pageNumber = event.pageIndex + 1;
-        this._spinner.show();
+        this._spinnerService.show();
         this._cadastroUsuariosService
             .get(this.emailInputValue, pageNumber, 10)
-            .pipe(finalize(() => this._spinner.hide()))
+            .pipe(finalize(() => this._spinnerService.hide()))
             .subscribe({
                 next: (response) => {
                     this.searchResult = response.data.map((item: ConsultaUsuarioResponseData) => {
@@ -148,7 +148,7 @@ export class ConsultaComponent implements OnInit {
                 };
                 this._cadastroUsuariosService
                     .updateStatus(userData)
-                    .pipe(finalize(() => this._spinner.hide()))
+                    .pipe(finalize(() => this._spinnerService.hide()))
                     .subscribe({
                         next: (response) => {
                             this.isUpdatedStatus.emit(true);

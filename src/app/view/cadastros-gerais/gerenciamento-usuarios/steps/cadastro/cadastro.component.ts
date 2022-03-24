@@ -46,7 +46,7 @@ export class CadastroComponent implements OnInit {
         private _perfisService: PerfisService,
         private _resumoService: ResumoService,
         private _editarService: EditarService,
-        private _spinner: NgxSpinnerService,
+        private _spinnerService: NgxSpinnerService,
         private _changeDetector: ChangeDetectorRef,
         private _messageTrackerService: MessageTrackerService
     ) {
@@ -101,10 +101,10 @@ export class CadastroComponent implements OnInit {
                 redefinirSenha: true
             };
 
-            this._spinner.show();
+            this._spinnerService.show();
             this._cadastroUsuariosService
                 .save(data, this.isEditing, this.userID)
-                .pipe(finalize(() => this._spinner.hide()))
+                .pipe(finalize(() => this._spinnerService.hide()))
                 .subscribe({
                     next: (response) => {
                         this.isRegistered.emit(true);

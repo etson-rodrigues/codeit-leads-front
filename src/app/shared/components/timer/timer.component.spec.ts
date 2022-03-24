@@ -51,7 +51,7 @@ describe('TimerComponent', () => {
         component['_processarContagemRegressiva']();
 
         fixture.autoDetectChanges();
-        tick(3000);
+        flush();
 
         expect(component['_segundosPassados']).withContext("A Variável '_segundosPassados' deve ser maior ou igual a variável 'tempoSegundos'").toBeGreaterThanOrEqual(component.tempoSegundos);
     }));

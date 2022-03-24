@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { AutenticacaoService } from './autenticacao.service';
-import { mockLoginResponse, mockUserLogin } from '../../mocks/data/autenticacao-mock';
+import { mockLoginResponse, mockLogoutResponse, mockUserLogin } from '../../mocks/data/autenticacao-mock';
 
 describe('AutenticacaoService', () => {
     let service: AutenticacaoService;
@@ -63,5 +63,24 @@ describe('AutenticacaoService', () => {
         expect(req.request.method).withContext('Método da requisição deve ser POST').toEqual('POST');
 
         req.error(errorEvent, { status, statusText });
+    });
+
+    it('[CIT-5917] deve retornar email do usuário que realizou o logout', () => {
+        const status = 200;
+        const statusText = 'Success';
+
+        service.logout().subscribe({
+            next: (response) => {
+                expect(response.data.email).withContext('O email deve ser teste@email.com').toEqual('teste@email.com');
+            },
+            error: (error) => {
+                fail('Error handler não deve ser chamado');
+            }
+        });
+
+        const req = http.expectOne(`${service['_url']}logout`);
+        expect(req.request.method).withContext('Método da requisição deve ser POST').toEqual('POST');
+
+        req.flush(mockLogoutResponse, { status, statusText });
     });
 });

@@ -17,10 +17,8 @@ export class ControleRotaService {
     public clearRouteData(routeUrl: string) {
         for (let route of this._routes) {
             if (`/${route.path}` === routeUrl) {
-                switch (routeUrl) {
-                    case '/login':
-                        this.clearData();
-                        break;
+                if (routeUrl == '/login' || routeUrl == '/') {
+                    this.clearData();
                 }
             }
         }
