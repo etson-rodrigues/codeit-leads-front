@@ -2,9 +2,9 @@
     <div class="container-form">
         <form class="form" [formGroup]="formConsulta" (submit)="search()" #formDirective="ngForm">
             <mat-form-field>
-                <mat-label>Razão Social</mat-label>
-                <input matInput formControlName="razaoSocial" placeholder="Razão Social" />
-                <mat-error>{{ validationInput('razaoSocial') }}</mat-error>
+                <mat-label>Razão Social / CNPJ</mat-label>
+                <input matInput formControlName="razaoSocialCnpj" [dropSpecialCharacters]="false" [mask]="getCnpjMask()" placeholder="Razão Social / CNPJ" />
+                <mat-error>{{ validationInput('razaoSocialCnpj') }}</mat-error>
             </mat-form-field>
 
             <div class="criterio-data">

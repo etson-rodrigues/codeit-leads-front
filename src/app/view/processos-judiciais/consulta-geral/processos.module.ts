@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -25,12 +26,17 @@ import { DetalhesProcessoComponent } from './detalhes-processo/detalhes-processo
 import { ConsultaProcessosComponent } from './consulta-processos/consulta-processos.component';
 import { CustomDateAdapter } from 'src/app/core/config/date-adapter';
 
+const maskConfig: Partial<IConfig> = {
+    validation: false
+};
+
 @NgModule({
     declarations: [ProcessosComponent, ConsultaProcessosComponent, DetalhesProcessoComponent],
     imports: [
         CommonModule,
         ProcessosRoutingModule,
         ReactiveFormsModule,
+        NgxMaskModule.forRoot(maskConfig),
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,

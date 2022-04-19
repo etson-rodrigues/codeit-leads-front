@@ -15,7 +15,7 @@ export class ConsultaProcessosService {
     constructor(private _http: HttpClient) {}
 
     get(searchParameters: ConsultaProcessosRequest, pageNumber: number, pageSize: number) {
-        let params = new HttpParams().set('razaoSocial', searchParameters.razaoSocial);
+        let params = new HttpParams().set('razaoSocialCnpj', searchParameters.razaoSocialCnpj);
 
         if (searchParameters.criterioData) {
             params = params.set('criterioData', searchParameters.criterioData);

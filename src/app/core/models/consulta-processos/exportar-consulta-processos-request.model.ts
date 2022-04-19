@@ -1,5 +1,5 @@
 export interface ExportarProcessosRequest {
-    razaoSocial: string;
+    razaoSocialCnpj: string;
     criterioData?: string;
     dataInicial?: string;
     dataFinal: string;

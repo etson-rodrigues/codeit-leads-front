@@ -24,7 +24,7 @@ describe('ConsultaProcessosService', () => {
 
     it('[CIT-5736][CIT-5849] deve retornar dados dos processos', () => {
         const searchParameters = {
-            razaoSocial: 'teste',
+            razaoSocialCnpj: 'teste',
             criterioData: CriterioData.CriacaoProcesso,
             dataInicial: '01/01/2021',
             dataFinal: '01/01/2022'
@@ -59,7 +59,7 @@ describe('ConsultaProcessosService', () => {
 
     it('[CIT-5736][CIT-5849] deve retornar erro caso consulta dos processos falhar', () => {
         const searchParameters = {
-            razaoSocial: 'teste',
+            razaoSocialCnpj: 'teste',
             criterioData: CriterioData.CriacaoProcesso,
             dataInicial: '01/01/2021',
             dataFinal: '01/01/2022'

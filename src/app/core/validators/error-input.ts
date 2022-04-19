@@ -18,4 +18,6 @@ export function validationInput(formGroup: FormGroup, formControlName: string): 
     if (errors?.dataFinalDeveSerMaiorDataInicial) return 'O campo data final deve ser maior ou igual a data inicial.';
 
     if (errors?.errorFormatoData) return 'O campo data deve estar no formato "dd/mm/yyyy".';
+
+    if (errors?.errorCnpj) return 'CNPJ incorreto ou inválido.';
 }

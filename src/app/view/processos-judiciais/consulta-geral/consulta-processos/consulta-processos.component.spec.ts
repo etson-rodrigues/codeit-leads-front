@@ -70,26 +70,66 @@ describe('ConsultaProcessosComponent', () => {
     });
 
     it('[CIT-5736] deve validar campo de razão social', () => {
-        const razaoSocialInput = component.formConsulta.get('razaoSocial');
-        expect(razaoSocialInput!.valid).withContext('Campo razão social deve inicializar inválido').toBeFalsy();
+        const razaoSocialCnpjInput = component.formConsulta.get('razaoSocialCnpj');
+        expect(razaoSocialCnpjInput!.valid).withContext('Campo razão social deve inicializar inválido').toBeFalsy();
 
-        razaoSocialInput!.setValue('');
+        razaoSocialCnpjInput!.setValue('');
         fixture.detectChanges();
-        expect(razaoSocialInput!.hasError('required')).withContext('Campo razão social é obrigatório').toBeTruthy();
+        expect(razaoSocialCnpjInput!.hasError('required')).withContext('Campo razão social é obrigatório').toBeTruthy();
 
-        razaoSocialInput!.setValue('t');
+        razaoSocialCnpjInput!.setValue('t');
         fixture.detectChanges();
-        expect(razaoSocialInput!.hasError('minlength')).withContext('Campo razão social deve ter no mínimo 2 caracteres').toBeTruthy();
+        expect(razaoSocialCnpjInput!.hasError('minlength')).withContext('Campo razão social deve ter no mínimo 2 caracteres').toBeTruthy();
 
-        razaoSocialInput!.setValue(
+        razaoSocialCnpjInput!.setValue(
             'Maecenas ipsum velit, consectetuer eu, lobortis ut, dictum at, dui. In rutrum. Sed ac dolor sit amet purus malesuada congue. In laoreet, magna id viverra tincidunt, sem odio bibendum justo, vel imperdiet sapien wisi sed libero. Suspendisse sagittis ultrices augue. Mauris metus.'
         );
         fixture.detectChanges();
-        expect(razaoSocialInput!.hasError('maxlength')).withContext('Campo razão social deve ter no máximo 250 caracteres').toBeTruthy();
+        expect(razaoSocialCnpjInput!.hasError('maxlength')).withContext('Campo razão social deve ter no máximo 250 caracteres').toBeTruthy();
 
-        razaoSocialInput!.setValue('teste');
+        razaoSocialCnpjInput!.setValue('teste');
         fixture.detectChanges();
-        expect(razaoSocialInput!.valid).withContext('Campo razão social deve ser válido').toBeTruthy();
+        expect(razaoSocialCnpjInput!.valid).withContext('Campo razão social deve ser válido').toBeTruthy();
+    });
+
+    it('[CIT-5924] deve validar campo de Razão Social / CNPJ com CNPJ informado', () => {
+        const razaoSocialCnpjInput = component.formConsulta.get('razaoSocialCnpj');
+
+        razaoSocialCnpjInput!.setValue('7648381');
+        fixture.detectChanges();
+        expect(razaoSocialCnpjInput!.hasError('errorCnpj')).withContext('CNPJ incorreto ou inválido.').toBeTruthy();
+
+        razaoSocialCnpjInput!.setValue('01234567891234');
+        fixture.detectChanges();
+        expect(razaoSocialCnpjInput!.hasError('errorCnpj')).withContext('CNPJ incorreto ou inválido.').toBeTruthy();
+
+        razaoSocialCnpjInput!.setValue('76483817000120');
+        fixture.detectChanges();
+        expect(razaoSocialCnpjInput!.valid).withContext('Campo razão social deve ser válido').toBeTruthy();
+    });
+
+    it('[CIT-5924] deve validar máscara do campo de Razão Social / CNPJ', () => {
+        const razaoSocialCnpjInput = component.formConsulta.get('razaoSocialCnpj');
+
+        razaoSocialCnpjInput!.setValue('teste');
+        fixture.detectChanges();
+        expect(component.getCnpjMask()).withContext('Campo razão social não deve ter máscara.').toBe('');
+
+        razaoSocialCnpjInput!.setValue('764838');
+        fixture.detectChanges();
+        expect(component.getCnpjMask()).withContext('Campo razão social não deve ter máscara.').toBe('');
+
+        razaoSocialCnpjInput!.setValue('7648381');
+        fixture.detectChanges();
+        expect(component.getCnpjMask()).withContext('Campo razão social deve ter máscara para CNPJ.').toBe('00.000.000/0000-00');
+
+        razaoSocialCnpjInput!.setValue('76483817000120');
+        fixture.detectChanges();
+        expect(component.getCnpjMask()).withContext('Campo razão social deve ter máscara para CNPJ.').toBe('00.000.000/0000-00');
+
+        razaoSocialCnpjInput!.setValue('76.483.817/0001-20');
+        fixture.detectChanges();
+        expect(component.getCnpjMask()).withContext('Campo razão social deve ter máscara para CNPJ.').toBe('00.000.000/0000-00');
     });
 
     it('[CIT-5849] deve validar o campo critério por data', () => {
@@ -147,12 +187,12 @@ describe('ConsultaProcessosComponent', () => {
         let formattedPresentDate = formatarDataPtBr(presentDate.toString());
         let formattedPastDate = formatarDataPtBr(pastDate.toString());
 
-        const razaoSocialInput = component.formConsulta.get('razaoSocial');
+        const razaoSocialCnpjInput = component.formConsulta.get('razaoSocialCnpj');
         const criterioDataInput = component.formConsulta.get('criterioData');
         const dataInicialInput = component.formConsulta.get('dataInicial');
         const dataFinalInput = component.formConsulta.get('dataFinal');
 
-        razaoSocialInput!.setValue('teste');
+        razaoSocialCnpjInput!.setValue('teste');
         criterioDataInput!.setValue(CriterioData.CriacaoProcesso);
         dataInicialInput!.setValue(pastDate);
         dataFinalInput!.setValue(presentDate);
@@ -160,7 +200,7 @@ describe('ConsultaProcessosComponent', () => {
 
         component.search();
 
-        expect(component.searchParameters.razaoSocial).withContext('Campo razão social deve ser "teste"').toBe('teste');
+        expect(component.searchParameters.razaoSocialCnpj).withContext('Campo razão social deve ser "teste"').toBe('teste');
         expect(component.searchParameters.criterioData).withContext('Campo critério por data deve ser "criacao"').toBe('PrimeiraData');
         expect(component.searchParameters.dataInicial).withContext(`Campo data inicial deve ser ${formattedPastDate}`).toBe(formattedPastDate);
         expect(component.searchParameters.dataFinal).withContext(`Campo data final deve ser ${formattedPresentDate}`).toBe(formattedPresentDate);
@@ -172,7 +212,7 @@ describe('ConsultaProcessosComponent', () => {
         let formattedPresentDate = formatarDataPtBr(presentDate.toString());
         let formattedPastDate = formatarDataPtBr(pastDate.toString());
         let searchParameters = {
-            razaoSocial: 'teste',
+            razaoSocialCnpj: 'teste',
             criterioData: CriterioData.UltimoAndamento,
             dataInicial: formattedPastDate,
             dataFinal: formattedPresentDate
@@ -187,7 +227,7 @@ describe('ConsultaProcessosComponent', () => {
 
     it('[CIT-5849] deve remover filtro selecionado da variável filters', () => {
         let searchParameters = {
-            razaoSocial: 'teste',
+            razaoSocialCnpj: 'teste',
             criterioData: 'ultima-atualizacao',
             dataInicial: null,
             dataFinal: formatarDataPtBr(new Date().toString())
@@ -213,12 +253,12 @@ describe('ConsultaProcessosComponent', () => {
     it('[CIT-5736][CIT-5849] deve realizar consulta de processos', () => {
         let presentDate = new Date();
         let pastDate = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
-        const razaoSocialInput = component.formConsulta.get('razaoSocial');
+        const razaoSocialCnpjInput = component.formConsulta.get('razaoSocialCnpj');
         const criterioDataInput = component.formConsulta.get('criterioData');
         const dataInicialInput = component.formConsulta.get('dataInicial');
         const dataFinalInput = component.formConsulta.get('dataFinal');
 
-        razaoSocialInput!.setValue('teste');
+        razaoSocialCnpjInput!.setValue('teste');
         criterioDataInput!.setValue(CriterioData.UltimaAtualizacao);
         dataInicialInput!.setValue(pastDate);
         dataFinalInput!.setValue(presentDate);
@@ -232,12 +272,12 @@ describe('ConsultaProcessosComponent', () => {
     it('[CIT-5736][CIT-5849] deve retornar erro caso consulta de processos falhar', () => {
         let presentDate = new Date();
         let pastDate = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
-        const razaoSocialInput = component.formConsulta.get('razaoSocial');
+        const razaoSocialCnpjInput = component.formConsulta.get('razaoSocialCnpj');
         const criterioDataInput = component.formConsulta.get('criterioData');
         const dataInicialInput = component.formConsulta.get('dataInicial');
         const dataFinalInput = component.formConsulta.get('dataFinal');
 
-        razaoSocialInput!.setValue('teste');
+        razaoSocialCnpjInput!.setValue('teste');
         criterioDataInput!.setValue('criacao');
         dataInicialInput!.setValue(pastDate);
         dataFinalInput!.setValue(presentDate);
@@ -255,8 +295,8 @@ describe('ConsultaProcessosComponent', () => {
             pageSize: 3,
             previousPageIndex: 0
         };
-        const razaoSocialInput = component.formConsulta.get('razaoSocial');
-        razaoSocialInput!.setValue('teste');
+        const razaoSocialCnpjInput = component.formConsulta.get('razaoSocialCnpj');
+        razaoSocialCnpjInput!.setValue('teste');
         fixture.detectChanges();
         consultaProcessosService.get.and.returnValue(of(mockConsultaProcessosResponse));
         component.onPageChange(event);
@@ -270,8 +310,8 @@ describe('ConsultaProcessosComponent', () => {
             pageSize: 3,
             previousPageIndex: 0
         };
-        const razaoSocialInput = component.formConsulta.get('razaoSocial');
-        razaoSocialInput!.setValue('teste');
+        const razaoSocialCnpjInput = component.formConsulta.get('razaoSocialCnpj');
+        razaoSocialCnpjInput!.setValue('teste');
         fixture.detectChanges();
         consultaProcessosService.get.and.returnValue(throwError(() => new Error()));
         component.onPageChange(event);
@@ -282,12 +322,12 @@ describe('ConsultaProcessosComponent', () => {
         let presentDate = new Date();
         let pastDate = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
 
-        const razaoSocialInput = component.formConsulta.get('razaoSocial');
+        const razaoSocialCnpjInput = component.formConsulta.get('razaoSocialCnpj');
         const criterioDataInput = component.formConsulta.get('criterioData');
         const dataInicialInput = component.formConsulta.get('dataInicial');
         const dataFinalInput = component.formConsulta.get('dataFinal');
 
-        razaoSocialInput!.setValue('teste');
+        razaoSocialCnpjInput!.setValue('teste');
         criterioDataInput!.setValue('criacao');
         dataInicialInput!.setValue(pastDate);
         dataFinalInput!.setValue(presentDate);
@@ -295,7 +335,7 @@ describe('ConsultaProcessosComponent', () => {
 
         component.cleanFilter();
 
-        expect(razaoSocialInput!.value).withContext('Campo razão social deve ser nulo após limpar filtro').toBeNull();
+        expect(razaoSocialCnpjInput!.value).withContext('Campo razão social deve ser nulo após limpar filtro').toBeNull();
         expect(criterioDataInput!.value).withContext('Campo critério por data deve ser nulo após limpar filtro').toBeNull();
         expect(dataInicialInput!.value).withContext('Campo data inicial deve ser nulo após limpar filtro').toBeNull();
         expect(dataFinalInput!.value).withContext('Campo data final deve ser nulo após limpar filtro').toBeNull();
@@ -371,7 +411,7 @@ describe('ConsultaProcessosComponent', () => {
 
     it('[CIT-5881] deve realizar exportação dos processos pesquisados', () => {
         component.searchParameters = {
-            razaoSocial: 'teste',
+            razaoSocialCnpj: 'teste',
             criterioData: CriterioData.CriacaoProcesso,
             dataInicial: '01/03/2022',
             dataFinal: '01/03/2022'

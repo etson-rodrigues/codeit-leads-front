@@ -16,7 +16,7 @@ export class ExportarProcessosService {
 
     export(searchParameters: ConsultaProcessosRequest) {
         let params: ExportarProcessosRequest = {
-            razaoSocial: searchParameters.razaoSocial,
+            razaoSocialCnpj: searchParameters.razaoSocialCnpj,
             dataFinal: formatarDataParaRequest(searchParameters.dataFinal)
         };
 

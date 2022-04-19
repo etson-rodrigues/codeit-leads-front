@@ -22,7 +22,7 @@ describe('ExportarConsultaProcessosService', () => {
 
     it('[CIT-5881] deve retornar a exportação dos processos', () => {
         const searchParameters = {
-            razaoSocial: 'teste',
+            razaoSocialCnpj: 'teste',
             criterioData: CriterioData.CriacaoProcesso,
             dataInicial: '2021-01-01',
             dataFinal: '2022-01-01'
@@ -41,7 +41,7 @@ describe('ExportarConsultaProcessosService', () => {
 
     it('[CIT-5881] deve retornar erro caso exportação dos processos falhar', () => {
         const searchParameters = {
-            razaoSocial: 'teste',
+            razaoSocialCnpj: 'teste',
             criterioData: CriterioData.CriacaoProcesso,
             dataInicial: '2021-01-01',
             dataFinal: '2022-01-01'

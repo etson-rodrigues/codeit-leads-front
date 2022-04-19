@@ -24,6 +24,7 @@ import { compareDateValidator } from 'src/app/core/validators/compare-date-valid
 import { dateFormatValidator } from 'src/app/core/validators/date-format-validator';
 import { Uf } from 'src/app/core/enums/uf.enum';
 import { CriterioData } from 'src/app/core/enums/criterio-data.enum';
+import { isCnpjTyped, razaoSocialCnpjValidator } from 'src/app/core/validators/razaoSocialCnpj-validator';
 
 @Component({
     selector: 'app-consulta-processos',
@@ -70,7 +71,7 @@ export class ConsultaProcessosComponent implements OnInit {
     ngOnInit(): void {
         this.formConsulta = this._formBuilder.group(
             {
-                razaoSocial: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(250)]],
+                razaoSocialCnpj: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(250), razaoSocialCnpjValidator]],
                 criterioData: [''],
                 dataInicial: ['', [dateFormatValidator, maxDateValidator]],
                 dataFinal: ['', [dateFormatValidator, maxDateValidator]]
@@ -83,7 +84,7 @@ export class ConsultaProcessosComponent implements OnInit {
 
     search() {
         if (this.formConsulta.valid) {
-            let razaoSocialInput = this.formConsulta.controls.razaoSocial.value;
+            let razaoSocialCnpjInput = this.formConsulta.controls.razaoSocialCnpj.value;
 
             let criterioDataInput: string = this.formConsulta.controls.criterioData.value;
             let dataInicialInput: Date = this.formConsulta.controls.dataInicial.value;
@@ -94,7 +95,7 @@ export class ConsultaProcessosComponent implements OnInit {
             let dataFinal: string = dataFinalInput ? formatarDataPtBr(dataFinalInput.toString()) : formatarDataPtBr(new Date().toString());
 
             this.searchParameters = {
-                razaoSocial: razaoSocialInput,
+                razaoSocialCnpj: razaoSocialCnpjInput,
                 criterioData,
                 dataInicial,
                 dataFinal
@@ -197,7 +198,7 @@ export class ConsultaProcessosComponent implements OnInit {
                             this.downloadAnchor.style.display = 'none';
                             const fileURL = URL.createObjectURL(file);
                             this.downloadAnchor.href = fileURL;
-                            this.downloadAnchor.download = `planilha-${this.searchParameters.razaoSocial
+                            this.downloadAnchor.download = `planilha-${this.searchParameters.razaoSocialCnpj
                                 .replace(/[^\w\s]/gi, '')
                                 .trim()
                                 .split(' ')
@@ -220,8 +221,8 @@ export class ConsultaProcessosComponent implements OnInit {
                 return;
             }
             switch (key) {
-                case 'razaoSocial':
-                    name = 'Razão Social';
+                case 'razaoSocialCnpj':
+                    name = 'Razão Social / CNPJ';
                     break;
                 case 'criterioData':
                     name = 'Critério por data';
@@ -296,5 +297,11 @@ export class ConsultaProcessosComponent implements OnInit {
             this.formConsulta.controls[field].markAsPristine();
             this.formConsulta.controls[field].markAsUntouched();
         }
+    }    
+
+    getCnpjMask(): string {
+        const razaoSocialCnpjInput = this.formConsulta.controls.razaoSocialCnpj.value;
+
+        return isCnpjTyped(razaoSocialCnpjInput) ? '00.000.000/0000-00' : '';
     }
 }
