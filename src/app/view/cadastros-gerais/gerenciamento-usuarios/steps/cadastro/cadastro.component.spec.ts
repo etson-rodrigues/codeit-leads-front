@@ -144,51 +144,6 @@ describe('CadastroComponent', () => {
         expect(perfilInput!.value.descricao).withContext('Campo perfil deve estar preenchido com Administrador').toBe('Administrador');
     });
 
-    it('[CIT-5693] deve cadastrar novo usuário', fakeAsync(() => {
-        spyOn(component['_resumoService'], 'setValues');
-
-        const emailInput = component.formCadastro.get('email');
-        const senhaInput = component.formCadastro.get('senha');
-        const confirmarSenhaInput = component.formCadastro.get('confirmarSenha');
-        const perfilInput = component.formCadastro.get('perfil');
-
-        emailInput!.setValue('teste@email.com');
-        senhaInput!.setValue('senha12345');
-        confirmarSenhaInput!.setValue('senha12345');
-        perfilInput!.setValue({ codigo: '002', descricao: 'Operador' });
-
-        cadastroUsuariosService.save.and.returnValue(of(mockCadastroUsuarioResponse));
-
-        component.register();
-
-        flush();
-
-        expect(component['_resumoService'].setValues).withContext('Deve chamar função de envio dos dados do usuário ao cadastrar com sucesso').toHaveBeenCalledTimes(1);
-    }));
-
-    it('[CIT-5693] deve gerar erro ao cadastrar usuário já existente', fakeAsync(() => {
-        spyOn(component['_resumoService'], 'setValues');
-
-        const emailInput = component.formCadastro.get('email');
-        const senhaInput = component.formCadastro.get('senha');
-        const confirmarSenhaInput = component.formCadastro.get('confirmarSenha');
-        const perfilInput = component.formCadastro.get('perfil');
-
-        emailInput!.setValue('teste@email.com');
-        senhaInput!.setValue('senha12345');
-        confirmarSenhaInput!.setValue('senha12345');
-        perfilInput!.setValue({ codigo: '002', descricao: 'Operador' });
-
-        cadastroUsuariosService.save.and.returnValue(throwError(() => new Error()));
-
-        component.register();
-
-        flush();
-
-        expect(component['_resumoService'].setValues).withContext('Não deve chamar função de envio dos dados do usuário ao gerar erro ao cadastrar usuário').toHaveBeenCalledTimes(0);
-        expect(messageTrackerService.subscribeError).withContext('Deve abrir o messageTracker ao gerar erro ao cadastrar usuário').toHaveBeenCalledTimes(1);
-    }));
-
     it('[CIT-5694] deve preencher os dados do formulário caso for edição de usuário', () => {
         const data = {
             id: 1,
@@ -213,13 +168,13 @@ describe('CadastroComponent', () => {
     });
 
     it('[CIT-5694] deve limpar campos do formulário caso usuário cancelar o novo cadastro', () => {
-        spyOn(component.previousStep, 'emit');
+        spyOn(component.isFinished, 'emit');
         const emailInput = component.formCadastro.controls.email;
         emailInput!.setValue('teste@email.com');
         fixture.detectChanges();
-        component.handlePreviousStep();
+        component.cancelar();
         expect(emailInput!.value).withContext('Campo e-mail deve ser nulo após resetar o formulário').toBeNull();
-        expect(component.previousStep.emit).withContext('Deve emitir evento de previousStep').toHaveBeenCalledTimes(1);
+        expect(component.isFinished.emit).withContext('Deve emitir evento de previousStep').toHaveBeenCalledTimes(1);
     });
 
     it('[CIT-5794] deve chamar função de foco e armazenar refs dos campos dos fomulários nas variáveis', () => {

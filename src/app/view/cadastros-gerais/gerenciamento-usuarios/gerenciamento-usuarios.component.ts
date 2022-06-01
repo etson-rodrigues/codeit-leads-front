@@ -4,6 +4,7 @@ import { StepperOrientation } from '@angular/cdk/stepper';
 import { map, Observable } from 'rxjs';
 import { MatStepper } from '@angular/material/stepper';
 import { CadastroComponent } from './steps/cadastro/cadastro.component';
+import { ConfiguracaoDbjusComponent } from './steps/configuracao-dbjus/configuracao-dbjus.component';
 
 @Component({
     selector: 'app-gerenciamento-usuarios',
@@ -17,8 +18,9 @@ export class GerenciamentoUsuariosComponent implements OnInit {
 
     @ViewChild('stepper') private stepper!: MatStepper;
     @ViewChild('cadastro') private cadastro!: CadastroComponent;
+    @ViewChild('configuracaoDBJus') private configuracaoDBJus!: ConfiguracaoDbjusComponent;
 
-    constructor(private _breakpointObserver: BreakpointObserver) {}
+    constructor(private _breakpointObserver: BreakpointObserver) { }
 
     ngOnInit(): void {
         this.stepperOrientation = this._breakpointObserver.observe('(min-width: 800px)').pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
@@ -32,6 +34,7 @@ export class GerenciamentoUsuariosComponent implements OnInit {
         if (isFinished) {
             this.stepper.reset();
             this.cadastro.resetForm();
+            this.configuracaoDBJus.resetForm();
         }
     }
 
@@ -41,7 +44,7 @@ export class GerenciamentoUsuariosComponent implements OnInit {
 
     getIsUpdatedStatus(IsUpdatedStatus: boolean) {
         if (IsUpdatedStatus) {
-            this.stepper.selectedIndex = 2;
+            this.stepper.selectedIndex = 3;
         }
     }
 

@@ -14,7 +14,7 @@ export class SidenavComponent implements OnInit {
     @Output() openMenu: EventEmitter<boolean> = new EventEmitter();
     accessData!: Autenticacao;
 
-    constructor(private _localStorageService: LocalStorageService) {}
+    constructor(private _localStorageService: LocalStorageService) { }
 
     ngOnInit(): void {
         if (Object.values(JSON.parse(this._localStorageService.getItemLocalStorage(ChavesLocalStorage.UserInfo) || '{}')).length == 0) {
@@ -31,6 +31,8 @@ export class SidenavComponent implements OnInit {
         switch (perfil) {
             case 'cadastro':
                 return this.accessData.perfil.acoesSeguranca.find((acao) => acao.acaoSeguranca.codigo == AcoesSeguranca.CadastroUsuarios);
+            case 'historicoConsultas':
+                return this.accessData.perfil.acoesSeguranca.find((acao) => acao.acaoSeguranca.codigo == AcoesSeguranca.HistoricoConsultas);
             default:
                 break;
         }

@@ -1,0 +1,151 @@
+@import '../../../../../assets/variaveis.scss';
+
+.container-historico-consultas-sintetico-visualizar-historicos {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 1rem auto;
+    padding: 2.5rem 4rem;
+
+    .container-form {
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            .filtros-pesquisa {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                gap: 1.5rem;
+
+                .mat-form-field {
+                    width: 100%;
+                }
+            }
+
+            .container-button {
+                display: flex;
+                gap: 2rem;
+
+                button {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    .wrapper {
+        display: flex;
+
+        .container-filtros-selecionados {
+            flex-grow: 1;
+            .mat-form-field {
+                width: 100%;
+                .mat-chip {
+                    .mat-chip-remove {
+                        transform: scale(1.15);
+                        opacity: 1;
+                    }
+                }
+            }
+
+            ::ng-deep .mat-form-field-outline-end,
+            ::ng-deep .mat-form-field-outline-start {
+                border: none;
+            }
+
+            ::ng-deep .mat-form-field-wrapper {
+                margin: 0;
+                padding: 0;
+                padding-bottom: 0.5rem;
+            }
+        }
+
+        .export {
+            margin: auto 0 auto auto;
+            .mat-icon-button {
+                width: 100%;
+                .mat-icon {
+                    margin-right: 0.5rem;
+                }
+            }
+        }
+    }
+
+    .container-table {
+        .result-table {
+            width: 100%;
+            margin-top: 1rem;
+
+            .mat-header-cell {
+                font-size: 1rem;
+                font-weight: bold;
+            }
+
+            .mat-column-usuarioEmail {
+                width: 40%;
+                padding-left: 0;
+                text-align: left;
+            }
+
+            .mat-column-tipoConsulta {
+                width: 15%;
+                text-align: left;
+            }
+
+            .mat-column-situacaoConsulta {
+                width: 15%;
+                text-align: left;
+            }
+
+            .mat-column-totalConsultas {
+                width: 15%;
+                text-align: right;
+            }            
+            
+            .mat-column-quantidadeTotalCreditos {
+                width: 15%;
+                text-align: right;
+            }
+
+            .footer-totalizadores {
+                font-weight: bold;
+            }
+              
+            .footer-saldo-disponivel td {
+                padding-left: 0;
+                text-align: left;
+                font-style: italic;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $desktop-medium) {
+    .container-historico-consultas-sintetico-visualizar-historicos {
+        padding: 2rem 3rem;
+        .result-table {
+            .mat-header-cell {
+                font-size: 1rem;
+            }
+            .mat-cell {
+                font-size: 0.9rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $desktop-base) {
+    .container-historico-consultas-sintetico-visualizar-historicos {
+        padding: 2rem 2rem;
+        .result-table {
+            .mat-header-cell {
+                font-size: 0.85rem;
+            }
+            .mat-cell {
+                font-size: 0.75rem;
+            }
+        }
+    }
+}

@@ -1,4 +1,4 @@
-<form class="container-form-cadastro" [formGroup]="formCadastro" (submit)="register()" (keydown.enter)="(false)" #formDirective="ngForm">
+<form class="container-form-cadastro" [formGroup]="formCadastro" (submit)="handleNextStep()" (keydown.enter)="(false)" #formDirective="ngForm">
     <mat-form-field>
         <mat-label>E-mail</mat-label>
         <input matInput formControlName="email" placeholder="seuemail@email.com" id="email" (keyup.enter)="changeFocus()" #emailRef required [readOnly]="isEditing" />
@@ -39,12 +39,12 @@
     </mat-form-field>
 
     <div class="container-button">
-        <button type="button" mat-button aria-label="Cancelar" (click)="handlePreviousStep()">
+        <button type="button" mat-button aria-label="Cancelar" (click)="cancelar()">
             <mat-icon fontSet="fas" fontIcon="fa-chevron-left"></mat-icon>
             <span>Cancelar</span>
         </button>
-        <button type="submit" mat-button aria-label="Cadastrar/Editar">
-            <span>{{ isEditing ? 'Editar' : 'Cadastrar' }}</span>
+        <button type="submit" mat-button aria-label="Avançar">            
+            <span>Avançar</span>
             <mat-icon fontSet="fas" fontIcon="fa-chevron-right"></mat-icon>
         </button>
     </div>

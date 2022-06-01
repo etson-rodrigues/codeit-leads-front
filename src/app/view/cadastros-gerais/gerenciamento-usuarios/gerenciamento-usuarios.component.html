@@ -11,7 +11,11 @@
         </mat-step>
 
         <mat-step [stepControl]="cadastro.formCadastro" label="Cadastro">
-            <app-cadastro #cadastro (isRegistered)="getIsRegistered($event)" (previousStep)="setPreviousStep()" [isEditing]="isEditing"> </app-cadastro>
+            <app-cadastro #cadastro (isRegistered)="getIsRegistered($event)" (nextStep)="setNextStep()" (isFinished)="getIsFinished($event)" [isEditing]="isEditing"> </app-cadastro>
+        </mat-step>
+
+        <mat-step [stepControl]="configuracaoDBJus.formConfiguracaoDBJus" label="Configuração DBJus">
+            <app-configuracao-dbjus #configuracaoDBJus (isRegistered)="getIsRegistered($event)" (previousStep)="setPreviousStep()" [isEditing]="isEditing"> </app-configuracao-dbjus>
         </mat-step>
 
         <mat-step label="Resumo">

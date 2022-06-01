@@ -1,0 +1,156 @@
+<div class="container-historico-consultas-sintetico-visualizar-historicos mat-elevation-z24">
+    <div class="container-form">
+        <form class="form" [formGroup]="formConsulta" (submit)="search()" #formDirective="ngForm">  
+            <mat-form-field *ngIf="isAdministrador()">
+                <mat-label>Usuário</mat-label>
+                <mat-select formControlName="usuarioEmail">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let option of usuarios" [value]="option.email">
+                        {{ option.email }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div class="filtros-pesquisa">
+                <mat-form-field>
+                    <mat-label>Tipo de consulta</mat-label>
+                    <mat-select formControlName="tipoConsulta">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let option of tipoConsultaOptions" [value]="option.value">
+                            {{ option.viewValue }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Situação da consulta</mat-label>
+                    <mat-select formControlName="situacaoConsulta">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let option of situacaoConsultaOptions" [value]="option.value">
+                            {{ option.viewValue }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Data Inicial</mat-label>
+                    <input
+                        matInput
+                        formControlName="dataInicial"
+                        id="dataInicial"
+                        [matDatepicker]="dataInicial"
+                        [max]="maxDate"
+                        (input)="validateEmptyField($event, 'dataInicial')"
+                        (focus)="validateEmptyField($event, 'dataInicial')"
+                    />
+                    <mat-datepicker-toggle matSuffix [for]="dataInicial"></mat-datepicker-toggle>
+                    <mat-datepicker #dataInicial></mat-datepicker>
+                    <mat-error>{{ validationInput('dataInicial') }}</mat-error>
+                </mat-form-field>
+
+                <span>até</span>
+
+                <mat-form-field>
+                    <mat-label>Data Final</mat-label>
+                    <input
+                        matInput
+                        formControlName="dataFinal"
+                        id="dataFinal"
+                        [matDatepicker]="dataFinal"
+                        [max]="maxDate"
+                        (input)="validateEmptyField($event, 'dataFinal')"
+                        (focus)="validateEmptyField($event, 'dataFinal')"
+                    />
+                    <mat-datepicker-toggle matSuffix [for]="dataFinal"></mat-datepicker-toggle>
+                    <mat-datepicker #dataFinal></mat-datepicker>
+                    <mat-error>{{ validationInput('dataFinal') }}</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="container-button">
+                <button type="submit" class="search" mat-raised-button>Pesquisar</button>
+                <button type="button" class="cleanFilter" mat-raised-button (click)="cleanFilter()">Limpar Filtro</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="wrapper">
+        <div class="container-filtros-selecionados" [hidden]="!(filters.length > 0)">
+            <mat-form-field class="example-chip-list">
+                <mat-chip-list aria-label="Filtros selecionados">
+                    <mat-chip *ngFor="let filter of filters" (removed)="removeFilter(filter)">
+                        {{ filter.name }}
+                        <button matChipRemove>
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </mat-chip>
+                </mat-chip-list>
+            </mat-form-field>
+        </div>
+
+        <div class="export" matTooltip="Exportar (máximo 100 registros)" matTooltipPosition="above" *ngIf="searchResult && searchResult.length > 0">
+            <button mat-icon-button [matMenuTriggerFor]="exportMenu" aria-label="Exportar históricos">
+                <mat-icon fontSet="fas" fontIcon="fa-file-export" class="icon-md-24"></mat-icon>
+                <span>Exportar</span>
+            </button>
+            <mat-menu class="menu-export" #exportMenu="matMenu" xPosition="before">
+                <button mat-menu-item (click)="export()">
+                    <mat-icon fontSet="fas" fontIcon="fa-file-download" class="icon-md-24"></mat-icon>
+                    <span>Exportar para CSV</span>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+
+    <div *ngIf="searchResult != null && searchResult.length == 0">
+        <p>Nenhum resultado foi encontrado</p>
+    </div>
+
+    <div class="container-table" [hidden]="!(searchResult && searchResult.length > 0)">
+        <mat-divider></mat-divider>
+        <table mat-table [dataSource]="searchResult" class="result-table">
+
+            <ng-container matColumnDef="usuarioEmail">
+                <th mat-header-cell *matHeaderCellDef id="usuarioEmail">Usuário</th>
+                <td mat-cell *matCellDef="let element">{{ element.usuarioEmail }}</td>
+                <td mat-footer-cell *matFooterCellDef> Total </td>
+            </ng-container>
+
+            <ng-container matColumnDef="tipoConsulta">
+                <th mat-header-cell *matHeaderCellDef id="tipoConsulta">Tipo da consulta</th>
+                <td mat-cell *matCellDef="let element">{{ getDescricaoTipoConsulta(element.tipoConsulta) }}</td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="situacaoConsulta">
+                <th mat-header-cell *matHeaderCellDef id="situacaoConsulta">Situação da consulta</th>
+                <td mat-cell *matCellDef="let element">{{ element.situacaoConsulta }}</td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalConsultas">
+                <th mat-header-cell *matHeaderCellDef id="totalConsultas">Total de consultas</th>
+                <td mat-cell *matCellDef="let element">{{ element.totalConsultas | number }}</td>
+                <td mat-footer-cell *matFooterCellDef> {{ totalConsultas | number }} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="quantidadeTotalCreditos">
+                <th mat-header-cell *matHeaderCellDef id="quantidadeTotalCreditos">Quantidade de créditos</th>
+                <td mat-cell *matCellDef="let element">{{ element.quantidadeTotalCreditos | currency:' ':'symbol':'1.2-2' }}</td>
+                <td mat-footer-cell *matFooterCellDef> {{ totalQuantidadeCreditos | currency:' ':'symbol':'1.2-2' }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="saldoDisponivel">
+                <td mat-footer-cell *matFooterCellDef colspan="5">Saldo de crédito disponível: {{ saldoDisponivel | currency:' ':'symbol':'1.2-2' }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            <tr mat-footer-row *matFooterRowDef="displayedColumns" class="footer-totalizadores"></tr>
+            <tr mat-footer-row *matFooterRowDef="['saldoDisponivel']" class="footer-saldo-disponivel" [style.display]="showSaldoDisponivel ? 'table-row' : 'none'"></tr>          
+
+        </table>
+
+        <mat-paginator hidePageSize="true" [length]="totalRecords" [pageSize]="pageSize" showFirstLastButtons (page)="onPageChange($event)"> </mat-paginator>
+    </div>
+</div>

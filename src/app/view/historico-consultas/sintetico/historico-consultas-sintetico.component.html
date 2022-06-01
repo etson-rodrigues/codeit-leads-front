@@ -1,0 +1,16 @@
+<div class="container-title">
+    <button mat-icon-button aria-label="Retornar" routerLink="/historico-consultas/sintetico">
+        <mat-icon fontSet="fas" fontIcon="fa-chevron-left" class="icon-md-24"></mat-icon>
+    </button>
+    <h1>Historico de Consultas Sintético</h1>
+</div>
+
+<div class="container-historico-consultas-sintetico">
+    <mat-horizontal-stepper linear #stepper>
+        <mat-step>
+            <ng-template matStepContent>
+                <app-historico-consultas-sintetico-visualizar-historicos></app-historico-consultas-sintetico-visualizar-historicos>
+            </ng-template>
+        </mat-step>
+    </mat-horizontal-stepper>
+</div>

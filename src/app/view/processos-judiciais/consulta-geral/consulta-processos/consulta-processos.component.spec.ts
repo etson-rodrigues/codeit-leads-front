@@ -247,7 +247,6 @@ describe('ConsultaProcessosComponent', () => {
 
         expect(component.filters.length).withContext('Váriavel array filters deve ter tamanho 2').toBe(2);
         expect(isFilterRemoved).withContext('Deve ter sido removido o filtro correto').toBeTruthy();
-        expect(isFilterRemoved).withContext('Deve ter sido removido o filtro correto').toBeTruthy();
     });
 
     it('[CIT-5736][CIT-5849] deve realizar consulta de processos', () => {

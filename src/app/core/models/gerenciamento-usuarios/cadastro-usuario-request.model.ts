@@ -6,4 +6,9 @@ export interface CadastroUsuarioRequest {
     };
     ativo: boolean;
     redefinirSenha: boolean;
+    usuarioDBJus: {
+        nome: string;
+        senha: string;
+        quantidadeCreditos: number;
+    }
 }

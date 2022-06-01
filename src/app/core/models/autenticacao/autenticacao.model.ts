@@ -15,4 +15,9 @@ export interface Autenticacao {
         acoesSeguranca: AcaoSeguranca[];
     };
     accessToken: string;
+    usuarioDBJus: {
+        nome: string;
+        senha: string;
+        quantidadeCreditos: number;
+    }
 }

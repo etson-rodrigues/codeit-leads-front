@@ -1,6 +1,7 @@
 export interface ConsultaUsuarioView {
     id: number;
     email: string;
+    senha: string;
     perfil: {
         codigo: string;
         descricao: string;
@@ -9,4 +10,9 @@ export interface ConsultaUsuarioView {
         ativo: boolean;
         descricao: string;
     };
+    usuarioDBJus: {
+        nome: string;
+        senha: string;
+        quantidadeCreditos: number;
+    }
 }

@@ -11,7 +11,12 @@ export const mockCadastroUsuarioRequest: CadastroUsuarioRequest = {
         codigo: '002'
     },
     ativo: true,
-    redefinirSenha: true
+    redefinirSenha: true,
+    usuarioDBJus: {
+        nome: "userDBJus_teste",
+        senha: "senhaDBJus_teste",
+        quantidadeCreditos: 10
+    }
 };
 
 export const mockCadastroUsuarioResponse: CadastroUsuarioResponse = {
@@ -24,7 +29,12 @@ export const mockCadastroUsuarioResponse: CadastroUsuarioResponse = {
             descricao: 'Operador'
         },
         ativo: true,
-        redefinirSenha: true
+        redefinirSenha: true,
+        usuarioDBJus: {
+            nome: "userDBJus_teste",
+            senha: "senhaDBJus_teste",
+            quantidadeCreditos: 10
+        }
     }
 };
 
@@ -59,7 +69,12 @@ export const mockConsultaUsuarioPaginateResponse: ConsultaUsuarioResponse = {
                 ]
             },
             ativo: true,
-            redefinirSenha: true
+            redefinirSenha: true,
+            usuarioDBJus: {
+                nome: "userDBJus_teste",
+                senha: "senhaDBJus_teste",
+                quantidadeCreditos: 10
+            }
         }
     ]
 };
@@ -67,6 +82,7 @@ export const mockConsultaUsuarioPaginateResponse: ConsultaUsuarioResponse = {
 export const mockConsultaCadastroEdicao: ConsultaUsuarioView = {
     id: 1,
     email: 'teste@email.com',
+    senha: "senhateste",
     perfil: {
         codigo: '001',
         descricao: 'Administrador'
@@ -74,6 +90,11 @@ export const mockConsultaCadastroEdicao: ConsultaUsuarioView = {
     status: {
         ativo: true,
         descricao: 'Ativo'
+    },
+    usuarioDBJus: {
+        nome: "userDBJus_teste",
+        senha: "senhaDBJus_teste",
+        quantidadeCreditos: 10
     }
 };
 
@@ -102,7 +123,12 @@ export const mockConsultaUsuarioAcaoSegurancaCadastro: ConsultaUsuarioResponse =
                 ]
             },
             ativo: true,
-            redefinirSenha: false
+            redefinirSenha: false,
+            usuarioDBJus: {
+                nome: "userDBJus_teste",
+                senha: "senhaDBJus_teste",
+                quantidadeCreditos: 10
+            }
         }
     ]
 };
@@ -126,7 +152,12 @@ export const mockConsultaUsuarioAcaoSegurancaProcesso: ConsultaUsuarioResponse =
                 ]
             },
             ativo: true,
-            redefinirSenha: false
+            redefinirSenha: false,
+            usuarioDBJus: {
+                nome: "userDBJus_teste",
+                senha: "senhaDBJus_teste",
+                quantidadeCreditos: 10
+            }
         }
     ]
 };

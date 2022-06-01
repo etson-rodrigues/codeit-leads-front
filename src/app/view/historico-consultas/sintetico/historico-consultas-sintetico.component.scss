@@ -1,0 +1,32 @@
+@import '../../../../assets/variaveis.scss';
+
+.container-title {
+    height: 3rem;
+    display: flex;
+    align-items: center;
+
+    h1 {
+        margin: 0;
+    }
+}
+
+.container-historico-consultas-sintetico {
+    width: 85%;
+    margin: 2rem auto;
+
+    ::ng-deep .mat-horizontal-stepper-header-container {
+        display: none;
+    }
+}
+
+@media screen and (max-width: $desktop-medium) {
+    .container-historico-consultas-sintetico-visualizar-historicos {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: $desktop-base) {
+    .container-historico-consultas-sintetico-visualizar-historicos {
+        width: 95%;
+    }
+}

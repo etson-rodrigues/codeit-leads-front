@@ -13,7 +13,7 @@ import { ConsultaUsuarioResponse } from '../../models/gerenciamento-usuarios/con
 export class CadastroUsuariosService {
     private _url: string = environment.url;
 
-    constructor(private _http: HttpClient) {}
+    constructor(private _http: HttpClient) { }
 
     save(data: CadastroUsuarioRequest, isEditing: boolean, id: number) {
         if (isEditing) {
@@ -29,6 +29,11 @@ export class CadastroUsuariosService {
 
     get(email: string, pageNumber: number, pageSize: number) {
         const params = new HttpParams().set('email', email).set('pageNumber', pageNumber).set('pageSize', pageSize);
+        return this._http.get<ConsultaUsuarioResponse>(`${this._url}usuarios`, { params });
+    }
+
+    getAll() {
+        const params = new HttpParams().set('email', "");
         return this._http.get<ConsultaUsuarioResponse>(`${this._url}usuarios`, { params });
     }
 }

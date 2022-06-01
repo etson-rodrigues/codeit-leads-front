@@ -31,6 +31,11 @@ export const mockLoginResponse: LoginResponse = {
                     }
                 }
             ]
+        },
+        usuarioDBJus: {
+            nome: "userDBJus_teste",
+            senha: "senhaDBJus_teste",
+            quantidadeCreditos: 10
         }
     }
 };

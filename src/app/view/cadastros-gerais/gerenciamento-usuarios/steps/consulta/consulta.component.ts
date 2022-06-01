@@ -51,7 +51,7 @@ export class ConsultaComponent implements OnInit {
         });
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 
     search() {
         this.triggerSearch = true;
@@ -66,10 +66,16 @@ export class ConsultaComponent implements OnInit {
                         return {
                             id: item.id,
                             email: item.email,
+                            senha: '',
                             perfil: item.perfil,
                             status: {
                                 ativo: item.ativo,
                                 descricao: item.ativo ? 'Ativo' : 'Inativo'
+                            },
+                            usuarioDBJus: {
+                                nome: item.usuarioDBJus.nome,
+                                senha: item.usuarioDBJus.senha,
+                                quantidadeCreditos: item.usuarioDBJus.quantidadeCreditos
                             }
                         };
                     });
@@ -97,10 +103,16 @@ export class ConsultaComponent implements OnInit {
                         return {
                             id: item.id,
                             email: item.email,
+                            senha: '',
                             perfil: item.perfil,
                             status: {
                                 ativo: item.ativo,
                                 descricao: item.ativo ? 'Ativo' : 'Inativo'
+                            },
+                            usuarioDBJus: {
+                                nome: item.usuarioDBJus.nome,
+                                senha: item.usuarioDBJus.senha,
+                                quantidadeCreditos: item.usuarioDBJus.quantidadeCreditos
                             }
                         };
                     });
@@ -165,6 +177,7 @@ export class ConsultaComponent implements OnInit {
     }
 
     handleNextStep() {
+        this._editarService.setValues(null);
         this.nextStep.emit();
         this.isEditing.emit(false);
         this.triggerSearch = false;

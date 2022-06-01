@@ -2,5 +2,5 @@ import { EnvironmentInterface } from 'src/app/core/interfaces/configs/environmen
 
 export const environment: EnvironmentInterface = {
   production: true,
-  url: 'http://52.205.77.185:8000/api/'
+  url: 'http://leadsgarantia.codeitsolutions.com.br:8000/api/'
 };

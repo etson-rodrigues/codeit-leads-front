@@ -1,0 +1,20 @@
+.container-form-configuracao-dbjus {
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    margin: 1rem auto;
+
+    .container-button {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+            .mat-icon {
+                vertical-align: baseline;
+            }
+            span {
+                margin: 0 0.5rem;
+            }
+        }
+    }
+}

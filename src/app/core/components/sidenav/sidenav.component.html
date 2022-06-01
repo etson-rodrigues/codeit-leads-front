@@ -16,5 +16,9 @@
         <mat-menu #processosjudiciais="matMenu" yPosition="below" xPosition="before">
             <a mat-menu-item (click)="toggleSidenav()" routerLink="/processos-judiciais/consulta-geral">Consulta Geral</a>
         </mat-menu>
+        <a mat-list-item [matMenuTriggerFor]="historicoConsultas" *ngIf="profileAccess('historicoConsultas')">Histórico de Consultas</a>
+        <mat-menu #historicoConsultas="matMenu" yPosition="below" xPosition="before">
+            <a mat-menu-item (click)="toggleSidenav()" routerLink="/historico-consultas/sintetico">Sintético</a>
+        </mat-menu>
     </mat-nav-list>
 </section>

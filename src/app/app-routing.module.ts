@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './core/auth/guards/authorization/auth.guard';
 import { CadastrosGuard } from './core/auth/guards/cadastros/cadastros.guard';
+import { HistoricoConsultasGuard } from './core/auth/guards/historico-consultas/historico-consultas.guard';
 import { LoginGuard } from './core/auth/guards/login/login.guard';
 import { RedefinirSenhaGuard } from './core/auth/guards/redefinir-senha/redefinir-senha.guard';
 
@@ -34,6 +35,11 @@ export const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
+        path: 'historico-consultas/sintetico',
+        loadChildren: () => import('./view/historico-consultas/sintetico/historico-consultas-sintetico.module').then((m) => m.HistoricoConsultasSinteticoModule),
+        canActivate: [AuthGuard, HistoricoConsultasGuard]
+    },
+    {
         path: 'seletor-temas',
         loadChildren: () => import('./view/seletor-temas/seletor-temas.module').then((m) => m.SeletorTemasModule),
         canActivate: [AuthGuard]
@@ -49,4 +55,4 @@ export const routes: Routes = [
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

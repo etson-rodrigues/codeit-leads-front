@@ -1,21 +1,17 @@
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { finalize } from 'rxjs';
 
 import { MatSelect } from '@angular/material/select';
 
 import { Perfil } from 'src/app/core/models/perfil/perfil-response.model';
-import { CadastroUsuariosService } from 'src/app/core/services/cadastro-usuarios/cadastro-usuarios.service';
 import { MessageTrackerService } from 'src/app/core/services/message-tracker/message-tracker.service';
 import { PerfisService } from 'src/app/core/services/perfis/perfis.service';
 import { emailValidator } from 'src/app/core/validators/email-validator';
 import { validationInput } from 'src/app/core/validators/error-input';
 import { inputFocus } from 'src/app/shared/utils/inputFocus';
-import { ResumoService } from 'src/app/core/services/resumo/resumo.service';
 import { EditarService } from 'src/app/core/services/editar/editar.service';
 import { samePasswordValidator } from 'src/app/core/validators/same-password-validator';
-import { CadastroUsuarioRequest } from 'src/app/core/models/gerenciamento-usuarios/cadastro-usuario-request.model';
+import { ConsultaUsuarioView } from '../consulta/consulta.model';
 
 @Component({
     selector: 'app-cadastro',
@@ -23,6 +19,7 @@ import { CadastroUsuarioRequest } from 'src/app/core/models/gerenciamento-usuari
     styleUrls: ['./cadastro.component.scss']
 })
 export class CadastroComponent implements OnInit {
+    usuario: ConsultaUsuarioView = {} as ConsultaUsuarioView;
     formCadastro!: FormGroup;
     perfis: Perfil[] = [];
     userID: number = 0;
@@ -36,17 +33,15 @@ export class CadastroComponent implements OnInit {
     @ViewChild('confirmarSenhaRef') confirmarSenhaRef!: ElementRef;
     @ViewChild('perfilRef') perfilRef!: MatSelect;
 
+    @Output() nextStep: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() isRegistered: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() previousStep: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() isFinished: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Input() isEditing: boolean = false;
 
     constructor(
         private _formBuilder: FormBuilder,
-        private _cadastroUsuariosService: CadastroUsuariosService,
         private _perfisService: PerfisService,
-        private _resumoService: ResumoService,
         private _editarService: EditarService,
-        private _spinnerService: NgxSpinnerService,
         private _changeDetector: ChangeDetectorRef,
         private _messageTrackerService: MessageTrackerService
     ) {
@@ -64,17 +59,26 @@ export class CadastroComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.setUsuario();
         this.fillPerfilSelect();
         this.fillFormEditing();
     }
 
+    setUsuario() {
+        this._editarService.getValues.subscribe((data) => {
+            this.usuario = (data != null && data != undefined) ? data as ConsultaUsuarioView : {} as ConsultaUsuarioView;
+        });
+    }
+
     fillFormEditing() {
         this._editarService.getValues.subscribe((data) => {
-            Object.entries(data).forEach(() => {
-                this.userID = data.id;
-                this.formCadastro.controls.email.patchValue(data.email);
-                this.formCadastro.controls.perfil.patchValue(data.perfil.codigo);
-            });
+            if (data != null && data != undefined) {
+                Object.entries(data).forEach(() => {
+                    this.userID = data.id;
+                    this.formCadastro.controls.email.patchValue(data.email);
+                    this.formCadastro.controls.perfil.patchValue(data.perfil.codigo);
+                });
+            }
         });
     }
 
@@ -89,37 +93,8 @@ export class CadastroComponent implements OnInit {
         });
     }
 
-    register() {
-        if (this.formCadastro.valid) {
-            const data: CadastroUsuarioRequest = {
-                email: this.formCadastro.controls.email.value,
-                senha: this.formCadastro.controls.confirmarSenha.value,
-                perfil: {
-                    codigo: this.formCadastro.controls.perfil.value
-                },
-                ativo: true,
-                redefinirSenha: true
-            };
-
-            this._spinnerService.show();
-            this._cadastroUsuariosService
-                .save(data, this.isEditing, this.userID)
-                .pipe(finalize(() => this._spinnerService.hide()))
-                .subscribe({
-                    next: (response) => {
-                        this.isRegistered.emit(true);
-                        this.userID = 0;
-                        this._resumoService.setValues(response, this.isEditing);
-                    },
-                    error: (error) => {
-                        this._messageTrackerService.subscribeError(error.error);
-                    }
-                });
-        }
-    }
-
-    handlePreviousStep() {
-        this.previousStep.emit();
+    cancelar() {
+        this.isFinished.emit(true);
         this.resetForm();
     }
 
@@ -134,5 +109,22 @@ export class CadastroComponent implements OnInit {
     changeFocus() {
         this.listRef = [this.emailRef, this.senhaRef, this.confirmarSenhaRef, this.perfilRef];
         inputFocus(this.formCadastro, this.listRef, this._changeDetector);
+    }
+
+    handleNextStep() {
+        if (this.formCadastro.valid) {
+            this.updateEditarService();
+            this.nextStep.emit();
+        }
+    }
+
+    private updateEditarService() {
+        this.usuario.email = this.formCadastro.controls.email.value;
+        this.usuario.senha = this.formCadastro.controls.confirmarSenha.value;
+        this.usuario.perfil = {
+            descricao: '',
+            codigo: this.formCadastro.controls.perfil.value
+        };
+        this._editarService.setValues(this.usuario);
     }
 }

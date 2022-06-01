@@ -10,6 +10,11 @@ export const mockUserRedefinirSenhaResponse: CadastroUsuarioResponse = {
             id: 2,
             codigo: '002',
             descricao: 'Operador'
+        },
+        usuarioDBJus: {
+            nome: "userDBJus_teste",
+            senha: "senhaDBJus_teste",
+            quantidadeCreditos: 10
         }
     }
 };
