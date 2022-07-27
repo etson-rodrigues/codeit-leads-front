@@ -420,11 +420,21 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
                     }
                 }
             }
+            .partes-receitaPj {
+                .partes-receitaPj-table {
+                    table {
+                        .mat-header-cell {
+                            color: mat-color($app-accent, 800);
+                        }
+                    }
+                }
+            }
         }
     }
 
-    // histórico de consultas - sintético
-    .container-historico-consultas-sintetico-visualizar-historicos {
+    // histórico de consultas
+    .container-historico-consultas-sintetico-visualizar-historicos,
+    .container-historico-consultas-analitico-visualizar-historicos {
         .form {
             .container-button {
                 .search {

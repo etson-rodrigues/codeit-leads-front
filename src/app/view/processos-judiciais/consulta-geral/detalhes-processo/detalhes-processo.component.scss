@@ -79,6 +79,70 @@
             }
         }
 
+
+        .partes-receitaPj {
+            padding: 0 1rem 0 1rem;
+
+            .partes-receitaPj-table {
+                overflow: auto;
+                display: flex;
+                flex-direction: column;
+
+                table {
+                    width: 100%;
+
+                    .mat-header-cell {
+                        font-size: 1rem;
+                        font-weight: bold;
+                        padding: 0;
+                    }
+
+                    .mat-column-cnpj {
+                        width: 10%;
+                        text-align: center;
+                    }
+
+                    .mat-column-nome {
+                        width: 15%;
+                        text-align: left;
+                    }
+
+                    .mat-column-atividadePrincipalDescricao {
+                        width: 15%;
+                        text-align: left;
+                    }
+
+                    .mat-column-situacao {
+                        width: 7%;
+                        text-align: left;
+                    }
+
+                    .mat-column-capitalSocial {
+                        width: 7%;
+                        text-align: right;
+                    }
+
+                    .mat-column-endereco {
+                        width: 26%;                        
+                        padding-left: 1em;
+                        text-align: left;
+                    }
+
+                    .mat-column-telefone {
+                        width: 10%;
+                        text-align: left;
+                    }
+
+                    .mat-column-email {
+                        width: 10%;
+                        padding-left: 1em;
+                        padding-right: 0;
+                        text-align: left;
+                    }                    
+                }
+            }
+        }
+
         .andamentos {
             padding: 0 1rem 0 1rem;
 
@@ -95,20 +159,21 @@
                         font-size: 1rem;
                         font-weight: bold;
                         padding: 0;
+                    }
+
+                    .mat-column-data {
+                        width: 20%;
                         text-align: center;
                     }
 
-                    .mat-cell {
-                        padding: 0;
+                    .mat-column-descricao {
+                        width: 20%;
+                        text-align: left;
+                    }
 
-                        &:first-child {
-                            text-align: center;
-                        }
-
-                        &:not(first-child),
-                        &:not(last-child) {
-                            padding-left: 0.5rem;
-                        }
+                    .mat-column-detalhe {
+                        width: 60%;
+                        text-align: left;
                     }
                 }
 

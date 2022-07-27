@@ -29,7 +29,7 @@ describe('ConsultaProcessosComponent', () => {
 
     beforeEach(
         waitForAsync(() => {
-            const consultaProcessosServiceSpy = jasmine.createSpyObj('ConsultaProcessosService', ['get']);
+            const consultaProcessosServiceSpy = jasmine.createSpyObj('ConsultaProcessosService', ['post']);
             const consultaProcessoDetalheServiceSpy = jasmine.createSpyObj('ConsultaProcessoDetalheService', ['get']);
             const exportarConsultaProcessosServiceSpy = jasmine.createSpyObj('ExportarConsultaProcessosService', ['export']);
             const stepperServiceSpy = jasmine.createSpyObj('StepperService', ['next']);
@@ -66,16 +66,12 @@ describe('ConsultaProcessosComponent', () => {
     });
 
     it('[CIT-5736] deve validar formulário vazio', () => {
-        expect(component.formConsulta.valid).withContext('Formulário deve inicializar inválido').toBeFalsy();
+        expect(component.formConsulta.valid).withContext('Formulário deve inicializar válido').toBeTruthy();
     });
 
     it('[CIT-5736] deve validar campo de razão social', () => {
         const razaoSocialCnpjInput = component.formConsulta.get('razaoSocialCnpj');
-        expect(razaoSocialCnpjInput!.valid).withContext('Campo razão social deve inicializar inválido').toBeFalsy();
-
-        razaoSocialCnpjInput!.setValue('');
-        fixture.detectChanges();
-        expect(razaoSocialCnpjInput!.hasError('required')).withContext('Campo razão social é obrigatório').toBeTruthy();
+        expect(razaoSocialCnpjInput!.valid).withContext('Campo razão social deve inicializar válido').toBeTruthy();
 
         razaoSocialCnpjInput!.setValue('t');
         fixture.detectChanges();
@@ -132,6 +128,36 @@ describe('ConsultaProcessosComponent', () => {
         expect(component.getCnpjMask()).withContext('Campo razão social deve ter máscara para CNPJ.').toBe('00.000.000/0000-00');
     });
 
+    it('[CIT-5985] deve validar campo Nup', () => {
+        const nupInput = component.formConsulta.get('nup');
+        expect(nupInput!.valid).withContext('Campo Nup deve inicializar válido').toBeTruthy();
+
+        nupInput!.setValue('1');
+        fixture.detectChanges();
+        expect(nupInput!.hasError('minlength')).withContext('Campo Nup deve ter no mínimo 25 caracteres').toBeTruthy();
+
+        nupInput!.setValue('0002900-68.2016.8.16.003512345');
+        fixture.detectChanges();
+        expect(nupInput!.hasError('maxlength')).withContext('Campo Nup deve ter no máximo 25 caracteres').toBeTruthy();
+
+        nupInput!.setValue('0002900-68.2016.8.16.0035');
+        fixture.detectChanges();
+        expect(nupInput!.valid).withContext('Campo Nup deve ser válido').toBeTruthy();
+    });
+
+    it('[CIT-5985] deve validar campo Valor Causa', () => {
+        const valorCausaInput = component.formConsulta.get('valorCausa');
+        expect(valorCausaInput!.valid).withContext('Campo Valor Causa deve inicializar válido').toBeTruthy();
+
+        valorCausaInput!.setValue('1234567890123456');
+        fixture.detectChanges();
+        expect(valorCausaInput!.hasError('maxlength')).withContext('Campo Valor Causa deve ter no máximo 15 caracteres').toBeTruthy();
+
+        valorCausaInput!.setValue('123456789012345');
+        fixture.detectChanges();
+        expect(valorCausaInput!.valid).withContext('Campo Valor Causa deve ser válido').toBeTruthy();
+    });
+
     it('[CIT-5849] deve validar o campo critério por data', () => {
         const criterioDataInput = component.formConsulta.get('criterioData');
         expect(criterioDataInput!.value).withContext('Campo critério por data deve inicializar vazio').toBe('');
@@ -181,7 +207,7 @@ describe('ConsultaProcessosComponent', () => {
     });
 
     it('[CIT-5849] deve preencher variável searchParameters com dados do formulário', () => {
-        consultaProcessosService.get.and.returnValue(of(mockConsultaProcessosResponse));
+        consultaProcessosService.post.and.returnValue(of(mockConsultaProcessosResponse));
         let presentDate = new Date();
         let pastDate = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
         let formattedPresentDate = formatarDataPtBr(presentDate.toString());
@@ -213,9 +239,13 @@ describe('ConsultaProcessosComponent', () => {
         let formattedPastDate = formatarDataPtBr(pastDate.toString());
         let searchParameters = {
             razaoSocialCnpj: 'teste',
+            nup: null,
+            valorCausa: null,
             criterioData: CriterioData.UltimoAndamento,
             dataInicial: formattedPastDate,
-            dataFinal: formattedPresentDate
+            dataFinal: formattedPresentDate,
+            tribunais: null,
+            uf: null
         };
 
         expect(component.filters.length).withContext('Váriavel array filters deve inicializar vazia').toBe(0);
@@ -228,9 +258,13 @@ describe('ConsultaProcessosComponent', () => {
     it('[CIT-5849] deve remover filtro selecionado da variável filters', () => {
         let searchParameters = {
             razaoSocialCnpj: 'teste',
+            nup: null,
+            valorCausa: null,
             criterioData: 'ultima-atualizacao',
             dataInicial: null,
-            dataFinal: formatarDataPtBr(new Date().toString())
+            dataFinal: formatarDataPtBr(new Date().toString()),
+            tribunais: null,
+            uf: null
         };
         let selecttedFilter = {
             key: 'criterioData',
@@ -263,9 +297,9 @@ describe('ConsultaProcessosComponent', () => {
         dataFinalInput!.setValue(presentDate);
         fixture.detectChanges();
 
-        consultaProcessosService.get.and.returnValue(of(mockConsultaProcessosResponse));
+        consultaProcessosService.post.and.returnValue(of(mockConsultaProcessosResponse));
         component.search();
-        expect(consultaProcessosService.get).withContext('Serviço de consulta deve ser chamado uma vez').toHaveBeenCalledTimes(1);
+        expect(consultaProcessosService.post).withContext('Serviço de consulta deve ser chamado uma vez').toHaveBeenCalledTimes(1);
     });
 
     it('[CIT-5736][CIT-5849] deve retornar erro caso consulta de processos falhar', () => {
@@ -282,7 +316,7 @@ describe('ConsultaProcessosComponent', () => {
         dataFinalInput!.setValue(presentDate);
         fixture.detectChanges();
 
-        consultaProcessosService.get.and.returnValue(throwError(() => new Error()));
+        consultaProcessosService.post.and.returnValue(throwError(() => new Error()));
         component.search();
         expect(messageTrackerService.subscribeError).withContext('Deve abrir o messageTracker ao gerar erro na consulta de processos').toHaveBeenCalledTimes(1);
     });
@@ -297,9 +331,9 @@ describe('ConsultaProcessosComponent', () => {
         const razaoSocialCnpjInput = component.formConsulta.get('razaoSocialCnpj');
         razaoSocialCnpjInput!.setValue('teste');
         fixture.detectChanges();
-        consultaProcessosService.get.and.returnValue(of(mockConsultaProcessosResponse));
+        consultaProcessosService.post.and.returnValue(of(mockConsultaProcessosResponse));
         component.onPageChange(event);
-        expect(consultaProcessosService.get).withContext('Serviço de consulta deve ser chamado uma vez').toHaveBeenCalledTimes(1);
+        expect(consultaProcessosService.post).withContext('Serviço de consulta deve ser chamado uma vez').toHaveBeenCalledTimes(1);
     });
 
     it('[CIT-5736] deve retornar erro caso requisição de troca de página da consulta de processos falhar', () => {
@@ -312,7 +346,7 @@ describe('ConsultaProcessosComponent', () => {
         const razaoSocialCnpjInput = component.formConsulta.get('razaoSocialCnpj');
         razaoSocialCnpjInput!.setValue('teste');
         fixture.detectChanges();
-        consultaProcessosService.get.and.returnValue(throwError(() => new Error()));
+        consultaProcessosService.post.and.returnValue(throwError(() => new Error()));
         component.onPageChange(event);
         expect(messageTrackerService.subscribeError).withContext('Deve abrir o messageTracker ao gerar erro na consulta de processos').toHaveBeenCalledTimes(1);
     });
@@ -411,23 +445,27 @@ describe('ConsultaProcessosComponent', () => {
     it('[CIT-5881] deve realizar exportação dos processos pesquisados', () => {
         component.searchParameters = {
             razaoSocialCnpj: 'teste',
+            nup: null,
+            valorCausa: null,
             criterioData: CriterioData.CriacaoProcesso,
             dataInicial: '01/03/2022',
-            dataFinal: '01/03/2022'
+            dataFinal: '01/03/2022',
+            tribunais: null,
+            uf: null
         };
 
-        const fakeResponse = new Blob([''], { type: 'text/csv' });
+        const fakeResponse = new Blob([''], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         spyOn(component['_dialog'], 'open').and.returnValue({ afterClosed: () => of(true) } as MatDialogRef<typeof component>);
         exportarConsultaProcessosService.export.and.returnValue(of(fakeResponse));
         spyOn(component.downloadAnchor, 'click');
-        component.export();
+        component.export(false);
         expect(exportarConsultaProcessosService.export).withContext('Deve chamar serviço de exportação após confirmação do usuário').toHaveBeenCalled();
     });
 
     it('[CIT-5881] deve retornar erro caso exportação dos processos pesquisados falhar', () => {
         spyOn(component['_dialog'], 'open').and.returnValue({ afterClosed: () => of(true) } as MatDialogRef<typeof component>);
         exportarConsultaProcessosService.export.and.returnValue(throwError(() => new Error()));
-        component.export();
+        component.export(false);
         expect(exportarConsultaProcessosService.export).withContext('Deve chamar serviço de exportação após confirmação do usuário').toHaveBeenCalled();
         expect(messageTrackerService.subscribeError).withContext('Deve abrir o messageTracker ao gerar erro na exportação dos processos').toHaveBeenCalled();
     });

@@ -1,6 +1,6 @@
 @import '../../../../../assets/variaveis.scss';
 
-.container-consulta-processos {
+.container-historico-consultas-analitico-visualizar-historicos {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -13,7 +13,7 @@
             flex-direction: column;
             gap: 1rem;
 
-            .group-row {
+            .filtros-pesquisa {
                 display: flex;
                 justify-content: space-between;
                 align-items: baseline;
@@ -77,16 +77,60 @@
         .result-table {
             width: 100%;
             margin-top: 1rem;
+
             .mat-header-cell {
                 font-size: 1rem;
                 font-weight: bold;
             }
 
-            .mat-column-nup {
-                width: 19%;
+            .mat-column-dataConsulta {
+                width: 7%;
                 padding-left: 0;
                 text-align: center;
-                font-weight: bold;
+            }
+
+            .mat-column-usuarioEmail {
+                width: 9%;
+                padding-left: 1em;
+                text-align: left;
+            }
+
+            .mat-column-razaoSocial {
+                width: 9%;
+                padding-left: 1em;
+                text-align: left;
+            }
+
+            .mat-column-nup {
+                width: 10%;
+                text-align: center;
+            }
+
+            .mat-column-valorCausa {
+                width: 7%;
+                padding-right: 1em;
+                text-align: right;
+            }
+
+            .mat-column-criterioData {
+                width: 6%;
+                text-align: left;
+            }
+            
+            .mat-column-dataInicial {
+                width: 7%;
+                text-align: center;
+            }
+
+            .mat-column-dataFinal {
+                width: 7%;
+                text-align: center;
+            }
+
+            .mat-column-tribunais {
+                width: 7%;
+                max-width: 7%;
+                text-align: left;
             }
 
             .mat-column-uf {
@@ -94,43 +138,51 @@
                 text-align: center;
             }
 
-            .mat-column-nomeInstancia {
-                width: 20%;
+            .mat-column-pagina {
+                width: 4%;
+                padding-right: 1em;
+                text-align: right;
+            }
+
+            .mat-column-tipoConsulta {
+                width: 6%;
                 text-align: left;
             }
 
-            #partesAtivas,
-            #partesPassivas {
+            .mat-column-situacaoConsulta {
+                width: 5%;
                 text-align: center;
             }
-
-            .mat-column-partesAtivas,
-            .mat-column-partesPassivas {
-                width: 21%;
-                text-align: left;
-                white-space: pre-line;
+            
+            .mat-column-quantidadeCreditos {
+                width: 5%;
+                text-align: right;
             }
 
-            .mat-column-primeiraData {
-                width: 7%;
-                text-align: center;
-            }
-
-            .mat-column-dataUltimaAtualizacao {
-                width: 8%;
+            .mat-button-json {
+                padding-left: 1em;
                 padding-right: 0;
                 text-align: center;
+            }
+
+            .mat-column-json {
+                width: 7%;
+                padding-left: 1em;
+                padding-right: 0;
+                text-align: center;
+            }
+              
+            .footer-saldo-disponivel td {
+                padding-left: 0;
+                text-align: left;
+                font-style: italic;
             }
         }
     }
 }
 
-.icon-help {
-    margin-left: 0.5rem;
-}
-
 @media screen and (max-width: $desktop-medium) {
-    .container-consulta-processos {
+    .container-historico-consultas-analitico-visualizar-historicos {
         padding: 2rem 3rem;
         .result-table {
             .mat-header-cell {
@@ -144,7 +196,7 @@
 }
 
 @media screen and (max-width: $desktop-base) {
-    .container-consulta-processos {
+    .container-historico-consultas-analitico-visualizar-historicos {
         padding: 2rem 2rem;
         .result-table {
             .mat-header-cell {

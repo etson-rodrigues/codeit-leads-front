@@ -23,16 +23,20 @@ describe('ExportarConsultaProcessosService', () => {
     it('[CIT-5881] deve retornar a exportação dos processos', () => {
         const searchParameters = {
             razaoSocialCnpj: 'teste',
+            nup: null,
+            valorCausa: null,
             criterioData: CriterioData.CriacaoProcesso,
             dataInicial: '2021-01-01',
-            dataFinal: '2022-01-01'
+            dataFinal: '2022-01-01',
+            tribunais: null,
+            uf: null
         };
-        const fakeResponse = new Blob([''], { type: 'text/csv' });
-        service.export(searchParameters).subscribe((response) => {
+        const fakeResponse = new Blob([''], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        service.export(searchParameters, false).subscribe((response) => {
             expect(response instanceof Blob)
                 .withContext('Retorno deve ser Blob')
                 .toBeTruthy();
-            expect(response.type).withContext('Tipo deve ser text/csv').toEqual('text/csv');
+            expect(response.type).withContext('Tipo deve ser application/vnd.openxmlformats-officedocument.spreadsheetml.sheet').toEqual('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         });
         const req = http.expectOne(`${service['_url']}processos-judiciais/exportar`);
         expect(req.request.method).toBe('POST');
@@ -42,12 +46,16 @@ describe('ExportarConsultaProcessosService', () => {
     it('[CIT-5881] deve retornar erro caso exportação dos processos falhar', () => {
         const searchParameters = {
             razaoSocialCnpj: 'teste',
+            nup: null,
+            valorCausa: null,
             criterioData: CriterioData.CriacaoProcesso,
             dataInicial: '2021-01-01',
-            dataFinal: '2022-01-01'
+            dataFinal: '2022-01-01',
+            tribunais: null,
+            uf: null
         };
         const fakeResponse = new Blob([''], { type: 'application/problem+json' });
-        service.export(searchParameters).subscribe({
+        service.export(searchParameters, false).subscribe({
             next: () => {
                 fail('Operação de exportar processos deveria ter falhado');
             },

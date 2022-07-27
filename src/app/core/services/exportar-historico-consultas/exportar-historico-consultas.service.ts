@@ -14,7 +14,7 @@ export class ExportarHistoricoConsultasService {
 
     constructor(private _http: HttpClient) { }
 
-    export(searchParameters: HistoricoConsultasRequest) {
+    exportSintetico(searchParameters: HistoricoConsultasRequest) {
         let params: ExportarHistoricoConsultasRequest = {
             dataFinal: formatarDataParaRequest(searchParameters.dataFinal)
         };
@@ -48,5 +48,41 @@ export class ExportarHistoricoConsultasService {
         }
         
         return this._http.post(`${this._url}historico-consultas/exportar/sintetico`, params, { responseType: 'blob' });
+    }
+
+    exportAnalitico(searchParameters: HistoricoConsultasRequest) {
+        let params: ExportarHistoricoConsultasRequest = {
+            dataFinal: formatarDataParaRequest(searchParameters.dataFinal)
+        };
+
+        if (searchParameters.dataInicial) {
+            params = {
+                ...params,
+                dataInicial: formatarDataParaRequest(searchParameters.dataInicial)
+            };
+        }
+
+        if (searchParameters.usuarioEmail) {
+            params = {
+                ...params,
+                usuarioEmail: searchParameters.usuarioEmail
+            };
+        }
+
+        if (searchParameters.tipoConsulta) {
+            params = {
+                ...params,
+                tipoConsulta: searchParameters.tipoConsulta
+            };
+        }
+
+        if (searchParameters.situacaoConsulta) {
+            params = {
+                ...params,
+                situacaoConsulta: searchParameters.situacaoConsulta
+            };
+        }
+        
+        return this._http.post(`${this._url}historico-consultas/exportar/analitico`, params, { responseType: 'blob' });
     }
 }

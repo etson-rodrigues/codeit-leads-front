@@ -50,7 +50,7 @@
                     <h3>Partes Ativas</h3>
                     <mat-divider inset></mat-divider>
                     <ul>
-                        <li *ngFor="let parte of dadosProcesso.ativas">{{ parte }}</li>
+                        <li *ngFor="let parte of dadosProcesso.ativas">{{ getParteDescricao(parte) }}</li>
                     </ul>
                 </mat-card>
 
@@ -58,7 +58,7 @@
                     <h3>Partes Passivas</h3>
                     <mat-divider inset></mat-divider>
                     <ul>
-                        <li *ngFor="let parte of dadosProcesso.passivas">{{ parte }}</li>
+                        <li *ngFor="let parte of dadosProcesso.passivas">{{ getParteDescricao(parte) }}</li>
                     </ul>
                 </mat-card>
 
@@ -66,11 +66,52 @@
                     <h3>Outras Partes</h3>
                     <mat-divider inset></mat-divider>
                     <ul>
-                        <li *ngFor="let parte of dadosProcesso.outras">{{ parte }}</li>
+                        <li *ngFor="let parte of dadosProcesso.outras">{{ getParteDescricao(parte) }}</li>
                     </ul>
                 </mat-card>
             </div>
             <mat-divider></mat-divider>
+            <div class="partes-receitaPj" [hidden]="!(dadosProcesso.partesReceitaPj && dadosProcesso.partesReceitaPj.length > 0)">
+                <h3>Dados das Partes</h3>
+                <div class="partes-receitaPj-table">
+                    <table mat-table [dataSource]="dadosProcesso.partesReceitaPj">
+                        <ng-container matColumnDef="cnpj">
+                            <th mat-header-cell *matHeaderCellDef>CNPJ</th>
+                            <td mat-cell *matCellDef="let element">{{ element.cnpj }}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="nome">
+                            <th mat-header-cell *matHeaderCellDef>Razão Social</th>
+                            <td mat-cell *matCellDef="let element">{{ element.nome }}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="atividadePrincipalDescricao">
+                            <th mat-header-cell *matHeaderCellDef>Atividade</th>
+                            <td mat-cell *matCellDef="let element">{{ element.atividadePrincipalDescricao }}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="situacao">
+                            <th mat-header-cell *matHeaderCellDef>Situação</th>
+                            <td mat-cell *matCellDef="let element">{{ element.situacao }}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="capitalSocial">
+                            <th mat-header-cell *matHeaderCellDef>Capital Social</th>
+                            <td mat-cell *matCellDef="let element">{{ element.capitalSocial | currency:' ':'symbol':'1.2-2' }}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="endereco">
+                            <th mat-header-cell *matHeaderCellDef>Endereço</th>
+                            <td mat-cell *matCellDef="let element">{{ element.logradouro + ", " + element.numero + " - " + element.bairro + " - " + element.municipio + "-" + element.uf + " - " + element.cep }}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="telefone">
+                            <th mat-header-cell *matHeaderCellDef>Telefone</th>
+                            <td mat-cell *matCellDef="let element">{{ element.telefone }}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="email">
+                            <th mat-header-cell *matHeaderCellDef>E-mail</th>
+                            <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsPartesReceitaPj; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsPartesReceitaPj"></tr>
+                    </table>
+                </div>
+            </div>
             <div class="andamentos">
                 <h3>Andamentos do Processo</h3>
                 <div class="andamentos-table">

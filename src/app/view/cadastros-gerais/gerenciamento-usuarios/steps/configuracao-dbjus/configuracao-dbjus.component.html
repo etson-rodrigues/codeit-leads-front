@@ -21,6 +21,7 @@
                 id="quantidadeCreditos"
                 currencyMask
                 [options]="{ prefix: ' ', thousands: '.', decimal: ',' }"
+                maxlength="15"
                 (keyup.enter)="changeFocus()"
                 #quantidadeCreditosRef
                 required/>

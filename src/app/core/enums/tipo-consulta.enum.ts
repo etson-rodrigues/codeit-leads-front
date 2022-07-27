@@ -1,5 +1,6 @@
 export enum TipoConsulta {
     Pesquisa = 'Pesquisa',
     DetalhesProcesso = 'DetalhesProcesso',
-    Exportacao = 'Exportacao'
+    ExportacaoPesquisa = 'ExportacaoPesquisa',
+    ExportacaoPesquisaDetalhesProcesso = 'ExportacaoPesquisaDetalhesProcesso'
 }

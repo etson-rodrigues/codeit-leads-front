@@ -1,6 +1,29 @@
 import { AbstractResponse } from '../comum/abstract-response';
 
-export interface AndamentosResponseList {
+export interface ParteResponse {
+    tipo: string; 
+    nome: string; 
+    cpf: string; 
+    cnpj: string;
+}
+
+export interface ParteReceitaPjResponse {
+    cnpj: string; 
+    nome: string; 
+    atividadePrincipalDescricao: string; 
+    situacao: string; 
+    capitalSocial: string; 
+    logradouro: string; 
+    numero: string; 
+    bairro: string; 
+    municipio: string; 
+    uf: string; 
+    cep: string; 
+    telefone: string; 
+    email: string;
+}
+
+export interface AndamentoResponse {
     data: string;
     descricao: string;
     detalhes: string;
@@ -18,11 +41,12 @@ export interface DetalhesProcesso {
     };
     dataInicial: string;
     partes: {
-        partesAtivas: string[];
-        partesPassivas: string[];
-        outrasPartes: string[];
+        partesAtivas: ParteResponse[];
+        partesPassivas: ParteResponse[];
+        outrasPartes: ParteResponse[];
     };
-    andamentos: AndamentosResponseList[];
+    partesReceitaPj: ParteReceitaPjResponse[];
+    andamentos: AndamentoResponse[];
 }
 
 export interface DetalhesProcessoResponse extends AbstractResponse<DetalhesProcesso[]> {}

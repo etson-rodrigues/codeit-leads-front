@@ -40,6 +40,11 @@ export const routes: Routes = [
         canActivate: [AuthGuard, HistoricoConsultasGuard]
     },
     {
+        path: 'historico-consultas/analitico',
+        loadChildren: () => import('./view/historico-consultas/analitico/historico-consultas-analitico.module').then((m) => m.HistoricoConsultasAnaliticoModule),
+        canActivate: [AuthGuard, HistoricoConsultasGuard]
+    },
+    {
         path: 'seletor-temas',
         loadChildren: () => import('./view/seletor-temas/seletor-temas.module').then((m) => m.SeletorTemasModule),
         canActivate: [AuthGuard]

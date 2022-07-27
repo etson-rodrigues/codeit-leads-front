@@ -7,7 +7,21 @@
                 <mat-error>{{ validationInput('razaoSocialCnpj') }}</mat-error>
             </mat-form-field>
 
-            <div class="criterio-data">
+            <div class="group-row">
+                <mat-form-field>
+                    <mat-label>Número Único do Protocolo (NUP)</mat-label>
+                    <input matInput formControlName="nup" [dropSpecialCharacters]="false" mask="0000000-00.0000.0.00.0000" placeholder="Número Único do Protocolo (NUP)" />
+                    <mat-error>{{ validationInput('nup') }}</mat-error>
+                </mat-form-field>
+    
+                <mat-form-field>
+                    <mat-label>Valor Mínimo da Causa</mat-label>
+                        <input matInput formControlName="valorCausa" placeholder="Valor Mínimo da Causa" currencyMask [options]="{ prefix: ' ', thousands: '.', decimal: ',' }" maxlength="15"/>
+                    <mat-error>{{ validationInput('valorCausa') }}</mat-error>
+                </mat-form-field>
+            </div>            
+
+            <div class="group-row">
                 <mat-form-field>
                     <mat-label>Critério por data</mat-label>
                     <mat-select formControlName="criterioData">
@@ -53,6 +67,29 @@
                 </mat-form-field>
             </div>
 
+            <div class="group-row">
+                <mat-form-field appearance="fill">
+                    <mat-label>Tribunais</mat-label>
+                    <mat-select [formControl]="tribunais" (selectionChange)="onTribunaisChange()" multiple>
+                        <mat-option *ngFor="let option of tribunalOptions" [value]="option.value">
+                            {{ option.viewValue }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>UF</mat-label>
+                    <mat-select formControlName="uf">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let option of ufOptions" [value]="option.value">
+                            {{ option.viewValue }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-icon class="icon-help" matTooltip="Selecione UF para TJ, TJM e TRE" matSuffix>help</mat-icon>
+                </mat-form-field>
+
+            </div>
+
             <div class="container-button">
                 <button type="submit" class="search" mat-raised-button>Pesquisar</button>
                 <button type="button" class="cleanFilter" mat-raised-button (click)="cleanFilter()">Limpar Filtro</button>
@@ -80,9 +117,13 @@
                 <span>Exportar</span>
             </button>
             <mat-menu class="menu-export" #exportMenu="matMenu" xPosition="before">
-                <button mat-menu-item (click)="export()">
+                <button mat-menu-item (click)="export(false)">
                     <mat-icon fontSet="fas" fontIcon="fa-file-download" class="icon-md-24"></mat-icon>
-                    <span>Exportar para CSV</span>
+                    <span>Exportar em XLSX</span>
+                </button>
+                <button mat-menu-item (click)="export(true)">
+                    <mat-icon fontSet="fas" fontIcon="fa-file-download" class="icon-md-24"></mat-icon>
+                    <span>Exportar com detalhes em XLSX</span>
                 </button>
             </mat-menu>
         </div>
@@ -98,6 +139,11 @@
             <ng-container matColumnDef="nup">
                 <th mat-header-cell *matHeaderCellDef id="nup">NUP</th>
                 <td mat-cell *matCellDef="let element">{{ element.nup }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="nomeInstancia">
+                <th mat-header-cell *matHeaderCellDef id="nomeInstancia">Tribunal</th>
+                <td mat-cell *matCellDef="let element">{{ element.nomeInstancia }}</td>
             </ng-container>
 
             <ng-container matColumnDef="uf">

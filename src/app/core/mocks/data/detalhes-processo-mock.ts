@@ -13,10 +13,38 @@ export const mockDetalhesProcessoResponseData: DetalhesProcesso = {
     },
     dataInicial: '2022-02-16T02:00:00',
     partes: {
-        partesAtivas: ['JOANATAN DIAS DO CARMO'],
-        partesPassivas: ['SEJEAN SISTEMAS DE SEGURANCA ELETRONICA LTDA - ME', 'CLARO S.A.'],
-        outrasPartes: ['JOAO CLAIR DE ANDRADE GONCALVES']
+        partesAtivas: [
+            {
+                tipo: "",
+                nome: "JOANATAN DIAS DO CARMO",
+                cpf: "",
+                cnpj: ""
+            }
+        ],
+        partesPassivas: [
+            {
+                tipo: "",
+                nome: "SEJEAN SISTEMAS DE SEGURANCA ELETRONICA LTDA - ME",
+                cpf: "",
+                cnpj: ""
+            },
+            {
+                tipo: "",
+                nome: "CLARO S.A.",
+                cpf: "",
+                cnpj: ""
+            }
+        ],
+        outrasPartes: [
+            {
+                tipo: "",
+                nome: "JOAO CLAIR DE ANDRADE GONCALVES",
+                cpf: "",
+                cnpj: ""
+            }
+        ]
     },
+    partesReceitaPj: [],
     andamentos: [
         {
             data: '2019-07-26T02:00:00',
@@ -93,9 +121,37 @@ export const mockDetalhesProcessoView: DetalhesProcessoView = {
     comarca: 'CURITIBA',
     uf: 'PARANÁ',
     dataInicial: '16/02/2022',
-    ativas: ['JOANATAN DIAS DO CARMO'],
-    passivas: ['SEJEAN SISTEMAS DE SEGURANCA ELETRONICA LTDA - ME', 'CLARO S.A.'],
-    outras: ['JOAO CLAIR DE ANDRADE GONCALVES'],
+    ativas: [
+        {
+            tipo: "",
+            nome: "JOANATAN DIAS DO CARMO",
+            cpf: "",
+            cnpj: ""
+        }
+    ],
+    passivas: [
+        {
+            tipo: "",
+            nome: "SEJEAN SISTEMAS DE SEGURANCA ELETRONICA LTDA - ME",
+            cpf: "",
+            cnpj: ""
+        },
+        {
+            tipo: "",
+            nome: "CLARO S.A.",
+            cpf: "",
+            cnpj: ""
+        }
+    ],
+    outras: [
+        {
+            tipo: "",
+            nome: "JOAO CLAIR DE ANDRADE GONCALVES",
+            cpf: "",
+            cnpj: ""
+        }
+    ],
+    partesReceitaPj: [],
     andamentos: [
         {
             data: '26/07/2019',

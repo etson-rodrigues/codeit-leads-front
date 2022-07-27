@@ -5,13 +5,14 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs';
 import { setPaginatorConfig } from 'src/app/core/config/paginator-config';
+import { CriterioData } from 'src/app/core/enums/criterio-data.enum';
 import { ChavesLocalStorage } from 'src/app/core/enums/local-storage.enum';
 import { Perfil } from 'src/app/core/enums/perfil.enum';
 import { SituacaoConsulta } from 'src/app/core/enums/situacao-consulta.enum';
 import { TipoConsulta } from 'src/app/core/enums/tipo-consulta.enum';
 import { Autenticacao } from 'src/app/core/models/autenticacao/autenticacao.model';
 import { ConsultaUsuarioResponseData } from 'src/app/core/models/gerenciamento-usuarios/consulta-usuario-response.model';
-import { HistoricoConsultasSinteticoResponseData } from 'src/app/core/models/historico-consultas/historico-consultas-sintetico-response.model';
+import { HistoricoConsultasAnaliticoResponseData } from 'src/app/core/models/historico-consultas/historico-consultas-analitico-response.model';
 import { HistoricoConsultasRequest } from 'src/app/core/models/historico-consultas/historio-consultas-request.model';
 import { CadastroUsuariosService } from 'src/app/core/services/cadastro-usuarios/cadastro-usuarios.service';
 import { ExportarHistoricoConsultasService } from 'src/app/core/services/exportar-historico-consultas/exportar-historico-consultas.service';
@@ -24,14 +25,15 @@ import { validationInput } from 'src/app/core/validators/error-input';
 import { maxDateValidator } from 'src/app/core/validators/max-date-validator';
 import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
 import { formatarDataPtBr } from 'src/app/shared/utils/formatar-data';
-import { HistoricoConsultasFilterOptions, HistoricoConsultasSelectedFilters, HistoricoConsultasView, UsuarioFilter } from './historico-consultas-sintetico-visualizar-historicos.model';
+import { HistoricoConsultasFilterOptions, HistoricoConsultasSelectedFilters, HistoricoConsultasAnaliticoView, UsuarioFilter } from './historico-consultas-analitico-visualizar-historicos.model';
+import { HistoricoConsultasAnaliticoVisualizarHistoricosResultadoComponent } from './resultado/historico-consultas-analitico-visualizar-historicos-resultado.component';
 
 @Component({
-  selector: 'app-historico-consultas-sintetico-visualizar-historicos',
-  templateUrl: './historico-consultas-sintetico-visualizar-historicos.component.html',
-  styleUrls: ['./historico-consultas-sintetico-visualizar-historicos.component.scss']
+  selector: 'app-historico-consultas-analitico-visualizar-historicos',
+  templateUrl: './historico-consultas-analitico-visualizar-historicos.component.html',
+  styleUrls: ['./historico-consultas-analitico-visualizar-historicos.component.scss']
 })
-export class HistoricoConsultasSinteticoVisualizarHistoricosComponent implements OnInit {
+export class HistoricoConsultasAnaliticoVisualizarHistoricosComponent implements OnInit {
   formConsulta: FormGroup = new FormGroup({});
   searchParameters!: HistoricoConsultasRequest;
   tipoConsultaOptions: HistoricoConsultasFilterOptions[] = [
@@ -47,18 +49,16 @@ export class HistoricoConsultasSinteticoVisualizarHistoricosComponent implements
   maxDate: Date = new Date();
   filters: HistoricoConsultasSelectedFilters[] = [];
 
-  searchResult!: HistoricoConsultasView[];
+  searchResult!: HistoricoConsultasAnaliticoView[];
   usuarios: UsuarioFilter[] = [];
   accessData!: Autenticacao;
-  displayedColumns: string[] = ['usuarioEmail', 'tipoConsulta', 'situacaoConsulta', 'totalConsultas', 'quantidadeTotalCreditos'];
+  displayedColumns: string[] = ['dataConsulta', 'usuarioEmail', 'razaoSocial', 'nup', 'valorCausa', 'criterioData',  'dataInicial', 'dataFinal', 'tribunais', 'uf', 'pagina', 'tipoConsulta', 'situacaoConsulta', 'quantidadeCreditos','json'];
 
   totalRecords!: number;
   pageSize!: number;
 
   downloadAnchor: HTMLAnchorElement = document.createElement('a');
 
-  totalQuantidadeCreditos: number = 0;
-  totalConsultas: number = 0;
   saldoDisponivel: number = 0;
   showSaldoDisponivel: boolean = false;
 
@@ -149,24 +149,33 @@ export class HistoricoConsultasSinteticoVisualizarHistoricosComponent implements
 
       this._spinnerService.show();
       this._historicoConsultasService
-        .getSinteticoBy(this.searchParameters, 1, 10)
+        .getAnaliticoBy(this.searchParameters, 1, 10)
         .pipe(finalize(() => this._spinnerService.hide()))
         .subscribe({
           next: (response) => {
-            this.searchResult = response.data.map((item: HistoricoConsultasSinteticoResponseData) => {
+            this.searchResult = response.data.map((item: HistoricoConsultasAnaliticoResponseData) => {
               return {
-                usuarioEmail: item.usuarioEmail,
+                dataConsulta:  new Date(item.dataConsulta).toLocaleDateString('pt-br') + ' ' + new Date(item.dataConsulta).toLocaleTimeString('pt-br'),
+                usuarioEmail: item.usuarioEmail.split('@')[0],
+                razaoSocial: item.razaoSocial,
+                nup: item.nup,
+                valorCausa: item.valorCausa,
+                criterioData: item.criterioData,
+                dataInicial: item.dataInicial ? formatarDataPtBr(item.dataInicial) : '',
+                dataFinal: item.dataFinal ? formatarDataPtBr(item.dataFinal) : '',
+                tribunais: item.tribunais,
+                uf: item.uf,
+                pagina: item.pagina,
                 tipoConsulta: item.tipoConsulta,
                 situacaoConsulta: item.situacaoConsulta,
-                totalConsultas: item.totalConsultas,
-                quantidadeTotalCreditos: item.quantidadeTotalCreditos
+                quantidadeCreditos: item.quantidadeCreditos,
+                resultado: item.resultado
               };
             });
 
             this.totalRecords = response.totalRecords;
             this.pageSize = response.pageSize;
             this.paginator.firstPage();
-            this.atualizaTotalizadores();
             this.getSaldoDisponivel();
             setPaginatorConfig(this.paginator);
           },
@@ -184,23 +193,32 @@ export class HistoricoConsultasSinteticoVisualizarHistoricosComponent implements
 
     this._spinnerService.show();
     this._historicoConsultasService
-      .getSinteticoBy(this.searchParameters, pageNumber, 10)
+      .getAnaliticoBy(this.searchParameters, pageNumber, 10)
       .pipe(finalize(() => this._spinnerService.hide()))
       .subscribe({
         next: (response) => {
-          this.searchResult = response.data.map((item: HistoricoConsultasSinteticoResponseData) => {
+          this.searchResult = response.data.map((item: HistoricoConsultasAnaliticoResponseData) => {
             return {
-              usuarioEmail: item.usuarioEmail,
+              dataConsulta: new Date(item.dataConsulta).toLocaleDateString('pt-br') + ' ' + new Date(item.dataConsulta).toLocaleTimeString('pt-br'),
+              usuarioEmail: item.usuarioEmail.split('@')[0],
+              razaoSocial: item.razaoSocial,
+              nup: item.nup,
+              valorCausa: item.valorCausa,
+              criterioData: item.criterioData,
+              dataInicial: item.dataInicial ? formatarDataPtBr(item.dataInicial) : '',
+              dataFinal: item.dataFinal ? formatarDataPtBr(item.dataFinal) : '',
+              tribunais: item.tribunais,
+              uf: item.uf,
+              pagina: item.pagina,
               tipoConsulta: item.tipoConsulta,
               situacaoConsulta: item.situacaoConsulta,
-              totalConsultas: item.totalConsultas,
-              quantidadeTotalCreditos: item.quantidadeTotalCreditos
+              quantidadeCreditos: item.quantidadeCreditos,
+              resultado: item.resultado
             };
           });
 
           this.totalRecords = response.totalRecords;
           this.pageSize = response.pageSize;
-          this.atualizaTotalizadores();
           this.getSaldoDisponivel();
           setPaginatorConfig(this.paginator);
         },
@@ -222,7 +240,7 @@ export class HistoricoConsultasSinteticoVisualizarHistoricosComponent implements
       if (result) {
         this._spinnerService.show();
         this._exportarHistoricoConsultasService
-          .exportSintetico(this.searchParameters)
+          .exportAnalitico(this.searchParameters)
           .pipe(finalize(() => this._spinnerService.hide()))
           .subscribe({
             next: (response) => {
@@ -230,7 +248,7 @@ export class HistoricoConsultasSinteticoVisualizarHistoricosComponent implements
               this.downloadAnchor.style.display = 'none';
               const fileURL = URL.createObjectURL(file);
               this.downloadAnchor.href = fileURL;
-              this.downloadAnchor.download = `planilha-historico-consultas-sintetico-${formatarDataPtBr(new Date().toString())}.xlsx`;
+              this.downloadAnchor.download = `planilha-historico-consultas-analitico-${formatarDataPtBr(new Date().toString())}.xlsx`;
               this.downloadAnchor.click();
             },
             error: (error) => {
@@ -319,6 +337,30 @@ export class HistoricoConsultasSinteticoVisualizarHistoricosComponent implements
     return value;
   }
 
+  getDescricaoCriterioData(field: string): string {
+    let value: string = '';
+
+    if (field == null || field == undefined)
+      return value;
+
+    switch (field) {
+      case CriterioData.CriacaoProcesso:
+        value = 'Criação do Processo';
+        break;
+      case CriterioData.UltimoAndamento:
+        value = 'Último Andamento';
+        break;
+      case CriterioData.UltimaAtualizacao:
+        value = 'Última Atualização';
+        break;
+      default:
+        value = field;
+        break;
+    }
+
+    return value;
+  }
+
   cleanFilter() {
     this.formDirective.resetForm();
     this.filters = [];
@@ -346,18 +388,6 @@ export class HistoricoConsultasSinteticoVisualizarHistoricosComponent implements
     }
   }
 
-  private atualizaTotalizadores() {
-    this.totalConsultas = 0;
-    this.totalQuantidadeCreditos = 0;
-
-    if (this.searchResult != null && this.searchResult != undefined && this.searchResult.length > 0) {
-      this.searchResult.forEach(item => {
-        this.totalConsultas += item.totalConsultas;
-        this.totalQuantidadeCreditos += item.quantidadeTotalCreditos;
-      });
-    }
-  }
-
   private getSaldoDisponivel() {
     this.saldoDisponivel = 0;
     this.showSaldoDisponivel = false;
@@ -377,5 +407,16 @@ export class HistoricoConsultasSinteticoVisualizarHistoricosComponent implements
           this._messageTrackerService.subscribeError(error.error);
         }
       });
+  }
+
+  visualizarResultado(historicoConsultaAnalitico: HistoricoConsultasAnaliticoView) {
+    this._dialog.open(HistoricoConsultasAnaliticoVisualizarHistoricosResultadoComponent, {
+      width: '75vw',
+      maxHeight: '100vh',
+      data: {
+        value: historicoConsultaAnalitico.resultado,
+        title: 'Resultado JSON'
+      }
+    });
   }
 }

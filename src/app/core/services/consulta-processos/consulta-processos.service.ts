@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from 'src/environments/environment';
+import { ConsultaProcessosParameters } from '../../models/consulta-processos/consulta-processos-parameters.model';
 import { ConsultaProcessosRequest } from '../../models/consulta-processos/consulta-processos-request.model';
 import { ConsultaProcessosResponse } from '../../models/consulta-processos/consulta-processos-response.model';
 import { formatarDataParaRequest } from 'src/app/shared/utils/formatar-data';
@@ -12,20 +13,64 @@ import { formatarDataParaRequest } from 'src/app/shared/utils/formatar-data';
 export class ConsultaProcessosService {
     private _url: string = environment.url;
 
-    constructor(private _http: HttpClient) {}
+    constructor(private _http: HttpClient) {}    
 
-    get(searchParameters: ConsultaProcessosRequest, pageNumber: number, pageSize: number) {
-        let params = new HttpParams().set('razaoSocialCnpj', searchParameters.razaoSocialCnpj);
+    post(searchParameters: ConsultaProcessosParameters, pageNumber: number, pageSize: number) {
+        let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
+
+        let bodyParams: ConsultaProcessosRequest = {
+            dataFinal: formatarDataParaRequest(searchParameters.dataFinal)
+        };
+
+        if (searchParameters.dataInicial) {
+            bodyParams = {
+                ...bodyParams,
+                dataInicial: formatarDataParaRequest(searchParameters.dataInicial)
+            };
+        }
+
+        if (searchParameters.razaoSocialCnpj) {
+            bodyParams = {
+                ...bodyParams,
+                razaoSocialCnpj: searchParameters.razaoSocialCnpj
+            };
+        }
+
+        if (searchParameters.nup) {
+            bodyParams = {
+                ...bodyParams,
+                nup: searchParameters.nup
+            };
+        }
+
+        if (searchParameters.valorCausa) {
+            bodyParams = {
+                ...bodyParams,
+                valorCausa: searchParameters.valorCausa
+            };
+        }
 
         if (searchParameters.criterioData) {
-            params = params.set('criterioData', searchParameters.criterioData);
-        }
-        if (searchParameters.dataInicial) {
-            params = params.set('dataInicial', formatarDataParaRequest(searchParameters.dataInicial));
+            bodyParams = {
+                ...bodyParams,
+                criterioData: searchParameters.criterioData
+            };
         }
 
-        params = params.set('dataFinal', formatarDataParaRequest(searchParameters.dataFinal)).set('pageNumber', pageNumber).set('pageSize', pageSize);
+        if (searchParameters.tribunais && searchParameters.tribunais.length > 0) {
+            bodyParams = {
+                ...bodyParams,
+                tribunais: searchParameters.tribunais
+            };
+        }
 
-        return this._http.get<ConsultaProcessosResponse>(`${this._url}processos-judiciais`, { params });
+        if (searchParameters.uf) {
+            bodyParams = {
+                ...bodyParams,
+                uf: searchParameters.uf
+            };
+        }
+
+        return this._http.post<ConsultaProcessosResponse>(`${this._url}processos-judiciais`, bodyParams, { params });
     }
 }

@@ -1,5 +1,6 @@
 export interface ConsultaProcessosView {
     nup: string;
+    nomeInstancia: string;
     uf: string;
     partesAtivas: string;
     partesPassivas: string;

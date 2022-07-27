@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>{{ this.title }}</h1>
+
+<mat-dialog-content>
+    <pre *ngIf="isJson">{{ this.value | json}}</pre>
+    <pre *ngIf="!isJson">{{ this.value }}</pre>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button mat-dialog-close>
+        Fechar
+    </button>
+</mat-dialog-actions>

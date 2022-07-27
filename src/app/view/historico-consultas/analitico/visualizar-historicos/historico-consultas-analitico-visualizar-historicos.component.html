@@ -1,4 +1,4 @@
-<div class="container-historico-consultas-sintetico-visualizar-historicos mat-elevation-z24">
+<div class="container-historico-consultas-analitico-visualizar-historicos mat-elevation-z24">
     <div class="container-form">
         <form class="form" [formGroup]="formConsulta" (submit)="search()" #formDirective="ngForm">  
             <mat-form-field *ngIf="isAdministrador()">
@@ -110,37 +110,86 @@
         <mat-divider></mat-divider>
         <table mat-table [dataSource]="searchResult" class="result-table">
 
+            <ng-container matColumnDef="dataConsulta">
+                <th mat-header-cell *matHeaderCellDef id="dataConsulta">Data Consulta</th>
+                <td mat-cell *matCellDef="let element">{{ element.dataConsulta }}</td>
+            </ng-container>
+
             <ng-container matColumnDef="usuarioEmail">
-                <th mat-header-cell *matHeaderCellDef id="usuarioEmail">Usuário</th>
-                <td mat-cell *matCellDef="let element">{{ element.usuarioEmail }}</td>
-                <td mat-footer-cell *matFooterCellDef> Total </td>
+                <th mat-header-cell *matHeaderCellDef id="usuarioEmail" [hidden]="!isAdministrador()">Usuário</th>
+                <td mat-cell *matCellDef="let element" [hidden]="!isAdministrador()">{{ element.usuarioEmail }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="razaoSocial">
+                <th mat-header-cell *matHeaderCellDef id="razaoSocial">Razão Social</th>
+                <td mat-cell *matCellDef="let element">{{ element.razaoSocial }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="nup">
+                <th mat-header-cell *matHeaderCellDef id="nup">NUP</th>
+                <td mat-cell *matCellDef="let element">{{ element.nup }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="valorCausa">
+                <th mat-header-cell *matHeaderCellDef id="valorCausa">Valor Causa</th>
+                <td mat-cell *matCellDef="let element">{{ element.valorCausa | currency:' ':'symbol':'1.2-2' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="criterioData">
+                <th mat-header-cell *matHeaderCellDef id="criterioData">Critério</th>
+                <td mat-cell *matCellDef="let element">{{ getDescricaoCriterioData(element.criterioData) }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="dataInicial">
+                <th mat-header-cell *matHeaderCellDef id="dataInicial">Data Inicial</th>
+                <td mat-cell *matCellDef="let element">{{ element.dataInicial }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="dataFinal">
+                <th mat-header-cell *matHeaderCellDef id="dataFinal">Data Final</th>
+                <td mat-cell *matCellDef="let element">{{ element.dataFinal }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="tribunais">
+                <th mat-header-cell *matHeaderCellDef id="tribunais">Tribunais</th>
+                <td mat-cell *matCellDef="let element">{{ element.tribunais }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="uf">
+                <th mat-header-cell *matHeaderCellDef id="uf">UF</th>
+                <td mat-cell *matCellDef="let element">{{ element.uf }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="pagina">
+                <th mat-header-cell *matHeaderCellDef id="pagina">Página</th>
+                <td mat-cell *matCellDef="let element">{{ element.pagina }}</td>
             </ng-container>
 
             <ng-container matColumnDef="tipoConsulta">
-                <th mat-header-cell *matHeaderCellDef id="tipoConsulta">Tipo da consulta</th>
+                <th mat-header-cell *matHeaderCellDef id="tipoConsulta">Tipo</th>
                 <td mat-cell *matCellDef="let element">{{ getDescricaoTipoConsulta(element.tipoConsulta) }}</td>
-                <td mat-footer-cell *matFooterCellDef></td>
             </ng-container>
 
             <ng-container matColumnDef="situacaoConsulta">
-                <th mat-header-cell *matHeaderCellDef id="situacaoConsulta">Situação da consulta</th>
+                <th mat-header-cell *matHeaderCellDef id="situacaoConsulta">Situação</th>
                 <td mat-cell *matCellDef="let element">
                     <mat-icon style="color: green" *ngIf="element.situacaoConsulta === 'Sucesso'" matTooltip="Sucesso">check_circle_outline</mat-icon>
                     <mat-icon style="color: red" *ngIf="element.situacaoConsulta === 'Erro'" matTooltip="Erro">error</mat-icon>
                 </td>
-                <td mat-footer-cell *matFooterCellDef></td>
-            </ng-container>
-
-            <ng-container matColumnDef="totalConsultas">
-                <th mat-header-cell *matHeaderCellDef id="totalConsultas">Total de consultas</th>
-                <td mat-cell *matCellDef="let element">{{ element.totalConsultas | number }}</td>
-                <td mat-footer-cell *matFooterCellDef> {{ totalConsultas | number }} </td>
             </ng-container>
             
-            <ng-container matColumnDef="quantidadeTotalCreditos">
-                <th mat-header-cell *matHeaderCellDef id="quantidadeTotalCreditos">Quantidade de créditos</th>
-                <td mat-cell *matCellDef="let element">{{ element.quantidadeTotalCreditos | currency:' ':'symbol':'1.2-2' }}</td>
-                <td mat-footer-cell *matFooterCellDef> {{ totalQuantidadeCreditos | currency:' ':'symbol':'1.2-2' }} </td>
+            <ng-container matColumnDef="quantidadeCreditos">
+                <th mat-header-cell *matHeaderCellDef id="quantidadeCreditos">Créditos</th>
+                <td mat-cell *matCellDef="let element">{{ element.quantidadeCreditos | currency:' ':'symbol':'1.2-2' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="json">
+                <th mat-header-cell *matHeaderCellDef id="json">JSON</th>
+                <td mat-cell *matCellDef="let element">
+                    <button class="mat-button-json" mat-menu-item (click)="visualizarResultado(element)" *ngIf="element.situacaoConsulta === 'Sucesso'">
+                        <mat-icon matTooltip="Visualizar JSON">code</mat-icon>
+                    </button>                    
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="saldoDisponivel">
@@ -149,7 +198,6 @@
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            <tr mat-footer-row *matFooterRowDef="displayedColumns" class="footer-totalizadores"></tr>
             <tr mat-footer-row *matFooterRowDef="['saldoDisponivel']" class="footer-saldo-disponivel" [style.display]="showSaldoDisponivel ? 'table-row' : 'none'"></tr>          
 
         </table>

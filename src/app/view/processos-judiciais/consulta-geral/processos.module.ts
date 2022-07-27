@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -37,6 +38,7 @@ const maskConfig: Partial<IConfig> = {
         ProcessosRoutingModule,
         ReactiveFormsModule,
         NgxMaskModule.forRoot(maskConfig),
+        NgxCurrencyModule,
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,

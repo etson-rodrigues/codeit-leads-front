@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from 'src/environments/environment';
-import { ConsultaProcessosRequest } from '../../models/consulta-processos/consulta-processos-request.model';
+import { ConsultaProcessosParameters } from '../../models/consulta-processos/consulta-processos-parameters.model';
 import { ExportarProcessosRequest } from '../../models/consulta-processos/exportar-consulta-processos-request.model';
 import { formatarDataParaRequest } from 'src/app/shared/utils/formatar-data';
 
@@ -14,11 +14,38 @@ export class ExportarProcessosService {
 
     constructor(private _http: HttpClient) {}
 
-    export(searchParameters: ConsultaProcessosRequest) {
+    export(searchParameters: ConsultaProcessosParameters, isExportacaoComDetalhes: boolean) {
         let params: ExportarProcessosRequest = {
-            razaoSocialCnpj: searchParameters.razaoSocialCnpj,
             dataFinal: formatarDataParaRequest(searchParameters.dataFinal)
         };
+
+        if (searchParameters.dataInicial) {
+            params = {
+                ...params,
+                dataInicial: formatarDataParaRequest(searchParameters.dataInicial)
+            };
+        }
+
+        if (searchParameters.razaoSocialCnpj) {
+            params = {
+                ...params,
+                razaoSocialCnpj: searchParameters.razaoSocialCnpj
+            };
+        }
+
+        if (searchParameters.nup) {
+            params = {
+                ...params,
+                nup: searchParameters.nup
+            };
+        }
+
+        if (searchParameters.valorCausa) {
+            params = {
+                ...params,
+                valorCausa: searchParameters.valorCausa
+            };
+        }
 
         if (searchParameters.criterioData) {
             params = {
@@ -27,10 +54,24 @@ export class ExportarProcessosService {
             };
         }
 
-        if (searchParameters.dataInicial) {
+        if (searchParameters.tribunais && searchParameters.tribunais.length > 0) {
             params = {
                 ...params,
-                dataInicial: formatarDataParaRequest(searchParameters.dataInicial)
+                tribunais: searchParameters.tribunais
+            };
+        }
+
+        if (searchParameters.uf) {
+            params = {
+                ...params,
+                uf: searchParameters.uf
+            };
+        }
+        
+        if (isExportacaoComDetalhes) {
+            params = {
+                ...params,
+                isExportacaoComDetalhes: isExportacaoComDetalhes
             };
         }
 

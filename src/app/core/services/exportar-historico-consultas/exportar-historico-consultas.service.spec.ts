@@ -30,12 +30,12 @@ describe('ExportarHistoricoConsultasService', () => {
       dataInicial: '01/01/2022',
       dataFinal: '01/01/2023'
     };
-    const fakeResponse = new Blob([''], { type: 'text/csv' });
-    service.export(searchParameters).subscribe((response) => {
+    const fakeResponse = new Blob([''], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    service.exportSintetico(searchParameters).subscribe((response) => {
         expect(response instanceof Blob)
             .withContext('Retorno deve ser Blob')
             .toBeTruthy();
-        expect(response.type).withContext('Tipo deve ser text/csv').toEqual('text/csv');
+        expect(response.type).withContext('Tipo deve ser application/vnd.openxmlformats-officedocument.spreadsheetml.sheet').toEqual('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     });
     const req = http.expectOne(`${service['_url']}historico-consultas/exportar/sintetico`);
     expect(req.request.method).toBe('POST');
@@ -51,7 +51,7 @@ describe('ExportarHistoricoConsultasService', () => {
       dataFinal: '01/01/2023'
     };
     const fakeResponse = new Blob([''], { type: 'application/problem+json' });
-    service.export(searchParameters).subscribe({
+    service.exportSintetico(searchParameters).subscribe({
         next: () => {
             fail('Operação de exportar processos deveria ter falhado');
         },
